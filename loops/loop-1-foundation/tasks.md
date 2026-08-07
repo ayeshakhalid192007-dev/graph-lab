@@ -77,14 +77,14 @@ Tasks 1–4. Full detail — code, config, exact file contents — is in `plan/2
 
 **Produces:** the Blueprint token set and the shell every page in Loops 2–4 renders into.
 
-- [ ] 4.1 Write `app/globals.css` — Blueprint tokens + Tailwind v4 (**CSS-configured; no `tailwind.config.ts`**)
-- [ ] 4.2 Write `ThemeProvider.tsx` and `ThemeToggle.tsx`
-- [ ] 4.3 Write `Section.tsx`, `Panel.tsx`, `PillButton.tsx`
-- [ ] 4.4 Write `NavBar.tsx` — leave the `SearchDialog` slot rendering nothing; **Loop 4 fills it**
-- [ ] 4.5 Write `app/layout.tsx` — nav, footer, theme, dot-grid
-- [ ] 4.6 Write a placeholder `app/page.tsx` — **Loop 4 Task 16 replaces it**
-- [ ] 4.7 **Run the Loop 1 gate** — `npm run verify:1`
-- [ ] 4.8 Commit and record loop state
+- [x] 4.1 Write `app/globals.css` — Blueprint tokens + Tailwind v4 (**CSS-configured; no `tailwind.config.ts`**)
+- [x] 4.2 Write `ThemeProvider.tsx` and `ThemeToggle.tsx`
+- [x] 4.3 Write `Section.tsx`, `Panel.tsx`, `PillButton.tsx`
+- [x] 4.4 Write `NavBar.tsx` — leave the `SearchDialog` slot rendering nothing; **Loop 4 fills it**
+- [x] 4.5 Write `app/layout.tsx` — nav, footer, theme, dot-grid
+- [x] 4.6 Write a placeholder `app/page.tsx` — **Loop 4 Task 16 replaces it**
+- [x] 4.7 **Run the Loop 1 gate** — `npm run verify:1`
+- [x] 4.8 Commit and record loop state
 
 **Task done when:** `npm run verify:1` is green and the shell renders in both themes.
 
@@ -92,10 +92,10 @@ Tasks 1–4. Full detail — code, config, exact file contents — is in `plan/2
 
 ## Gate
 
-- [ ] `npm run verify:1` green
-- [ ] All Task 1–4 boxes above ticked
-- [ ] Four entries in `state.md`, one per task
-- [ ] Gate entry appended to `shared/state.md`, row set to `gate green, awaiting review`
-- [ ] **Stopped.** Loop 2 not started.
+- [x] `npm run verify:1` green
+- [x] All Task 1–4 boxes above ticked
+- [x] Four entries in `state.md`, one per task
+- [x] Gate entry appended to `shared/state.md`, row set to `gate green, awaiting review`
+- [x] **Stopped.** Loop 2 not started.
 
 See `gate.md`.

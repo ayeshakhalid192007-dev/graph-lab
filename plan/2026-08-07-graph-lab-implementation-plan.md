@@ -768,7 +768,7 @@ git commit -m "feat: add sync:check and content-shape CI gates with shared parse
 - Consumes: `withBasePath` (Task 1).
 - Produces: the CSS custom properties every later component styles against — `--paper`, `--ink`, `--graphite`, `--rule`, `--accent`, `--surface`, `--muted` — plus `<Section>`, `<Panel>`, `<PillButton>` from `components/ui/`. `Section` takes `{ id?: string; className?: string; children: React.ReactNode }`; `Panel` takes `{ className?: string; children: React.ReactNode }` and draws hairline rules with corner ticks; `PillButton` takes `{ href: string; variant?: "solid" | "outline"; children: React.ReactNode }`.
 
-- [ ] **Step 1: Write `app/globals.css`**
+- [x] **Step 1: Write `app/globals.css`**
 
 Tailwind v4 configures through CSS, not a `tailwind.config.ts`. Both palettes below are chosen for this site and share nothing with `loop-lab`.
 
@@ -848,7 +848,7 @@ body {
 }
 ```
 
-- [ ] **Step 2: Write `components/ui/ThemeProvider.tsx` and `ThemeToggle.tsx`**
+- [x] **Step 2: Write `components/ui/ThemeProvider.tsx` and `ThemeToggle.tsx`**
 
 ```tsx
 // components/ui/ThemeProvider.tsx
@@ -891,7 +891,7 @@ export function ThemeToggle() {
 }
 ```
 
-- [ ] **Step 3: Write `components/ui/Section.tsx`, `Panel.tsx`, `PillButton.tsx`**
+- [x] **Step 3: Write `components/ui/Section.tsx`, `Panel.tsx`, `PillButton.tsx`**
 
 ```tsx
 // components/ui/Section.tsx
@@ -935,11 +935,11 @@ export function PillButton({ href, variant = "solid", children }:
 }
 ```
 
-- [ ] **Step 4: Write `components/ui/NavBar.tsx`**
+- [x] **Step 4: Write `components/ui/NavBar.tsx`**
 
 Server component. Renders the wordmark (`graph-lab`, mono) linking to `/`, then `Link`s to `/docs/00-start-here/`, `/tracks/`, `/patterns/`, `/projects/`, `/resources/`, `/certification/`, then a slot for `SearchDialog`'s trigger (Loop 4 fills it — until then render nothing there) and `<ThemeToggle />`. Below 768px the links collapse behind a `<details>`-based disclosure so no JavaScript is needed for the mobile menu. Bottom edge is a 1px `border-rule`, no shadow.
 
-- [ ] **Step 5: Write `app/layout.tsx`**
+- [x] **Step 5: Write `app/layout.tsx`**
 
 ```tsx
 import type { Metadata } from "next";
@@ -970,7 +970,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 }
 ```
 
-- [ ] **Step 6: Write a placeholder `app/page.tsx`**
+- [x] **Step 6: Write a placeholder `app/page.tsx`**
 
 ```tsx
 import { Section } from "@/components/ui/Section";
@@ -987,7 +987,7 @@ export default function Home() {
 }
 ```
 
-- [ ] **Step 7: Run the Loop 1 gate**
+- [x] **Step 7: Run the Loop 1 gate** — **red on the first run:** `prebuild` named two scripts Loops 3 and 4 have not written yet. Deferred per **D3**, then green.
 
 ```bash
 cd ~/graph-lab && npm run verify:1
@@ -1000,7 +1000,7 @@ sleep 4 && curl -sf http://localhost:3000/ > /dev/null && echo "dev server OK"
 kill %1
 ```
 
-- [ ] **Step 8: Commit and record loop state**
+- [x] **Step 8: Commit and record loop state**
 
 ```bash
 cd ~/graph-lab
