@@ -16,15 +16,15 @@ Tasks 1–4. Full detail — code, config, exact file contents — is in `plan/2
 
 **Consumes:** nothing.
 
-- [ ] 1.1 Create the repo and pin Node — **see D1: repo and git already exist, do not re-init or delete**
-- [ ] 1.2 Write `package.json` — all `verify:N` scripts now, cumulative on purpose
-- [ ] 1.3 Write `next.config.ts` — `output: "export"`, `images.unoptimized`, `trailingSlash: true`, basePath from `PAGES_BASE_PATH`
-- [ ] 1.4 Write `tsconfig.json`
-- [ ] 1.5 Write `postcss.config.mjs` and `eslint.config.mjs`
-- [ ] 1.6 Write `lib/base-path.ts`
-- [ ] 1.7 ~~Write `LOOP-STATE.md`~~ — **superseded by D0.** Write to `loops/loop-1-foundation/state.md` instead; do not create a root `LOOP-STATE.md`
-- [ ] 1.8 Install and verify the scaffold builds
-- [ ] 1.9 Commit
+- [x] 1.1 Create the repo and pin Node — **see D1: repo and git already exist, do not re-init or delete**
+- [x] 1.2 Write `package.json` — all `verify:N` scripts now, cumulative on purpose
+- [x] 1.3 Write `next.config.ts` — `output: "export"`, `images.unoptimized`, `trailingSlash: true`, basePath from `PAGES_BASE_PATH`
+- [x] 1.4 Write `tsconfig.json`
+- [x] 1.5 Write `postcss.config.mjs` and `eslint.config.mjs`
+- [x] 1.6 Write `lib/base-path.ts`
+- [x] 1.7 ~~Write `LOOP-STATE.md`~~ — **superseded by D0.** Write to `loops/loop-1-foundation/state.md` instead; do not create a root `LOOP-STATE.md`
+- [x] 1.8 Install and verify the scaffold builds
+- [x] 1.9 Commit
 
 **Task done when:** `npm install` succeeds and a bare `next build` emits a static export.
 

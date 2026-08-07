@@ -173,7 +173,7 @@ graph-lab/
 - Consumes: nothing.
 - Produces: the npm scripts every later task runs (`sync:latest`, `sync:check`, `check:content-shape`, `build`, `verify:1`…`verify:all`); `withBasePath(path: string): string` from `lib/base-path.ts`, imported by every component that emits a bare `href`/`src` string.
 
-- [ ] **Step 1: Create the repo and pin Node**
+- [x] **Step 1: Create the repo and pin Node**
 
 ```bash
 mkdir -p ~/graph-lab && cd ~/graph-lab && git init -b main
@@ -181,7 +181,7 @@ echo 24 > .nvmrc
 printf 'node_modules/\n.next/\nout/\n.env*.local\n.DS_Store\n' > .gitignore
 ```
 
-- [ ] **Step 2: Write `package.json`**
+- [x] **Step 2: Write `package.json`**
 
 ```json
 {
@@ -245,7 +245,7 @@ printf 'node_modules/\n.next/\nout/\n.env*.local\n.DS_Store\n' > .gitignore
 
 The `verify:N` scripts are cumulative on purpose: Loop 3 cannot silently break Loop 2's link check.
 
-- [ ] **Step 3: Write `next.config.ts`**
+- [x] **Step 3: Write `next.config.ts`**
 
 ```typescript
 import type { NextConfig } from "next";
@@ -267,7 +267,7 @@ const nextConfig: NextConfig = {
 export default nextConfig;
 ```
 
-- [ ] **Step 4: Write `tsconfig.json`**
+- [x] **Step 4: Write `tsconfig.json`**
 
 ```json
 {
@@ -295,7 +295,7 @@ export default nextConfig;
 
 `content` is excluded so 86 markdown files never enter the TS program.
 
-- [ ] **Step 5: Write `postcss.config.mjs` and `eslint.config.mjs`**
+- [x] **Step 5: Write `postcss.config.mjs` and `eslint.config.mjs`**
 
 ```javascript
 // postcss.config.mjs
@@ -317,7 +317,7 @@ export default [
 ];
 ```
 
-- [ ] **Step 6: Write `lib/base-path.ts`**
+- [x] **Step 6: Write `lib/base-path.ts`**
 
 ```typescript
 /**
@@ -335,7 +335,7 @@ export function withBasePath(path: string): string {
 
 Add `NEXT_PUBLIC_BASE_PATH` to the build env alongside `PAGES_BASE_PATH` in Task 22's workflow — `process.env.PAGES_BASE_PATH` is not readable from client components.
 
-- [ ] **Step 7: Write `LOOP-STATE.md`**
+- [x] ~~**Step 7: Write `LOOP-STATE.md`**~~ — **superseded by D0**: no root `LOOP-STATE.md`; task entries go to `loops/loop-1-foundation/state.md`, gate entries to `loops/shared/state.md`.
 
 ```markdown
 # graph-lab loop state
@@ -352,14 +352,14 @@ Plan: `~/graph-landing/2026-08-07-graph-lab-implementation-plan.md`
 <a loop that fixes an earlier loop's defect records it here>
 ```
 
-- [ ] **Step 8: Install and verify the scaffold builds**
+- [x] **Step 8: Install and verify the scaffold builds**
 
 ```bash
 cd ~/graph-lab && npm install && npx tsc --noEmit
 ```
 Expected: install succeeds; `tsc` passes (nothing to typecheck yet beyond `lib/base-path.ts`). A config error here — not a missing-file error — means stop and fix before continuing.
 
-- [ ] **Step 9: Commit**
+- [x] **Step 9: Commit**
 
 ```bash
 cd ~/graph-lab
