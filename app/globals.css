@@ -58,6 +58,111 @@ body {
 .tick::before { top: -1px; left: -1px; border-width: 1px 0 0 1px; }
 .tick::after  { bottom: -1px; right: -1px; border-width: 0 1px 1px 0; }
 
+/* Course prose. This is the whole typography layer for the 86 doc pages — there
+   is no typography plugin, by instruction. Sans for prose, mono for anything
+   structural: headings, inline code, table headers. */
+.prose-blueprint {
+  color: var(--graphite);
+  line-height: 1.7;
+}
+.prose-blueprint > * + * { margin-top: 1rem; }
+
+.prose-blueprint h1,
+.prose-blueprint h2,
+.prose-blueprint h3,
+.prose-blueprint h4 {
+  font-family: var(--font-mono);
+  color: var(--ink);
+  letter-spacing: -0.01em;
+  /* Clears the sticky column when a TOC anchor jumps to a heading. */
+  scroll-margin-top: 1.5rem;
+}
+.prose-blueprint h1 { font-size: 1.75rem; line-height: 1.25; }
+.prose-blueprint h2 {
+  font-size: 1.25rem;
+  margin-top: 2.5rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--rule);
+}
+.prose-blueprint h3 { font-size: 1.0625rem; margin-top: 1.75rem; }
+.prose-blueprint h4 { font-size: 0.9375rem; margin-top: 1.5rem; color: var(--graphite); }
+
+.prose-blueprint a {
+  color: var(--accent);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.prose-blueprint a:hover { text-decoration-thickness: 2px; }
+
+.prose-blueprint strong { color: var(--ink); font-weight: 600; }
+
+.prose-blueprint ul,
+.prose-blueprint ol { padding-left: 1.5rem; }
+.prose-blueprint ul { list-style: disc; }
+.prose-blueprint ol { list-style: decimal; }
+.prose-blueprint li::marker { color: var(--muted); }
+.prose-blueprint li + li { margin-top: 0.375rem; }
+.prose-blueprint li > ul,
+.prose-blueprint li > ol { margin-top: 0.375rem; }
+
+/* Inline code only — a fenced block is framed by CodeBlock and must not inherit
+   this border, hence the :not() rather than a bare `code` rule. */
+.prose-blueprint :not(pre) > code {
+  font-family: var(--font-mono);
+  font-size: 0.875em;
+  color: var(--ink);
+  background-color: var(--paper);
+  border: 1px solid var(--rule);
+  padding: 0.05em 0.3em;
+}
+
+.prose-blueprint blockquote {
+  border-left: 2px solid var(--accent);
+  padding-left: 1rem;
+  color: var(--muted);
+}
+
+.prose-blueprint table {
+  width: 100%;
+  border-collapse: collapse;
+  display: block;
+  overflow-x: auto;
+  font-size: 0.875rem;
+}
+.prose-blueprint th,
+.prose-blueprint td {
+  border: 1px solid var(--rule);
+  padding: 0.5rem 0.75rem;
+  text-align: left;
+  vertical-align: top;
+}
+.prose-blueprint th {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--muted);
+  font-weight: 500;
+}
+
+.prose-blueprint details {
+  border: 1px solid var(--rule);
+  background-color: var(--surface);
+  padding: 0.75rem 1rem;
+}
+.prose-blueprint summary {
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  color: var(--ink);
+  cursor: pointer;
+}
+.prose-blueprint summary::marker { color: var(--rule); }
+.prose-blueprint details > *:not(summary) { margin-top: 0.75rem; }
+
+.prose-blueprint hr { border: 0; border-top: 1px solid var(--rule); margin: 2rem 0; }
+
+.prose-blueprint img { max-width: 100%; height: auto; }
+
 /* Shiki is configured with two themes, so it writes the light colour inline and
    carries the dark one alongside as --shiki-dark. Nothing reads that custom
    property on its own — this rule is what makes the dark palette real, and
