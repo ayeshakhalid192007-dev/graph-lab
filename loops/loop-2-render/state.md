@@ -1,6 +1,6 @@
 # Loop 2 state — Render Layer and the 86 Doc Pages
 
-**Tasks:** 5–9 · **Gate:** `npm run verify:2` · **Status:** in progress — Tasks 5 and 6 done, Task 7 next
+**Tasks:** 5–9 · **Gate:** `npm run verify:2` · **Status:** in progress — Tasks 5, 6 and 7 done, Task 8 next
 
 Per-task log for this loop. Cross-loop material — gate entries, repairs to earlier loops, decisions binding later loops — goes in `../shared/state.md` instead.
 
@@ -81,6 +81,31 @@ Route mapping, as shipped:
 - **Two bugs in the plan's Task 6 code were found and fixed** — both invisible without Step 2, which is why the step exists. See D6 in `../shared/state.md`; the first one is the reason the probe printed 12 `DEAD` lines before it printed 0.
 - **`resolveContentLink` emits `/patterns/…` and `/resources/…` routes that do not exist until Loop 3.** Real content links reach them: `docs/README.md` alone links to `patterns/README.md`, `starters/README.md` and `resources/sources.md`. Task 9's `check-links.mjs` will flag these at the Loop 2 gate, alongside the six `NavBar` links Loop 1 already recorded. **This is expected — do not "fix" it by weakening the resolver.** Decide at Task 9 whether the check allowlists the Loop 3/4 routes or the gate accepts a known list of not-yet-built routes.
 - **The known-slug sets are cached at module level**, like `getAllDocs()`. Same caveat, same non-issue for a static build.
+
+### Task 7 — `lib/markdown.ts`, `CodeBlock`, `GraphDiagram`
+
+**Date:** 2026-08-08
+**Landed:** The render pipeline. Plain course markdown now becomes React elements with build-time syntax highlighting in both themes, client-rendered mermaid diagrams, rewritten links, and a collected TOC. Tasks 8, 11, 13 and 14 all go through this one function.
+**Files:** created `lib/markdown.ts`, `components/content/CodeBlock.tsx`, `components/content/GraphDiagram.tsx`, `components/ui/CopyButton.tsx`. Modified `app/globals.css`.
+**Produces:**
+```ts
+// lib/markdown.ts
+type Heading = { depth: 2 | 3; id: string; text: string }
+renderMarkdown(body: string, repoPath: string): Promise<{ content: ReactElement; headings: Heading[] }>
+toHast(body: string, repoPath: string): Promise<{ tree: Root; headings: Heading[] }>   // added, see below
+
+// components
+GraphDiagram({ chart: string })                                    // "use client"
+CodeBlock({ lang?: string; raw?: string; children?: ReactNode })    // server
+CopyButton({ text: string })                                       // "use client"
+```
+**Verified by:** the pipeline run over **all 86 pages, 0 failures** — not just the one page the plan names. Totals came out exactly as the task table predicts: **20 `graph-diagram`**, **64 `code-block`** (41 markdown, 15 json, 3 yaml, 3 text, 2 jsonl), 41 `<details>` surviving `rehypeRaw`, 501 headings collected, 272 anchors of which 265 rewrote to site routes and 7 became external GitHub links. Then the React half was verified end-to-end through a real `next build` against a temporary probe route rendering `docs/advanced/multi-graph-federation.md`: the emitted HTML held 15 headings, 4 `pre.shiki` frames with correct language labels, 193 `--shiki-dark` custom properties, 4 copy buttons with `aria-label="Copy code"`, the mermaid source fallback, an intact `<details>`/`<summary>`/`<table>`, and **zero** unmapped `<graph-diagram>`/`<code-block>` elements leaking through. Probe route deleted, clean rebuild green. `npm run typecheck` exit 0.
+**Next loop needs to know:**
+- **Call `renderMarkdown`, not `toHast`, from a page.** `toHast` stops at hast and does no React mapping. It exists because bare Node cannot import `.tsx`; see D7.
+- **`toHast` is the hook Loop 4 Task 15 wants.** `scripts/build-search-index.mjs` runs under plain Node and needs markdown reduced to text — that is exactly what `toHast` gives, with links and headings already resolved, and without dragging React into a build script.
+- **The hardest page in the content is `docs/advanced/multi-graph-federation.md`**, not the `docs/02-foundations/the-two-graphs.md` the plan's Step 4 names. The plan's page has 2 headings and zero diagrams, code blocks, tables and links — it would have passed while proving almost nothing. Ranked by feature density, use the federation page for any future pipeline change.
+- **Mermaid diagrams are absent from the prerendered HTML by design** — they render client-side and the `<pre>` source is what ships in `out/`. Loop 5's Definition of Done line "all 20 mermaid diagrams render as SVG in both themes" must be checked **in a browser**, not by grepping `out/`.
+- **Every fence in the content carries a language.** 84 opening fences, 84 labelled. `defaultLanguage`/`fallbackLanguage` are set to `text` anyway so a future unlabelled or unknown fence degrades instead of failing the build.
 
 ---
 

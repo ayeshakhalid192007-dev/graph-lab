@@ -52,11 +52,11 @@ Tasks 5–9. Full detail is in `plan/2026-08-07-graph-lab-implementation-plan.md
 | Relative `.md` links | Rewritten by `lib/links.ts` |
 | `##` / `###` headings | Slugged anchors, collected into the page TOC |
 
-- [ ] 7.1 Write `components/content/GraphDiagram.tsx` — explicit dark theme so diagrams stay legible; keeps source text as no-JS fallback
-- [ ] 7.2 Write `components/content/CodeBlock.tsx`
-- [ ] 7.3 Write `lib/markdown.ts`
-- [ ] 7.4 **Verify the pipeline against the hardest real page** in the content
-- [ ] 7.5 Typecheck and commit
+- [x] 7.1 Write `components/content/GraphDiagram.tsx` — explicit dark theme so diagrams stay legible; keeps source text as no-JS fallback
+- [x] 7.2 Write `components/content/CodeBlock.tsx`
+- [x] 7.3 Write `lib/markdown.ts`
+- [x] 7.4 **Verify the pipeline against the hardest real page** in the content
+- [x] 7.5 Typecheck and commit
 
 **Do not build** `CodeTabs`, `Callout`, or `CheckYourself` — constraint C4. Their degraded fallbacks are correct output.
 

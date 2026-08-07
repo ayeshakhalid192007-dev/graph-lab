@@ -185,6 +185,25 @@ The second bug is the quieter one. Bug 1 fails loudly at the link check; bug 2 f
 - **Loop 3 must not rename a pattern or starter slug away from its `content/` filename.** The route slug and the file stem are now the same string by construction; `/patterns/<slug>/` pages must be generated from `content/patterns/*.md` stems, or real links go null.
 - **Expect the Loop 2 gate to flag `/patterns/` and `/resources/`.** Real content links resolve there and those routes are Loop 3's. This is correct resolver output against an incomplete site — Task 9 decides how the check handles not-yet-built routes. Do not weaken the resolver to make the gate green.
 
+### D7 — the render pipeline splits `toHast` from `renderMarkdown`, 2026-08-08, Loop 2
+
+**Decision:** `lib/markdown.ts` exports **two** functions rather than the one the plan lists. `toHast(body, repoPath)` runs the whole remark/rehype pipeline and stops at hast; `renderMarkdown(body, repoPath)` calls it and maps the result to React, importing `GraphDiagram` and `CodeBlock` with a lazy `await import()` instead of at module scope. `lib/markdown.ts` contains no JSX — it uses `createElement`. The interface the plan promised is unchanged: `renderMarkdown` still returns `{ content, headings }`.
+
+**Because:** the plan's own Task 7 Step 4 verifies the module with `node --experimental-strip-types -e 'import("./lib/markdown.ts")'`, and the module as the plan writes it cannot be loaded that way twice over. Node's type stripping does not compile JSX, and a static `import … from "@/components/content/GraphDiagram"` resolves to a `.tsx` that bare Node rejects outright — confirmed: `TypeError: Unknown file extension ".tsx"`. Splitting the seam makes the pipeline core verifiable under Node while leaving the React path to the bundler, where it belongs.
+
+**Affects:**
+- **Pages call `renderMarkdown`.** `toHast` is the lower layer; it does no React mapping.
+- **Loop 4 Task 15 should build the search index on `toHast`.** `scripts/build-search-index.mjs` runs under plain Node, and this is the supported way to get course markdown reduced to structured text without importing React into a build script. Do not re-implement a second markdown parser there — a second definition of "what a heading is" is exactly the drift Loop 1 avoided with `lib/parse-content.ts`.
+- **Any `lib/` module a later loop wants verifiable under bare Node must avoid JSX and `.tsx` imports.** This is the same property D5 protects with explicit `.ts` extensions; D7 is its second half.
+
+### D8 — `CodeBlock` receives React children, not an HTML string, 2026-08-08, Loop 2
+
+**Decision:** the plan's `CodeBlock({ lang, html, raw })` ships as `CodeBlock({ lang, raw, children })`. A rehype step wraps each fence in a `<code-block lang raw>` element **before** shiki runs; shiki then highlights the `<pre>` still nested inside, and the highlighted markup reaches the component as ordinary React children.
+
+**Because:** `@shikijs/rehype` does `parent.children[index] = fragment` — it *replaces* the `<pre>` node rather than annotating it, so the raw source and language must be captured onto a wrapper beforehand or they are gone. Given a wrapper, passing children is strictly better than passing `html`: producing an HTML string would mean serialising hast back to HTML with `hast-util-to-html`, which is **not in the plan's `package.json`** and would need a dependency Decision under C10 — to undo work the pipeline had already done.
+
+**Affects:** Loop 3's starter-kit file viewer and any other surface that frames code. Use `CodeBlock` with children. The one visible consequence is that `raw` is optional: a code block with no captured source renders without a copy button rather than with a button that copies nothing.
+
 ---
 
 ## Open questions for the user

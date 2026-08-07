@@ -1325,7 +1325,7 @@ git commit -m "feat: rewrite relative markdown links to site routes"
 - Consumes: `resolveContentLink` (Task 6).
 - Produces: `renderMarkdown(body: string, repoPath: string): Promise<{ content: React.ReactElement; headings: Heading[] }>` where `Heading = { depth: 2 | 3; id: string; text: string }`. Tasks 8, 11, 13, and 14 all render course markdown through this one function.
 
-- [ ] **Step 1: Write `components/content/GraphDiagram.tsx`**
+- [x] **Step 1: Write `components/content/GraphDiagram.tsx`**
 
 ```tsx
 "use client";
@@ -1392,7 +1392,7 @@ export function GraphDiagram({ chart }: { chart: string }) {
 }
 ```
 
-- [ ] **Step 2: Write `components/content/CodeBlock.tsx`**
+- [x] **Step 2: Write `components/content/CodeBlock.tsx`**
 
 Shiki highlights at build time, so this is a server component with zero client JS. It receives already-highlighted HTML from the rehype pipeline and only supplies the frame plus a copy button.
 
@@ -1415,7 +1415,7 @@ export function CodeBlock({ lang, html, raw }:
 
 Also create `components/ui/CopyButton.tsx` — a `"use client"` button with `navigator.clipboard.writeText(text)`, an `aria-label` of `Copy code`, and a two-second `Copied` state.
 
-- [ ] **Step 3: Write `lib/markdown.ts`**
+- [x] **Step 3: Write `lib/markdown.ts`**
 
 ```typescript
 import { Fragment, type ReactElement } from "react";
@@ -1527,7 +1527,7 @@ export async function renderMarkdown(
 
 Note on `CodeBlock`: `@shikijs/rehype` emits its own `<pre class="shiki">`. Wire `CodeBlock` in by adding a small rehype step after shiki that wraps each `pre.shiki` in a `<code-block lang raw>` element and mapping that in the `components` map above — same mechanism as `graph-diagram`. Keep the raw text on the element before shiki replaces the children.
 
-- [ ] **Step 4: Verify the pipeline against the hardest real page**
+- [x] **Step 4: Verify the pipeline against the hardest real page**
 
 ```bash
 cd ~/graph-lab && node --experimental-strip-types -e '
@@ -1540,7 +1540,7 @@ import("./lib/markdown.ts").then(async (M) => {
 ```
 Expected: a non-zero heading count with real ids and text. An exception here is a pipeline wiring bug — fix before Task 8.
 
-- [ ] **Step 5: Typecheck and commit**
+- [x] **Step 5: Typecheck and commit**
 
 ```bash
 cd ~/graph-lab && npm run typecheck
