@@ -1,4 +1,4 @@
-import { Fragment, createElement, type ReactElement } from "react";
+import { Fragment, createElement, type ReactElement, type ReactNode } from "react";
 import * as jsxRuntime from "react/jsx-runtime";
 import { unified } from "unified";
 import remarkParse from "remark-parse";
@@ -12,6 +12,7 @@ import { visit, SKIP } from "unist-util-visit";
 import { toString } from "hast-util-to-string";
 import type { Root, Element } from "hast";
 import { resolveContentLink } from "./links.ts";
+import { withBasePath } from "./base-path.ts";
 
 export type Heading = { depth: 2 | 3; id: string; text: string };
 
@@ -85,7 +86,9 @@ function rehypeSiteLinks(repoPath: string) {
       if (typeof href !== "string") return;
       const resolved = resolveContentLink(href, repoPath);
       if (!resolved) return; // left as-is; check-links.mjs reports it against out/
-      node.properties!.href = resolved.href;
+      // These are plain <a> elements, not next/link, so Next never prefixes them
+      // and a bare /docs/… would 404 under the /graph-lab basePath (C8).
+      node.properties!.href = resolved.external ? resolved.href : withBasePath(resolved.href);
       if (resolved.external) {
         node.properties!.target = "_blank";
         node.properties!.rel = ["noopener", "noreferrer"]; // hast models rel as a list
@@ -173,8 +176,8 @@ export async function renderMarkdown(
       jsxs: (jsxRuntime as never as { jsxs: unknown }).jsxs,
       components: {
         "graph-diagram": ({ chart }: { chart: string }) => createElement(GraphDiagram, { chart }),
-        "code-block": ({ lang, raw, children }: { lang?: string; raw?: string; children?: React.ReactNode }) =>
-          createElement(CodeBlock, { lang, raw, children }),
+        "code-block": ({ lang, raw, children }: { lang?: string; raw?: string; children?: ReactNode }) =>
+          createElement(CodeBlock, { lang, raw }, children),
       },
     } as never)
     .stringify(tree as never) as never as ReactElement;
