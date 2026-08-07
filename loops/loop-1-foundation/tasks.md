@@ -40,11 +40,11 @@ Tasks 1–4. Full detail — code, config, exact file contents — is in `plan/2
 
 **Consumes:** `~/graph-engineering-course` at a clean, pushed `main`.
 
-- [ ] 2.1 Write `scripts/sync-docs.mjs` — the only writer of `content/`; no added banners, no added frontmatter
-- [ ] 2.2 Write `content/README.md` — states the directory is generated, names the script, says where to make the fix instead
-- [ ] 2.3 Run the first sync
-- [ ] 2.4 Verify the copy is byte-identical and complete
-- [ ] 2.5 Commit
+- [x] 2.1 Write `scripts/sync-docs.mjs` — the only writer of `content/`; no added banners, no added frontmatter
+- [x] 2.2 Write `content/README.md` — states the directory is generated, names the script, says where to make the fix instead
+- [x] 2.3 Run the first sync
+- [x] 2.4 Verify the copy is byte-identical and complete
+- [x] 2.5 Commit
 
 **Task done when:** four trees are copied byte-for-byte, `SOURCE.json` pins a real commit sha, and the file count matches the source.
 

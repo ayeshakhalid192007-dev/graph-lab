@@ -379,7 +379,7 @@ git commit -m "chore: scaffold graph-lab — Next 16 static export, Tailwind v4,
 - Consumes: `~/graph-engineering-course` (override with `COURSE_REPO`).
 - Produces: `content/docs/`, `content/patterns/`, `content/starters/`, `content/resources/` as byte-identical copies, and `content/SOURCE.json` with keys `repo`, `commit`, `syncedAt`, `files`. Every `lib/` module in Loop 2 reads from these paths.
 
-- [ ] **Step 1: Write `scripts/sync-docs.mjs`**
+- [x] **Step 1: Write `scripts/sync-docs.mjs`**
 
 ```javascript
 /**
@@ -490,7 +490,7 @@ try {
 }
 ```
 
-- [ ] **Step 2: Write `content/README.md`**
+- [x] **Step 2: Write `content/README.md`**
 
 ```markdown
 # This directory is generated
@@ -507,14 +507,14 @@ If a page reads wrong on the site, the fix belongs in the course repo's `docs/`.
 Then run `npm run sync:latest` and commit the resulting diff.
 ```
 
-- [ ] **Step 3: Run the first sync**
+- [x] **Step 3: Run the first sync**
 
 ```bash
 cd ~/graph-lab && mkdir -p content && npm run sync:latest
 ```
 Expected: `Synced <n> files from … @ <sha>`. `<n>` should be ~200+ (86 docs, 25 pattern files, 24 starter kits' worth of files, 2 resources).
 
-- [ ] **Step 4: Verify the copy is byte-identical and complete**
+- [x] **Step 4: Verify the copy is byte-identical and complete**
 
 ```bash
 cd ~/graph-lab
@@ -526,7 +526,7 @@ cat content/SOURCE.json
 ```
 Expected: `docs identical`, then `86`, `25`, `24`, and a SOURCE.json whose `commit` matches `git -C ../graph-engineering-course rev-parse HEAD`.
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 cd ~/graph-lab

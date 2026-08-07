@@ -34,6 +34,18 @@ score, a page total. Not "green".
 - **3 high-severity advisories from `npm audit`**, all transitive under the pinned `next@16.2.11`: `postcss <=8.5.22` (4 advisories) and `sharp <0.35.0` (libvips CVEs). `npm audit fix --force` wants `next@16.3.0`, which would break the C10 version pin. Not applied. Both are build-time-only for this site — the export is static, and `images.unoptimized` means `sharp` is never invoked. Flagged for the user rather than silently resolved either way.
 - Three untracked stray files sit at the repo root — `2026-08-06-course-website-design.md` and `2026-08-07-graph-lab-implementation-plan.md` (byte-identical duplicates of the canonical copies in `plan/`), and `day-4-plan.md` (a plan from the *course* repo, unrelated to graph-lab). Left untracked and uncommitted; the plan's `git add -A` steps would sweep them in, so commits in this loop name their files explicitly.
 
+### Task 2 — The content sync pipeline
+
+**Date:** 2026-08-07
+**Landed:** `content/` now holds the course's `docs/`, `patterns/`, `starters/`, and `resources/` trees, copied byte for byte and pinned to a commit. `scripts/sync-docs.mjs` is the only writer.
+**Files:** created `scripts/sync-docs.mjs`, `content/README.md`; generated `content/docs/`, `content/patterns/`, `content/starters/`, `content/resources/`, `content/SOURCE.json`.
+**Produces:** `content/SOURCE.json` with keys `repo`, `commit`, `syncedAt`, `files` — currently `{ repo: "ayeshakhalid192007-dev/graph-engineering-crash-course", commit: "af5321e3c7684d7886b6b59f3af433073d64d3b0", files: 224 }`. Every Loop 2 `lib/` module reads from these four paths.
+**Verified by:** `npm run sync:latest` — "Synced 224 files from /home/ayesha-khalid/graph-engineering-course @ af5321e3". `diff -r` per tree: `docs identical`, `patterns identical`, `resources identical`; `starters` reported 24 `Only in …: .claude` lines, and `diff -r -x '.*'` then printed clean — the difference is entirely the dotfile directories `walk()` deliberately skips, not a copy defect. Counts: `find content/docs -name '*.md'` = **86**, `ls content/patterns/*.md` = **25**, `ls -d content/starters/*/` = **24**. `content/SOURCE.json` `commit` equals `git -C ../graph-engineering-course rev-parse HEAD` = `af5321e3c7684d7886b6b59f3af433073d64d3b0`, which also equals `origin/main`.
+**Next loop needs to know:**
+- **The 24 "starter kits" include `_template`.** The directories are `_template` plus 23 real kits — matching the 23 pattern specs one-to-one. The plan's Step 4 check (`ls -d content/starters/*/ | wc -l` → 24) passes because it counts `_template`, and the spec's headline figure of 24 kits appears to come from the same count. **Loop 3 Task 11 has to decide whether the browser shows 24 entries or 23 real kits plus a hidden template** — do not assume the count is a bug either way.
+- **Each starter kit's `.claude/` directory was not copied.** `walk()` skips dotfiles by design, so `_template/.claude/agents/graph-verifier.md`, `.claude/skills/example-skill/SKILL.md`, and the equivalents in all 23 kits are absent from `content/`. Loop 3's starter viewer therefore cannot show them. Deliberate, per the script the plan specifies.
+- The course repo was moved from `spec/course-website` to `main` before this sync, on the user's instruction, so the pinned sha is one that exists on `origin`. `spec/course-website` still exists locally, unpushed, holding one extra commit that touches only `specs/`.
+
 ---
 
 ## Blockers
