@@ -46,6 +46,21 @@ score, a page total. Not "green".
 - **Each starter kit's `.claude/` directory was not copied.** `walk()` skips dotfiles by design, so `_template/.claude/agents/graph-verifier.md`, `.claude/skills/example-skill/SKILL.md`, and the equivalents in all 23 kits are absent from `content/`. Loop 3's starter viewer therefore cannot show them. Deliberate, per the script the plan specifies.
 - The course repo was moved from `spec/course-website` to `main` before this sync, on the user's instruction, so the pinned sha is one that exists on `origin`. `spec/course-website` still exists locally, unpushed, holding one extra commit that touches only `specs/`.
 
+### Task 3 — Sync and content-shape CI checks
+
+**Date:** 2026-08-07
+**Landed:** The two content gates. `sync:check` proves `content/` is reproducible from the pinned commit; `check:content-shape` proves the 7 quizzes and 6 flashcard sets still parse. The quiz and flashcard parsers have exactly one definition, imported by the CI check today and by Loop 3's pages later.
+**Files:** created `lib/parse-content.ts`, `scripts/check-sync.mjs`, `scripts/check-content-shape.mjs`.
+**Produces:** from `lib/parse-content.ts` — `parseQuiz(body: string): QuizQuestion[]` and `parseFlashcards(body: string): Flashcard[]`, with `QuizQuestion = { n: number; title: string; question: string; answer: string }` and `Flashcard = { term: string; definition: string }`. Signatures are exactly as the plan specifies; **Loop 3 Task 12 can import them as written.**
+**Verified by:**
+- `npm run sync:check` — `sync:check OK — content/ matches af5321e3`, exit 0.
+- `npm run check:content-shape` — `check:content-shape OK — 7 quizzes, 6 flashcard sets parse as expected`, exit 0. Parsed against the expected per-part counts: quizzes 3/2/3/2/3/2/2, flashcards 6/3/6/5/7/3 with Part 6 absent by design.
+- Step 5, first attempt: appended a line to `content/docs/README.md`, ran `sync:check`, got `sync:check OK — content/ matches af5321e3`, **exit 0 — the check failed to fail.** Cause and fix in D2 (`shared/state.md`).
+- Step 5, after the fix: edit to `content/docs/README.md` → `Files …/content/docs/README.md and /tmp/graph-lab-sync-rv6XEo/docs/README.md differ`, exit 1. Edit to `content/starters/audit-loop/README.md` → likewise differ, exit 1. Both reverted, `sync:check` green again, `git status content/` clean.
+**Next loop needs to know:**
+- **`sync:check` is stricter than the plan's text.** See D2. It now compares all 224 files including every nested `README.md`. Nothing to change on your side; just do not be surprised when touching `content/` turns it red, and do not "fix" the missing `--exclude` flags back in.
+- **`check:content-shape` prints a Node warning before its OK line:** `[MODULE_TYPELESS_PACKAGE_JSON] … lib/parse-content.ts is not specified and it doesn't parse as CommonJS. Reparsing as ES module`. Cosmetic — it is the cost of importing a `.ts` from a `.mjs` without `"type": "module"` in `package.json`. Adding that key is not in the plan and was not done. Exit code is 0.
+
 ---
 
 ## Blockers

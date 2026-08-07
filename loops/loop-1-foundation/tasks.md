@@ -58,12 +58,12 @@ Tasks 1–4. Full detail — code, config, exact file contents — is in `plan/2
 
 **Produces:** `parseQuiz(body: string): QuizQuestion[]` and `parseFlashcards(body: string): Flashcard[]`, where `QuizQuestion = { n: number; title: string; question: string; answer: string }` and `Flashcard = { term: string; definition: string }`. **Loop 3 Task 12 imports these exact functions** — the CI check and the rendered page share one parser, so a page can never disagree with the check that guards it.
 
-- [ ] 3.1 Write `lib/parse-content.ts`
-- [ ] 3.2 Write `scripts/check-sync.mjs` — re-syncs the pinned commit into a temp dir and diffs
-- [ ] 3.3 Write `scripts/check-content-shape.mjs` — imports `lib/parse-content.ts` directly (**needs Node >= 23.6**)
-- [ ] 3.4 Run both checks
-- [ ] 3.5 **Prove `sync:check` actually catches a hand-edit** — edit a synced file, watch it go red, revert, watch it go green
-- [ ] 3.6 Commit
+- [x] 3.1 Write `lib/parse-content.ts`
+- [x] 3.2 Write `scripts/check-sync.mjs` — re-syncs the pinned commit into a temp dir and diffs
+- [x] 3.3 Write `scripts/check-content-shape.mjs` — imports `lib/parse-content.ts` directly (**needs Node >= 23.6**)
+- [x] 3.4 Run both checks
+- [x] 3.5 **Prove `sync:check` actually catches a hand-edit** — edit a synced file, watch it go red, revert, watch it go green
+- [x] 3.6 Commit
 
 **Task done when:** both checks pass on clean content, and `sync:check` has been *observed* failing on a hand-edit. Expected shapes: 7 quizzes with heading counts equal to `<details>` counts (3, 2, 3, 2, 3, 2, 2); 6 flashcard sets with bold term cells (6, 3, 6, 5, 7, 3 rows).
 

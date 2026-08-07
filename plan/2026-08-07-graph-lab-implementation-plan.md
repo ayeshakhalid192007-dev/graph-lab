@@ -547,7 +547,7 @@ git commit -m "feat: add sync-docs pipeline and vendor course content pinned to 
 - Consumes: `content/` and `content/SOURCE.json` (Task 2).
 - Produces: `parseQuiz(body: string): QuizQuestion[]` and `parseFlashcards(body: string): Flashcard[]` from `lib/parse-content.ts`, where `QuizQuestion = { n: number; title: string; question: string; answer: string }` and `Flashcard = { term: string; definition: string }`. Loop 3 Task 12 imports these exact functions — the CI check and the rendered page share one parser, so a page can never disagree with the check that guards it.
 
-- [ ] **Step 1: Write `lib/parse-content.ts`**
+- [x] **Step 1: Write `lib/parse-content.ts`**
 
 The shapes below were verified against the shipped content on 2026-08-07: a quiz section is `## N. Title`, then the question paragraph, then a `<details>` whose `<summary>` is `Reveal the answer`; a flashcard set is a `| Term | Definition |` GFM table whose term cells are bold.
 
@@ -608,7 +608,7 @@ export function parseFlashcards(body: string): Flashcard[] {
 }
 ```
 
-- [ ] **Step 2: Write `scripts/check-sync.mjs`**
+- [x] **Step 2: Write `scripts/check-sync.mjs`** — **shipped with a correction, see D2:** the `--exclude=SOURCE.json --exclude=README.md` args below are wrong (the globs match at every depth and exempted 43 course-content READMEs). The shipped script seeds those two files into the temp tree by exact path and diffs with no exclusions.
 
 ```javascript
 /**
@@ -657,7 +657,7 @@ try {
 }
 ```
 
-- [ ] **Step 3: Write `scripts/check-content-shape.mjs`**
+- [x] **Step 3: Write `scripts/check-content-shape.mjs`**
 
 ```javascript
 /**
@@ -724,14 +724,14 @@ if (failures.length) {
 console.log(`check:content-shape OK — 7 quizzes, 6 flashcard sets parse as expected`);
 ```
 
-- [ ] **Step 4: Run both checks**
+- [x] **Step 4: Run both checks**
 
 ```bash
 cd ~/graph-lab && npm run sync:check && npm run check:content-shape
 ```
 Expected: `sync:check OK — content/ matches <sha>` then `check:content-shape OK — 7 quizzes, 6 flashcard sets parse as expected`.
 
-- [ ] **Step 5: Prove `sync:check` actually catches a hand-edit**
+- [x] **Step 5: Prove `sync:check` actually catches a hand-edit** — **it did not, first time round.** The plan's version printed `sync:check OK`, exit 0, on an edited `content/docs/README.md`. Fixed per D2, then re-run: red on `content/docs/README.md`, red on `content/starters/audit-loop/README.md`, green after revert.
 
 ```bash
 cd ~/graph-lab
@@ -741,7 +741,7 @@ git checkout content/docs/README.md
 ```
 Expected: it fails, prints the diff, and `exit=1`. A green result here means the check is not doing its job — stop and fix it. Restore the file afterward.
 
-- [ ] **Step 6: Commit**
+- [x] **Step 6: Commit**
 
 ```bash
 cd ~/graph-lab
