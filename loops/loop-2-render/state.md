@@ -1,6 +1,6 @@
 # Loop 2 state — Render Layer and the 86 Doc Pages
 
-**Tasks:** 5–9 · **Gate:** `npm run verify:2` · **Status:** not started
+**Tasks:** 5–9 · **Gate:** `npm run verify:2` · **Status:** in progress — Tasks 5 and 6 done, Task 7 next
 
 Per-task log for this loop. Cross-loop material — gate entries, repairs to earlier loops, decisions binding later loops — goes in `../shared/state.md` instead.
 
@@ -50,6 +50,37 @@ getPrevNext(slug: string[]): { prev: DocMeta | null; next: DocMeta | null }
 - **The per-part step counts (3/2/3/2/3/2/2) are identical to the per-part quiz-question counts** Loop 1's `check-content-shape.mjs` asserts. Convenient, and probably not a coincidence in how the course was written — but they are two independent facts. Do not derive one from the other in Loop 3.
 - **`getAllDocs()` memoises into a module-level `cache`.** Fine for a static build, where the process is short-lived and `content/` never changes mid-run. A later loop that mutates content at runtime would get a stale read; nothing does.
 - **`firstHeading` is exported from `lib/content.ts`** though the plan's Produces block omits it. It is part of the shipped surface.
+
+### Task 6 — `lib/links.ts`
+
+**Date:** 2026-08-07
+**Landed:** The resolver Task 7's rehype plugin calls on every link in every doc page. Course markdown links each other the GitHub way — relative, `.md`-suffixed — and those now become site routes.
+**Files:** created `lib/links.ts`.
+**Produces:**
+```ts
+resolveContentLink(href: string, fromRepoPath: string): { href: string; external: boolean } | null
+```
+Returns `null` when a link resolves to no known page. Task 9's `check-links.mjs` must treat `null` as a failure, not as "skip".
+
+Route mapping, as shipped:
+
+| Link resolves to | Result |
+| --- | --- |
+| `http(s):` / `mailto:` / `tel:` | unchanged, `external: true` |
+| `#anchor`, or an already-absolute `/route` | unchanged, `external: false` |
+| a `docs/**.md` file that owns a route | that doc's route + hash |
+| a directory holding `README.md` | that README's route |
+| `patterns/<slug>.md`, `starters/<slug>[/…]` | `/patterns/<slug>/` — **slug validated against `content/`** |
+| `patterns/`, `patterns/README.md`, `starters/`, `starters/README.md` | `/patterns/` (the catalogue is the pattern browser) |
+| `resources/README.md`, `resources/sources.md`, `resources/` | `/resources/` + hash |
+| a non-`.md` file under `docs/<part>/labs/` | GitHub blob URL at the pinned commit, `external: true` |
+| anything else | `null` |
+
+**Verified by:** the plan's Step 2 probe over every link in all 86 docs — **272 links, 0 unresolved**. Negative cases checked by hand: `../../patterns/no-such-pattern.md`, `../../starters/no-such-kit` and `labs/no-such-lab.md` all return `null`, while `../../patterns/anchor-and-freeze.md` → `/patterns/anchor-and-freeze/` and `../../starters/audit-loop/README.md` → `/patterns/audit-loop/`. `npm run typecheck` exit 0; `npm run sync:check` OK against `af5321e3`.
+**Next loop needs to know:**
+- **Two bugs in the plan's Task 6 code were found and fixed** — both invisible without Step 2, which is why the step exists. See D6 in `../shared/state.md`; the first one is the reason the probe printed 12 `DEAD` lines before it printed 0.
+- **`resolveContentLink` emits `/patterns/…` and `/resources/…` routes that do not exist until Loop 3.** Real content links reach them: `docs/README.md` alone links to `patterns/README.md`, `starters/README.md` and `resources/sources.md`. Task 9's `check-links.mjs` will flag these at the Loop 2 gate, alongside the six `NavBar` links Loop 1 already recorded. **This is expected — do not "fix" it by weakening the resolver.** Decide at Task 9 whether the check allowlists the Loop 3/4 routes or the gate accepts a known list of not-yet-built routes.
+- **The known-slug sets are cached at module level**, like `getAllDocs()`. Same caveat, same non-issue for a static build.
 
 ---
 

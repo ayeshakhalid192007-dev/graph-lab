@@ -1228,7 +1228,7 @@ git commit -m "feat: add content and docs loaders — 86 pages, 7 parts, 17 step
 - Consumes: `getAllDocs()` (Task 5).
 - Produces: `resolveContentLink(href: string, fromRepoPath: string): { href: string; external: boolean } | null`. Returns `null` when the link resolves to no known page — Task 9's link check treats that as a failure rather than shipping a dead link. Task 7's rehype plugin is its only caller.
 
-- [ ] **Step 1: Write `lib/links.ts`**
+- [x] **Step 1: Write `lib/links.ts`**
 
 ```typescript
 import { posix } from "node:path";
@@ -1285,7 +1285,7 @@ export function resolveContentLink(
 }
 ```
 
-- [ ] **Step 2: Sanity-check the resolver against real links**
+- [x] **Step 2: Sanity-check the resolver against real links**
 
 ```bash
 cd ~/graph-lab && node --experimental-strip-types -e '
@@ -1304,7 +1304,7 @@ Promise.all([import("./lib/links.ts"), import("./lib/docs.ts")]).then(([L, D]) =
 ```
 Expected: a total in the hundreds and **0 unresolved**. Any `DEAD` line is either a resolver bug or a genuinely broken link in the course repo — read the path and decide which before moving on; if it is a broken course link, fix it in the course repo and re-sync rather than loosening the resolver.
 
-- [ ] **Step 3: Typecheck and commit**
+- [x] **Step 3: Typecheck and commit**
 
 ```bash
 cd ~/graph-lab && npm run typecheck

@@ -29,9 +29,9 @@ Tasks 5–9. Full detail is in `plan/2026-08-07-graph-lab-implementation-plan.md
 
 **Produces:** the resolver that turns `../02-foundations/glossary.md#node` into `/docs/02-foundations/glossary/#node`. Resolves relative links **the way GitHub does**, then maps the repo path to its site route.
 
-- [ ] 6.1 Write `lib/links.ts`
-- [ ] 6.2 Sanity-check the resolver against real links drawn from the content
-- [ ] 6.3 Typecheck and commit
+- [x] 6.1 Write `lib/links.ts`
+- [x] 6.2 Sanity-check the resolver against real links drawn from the content
+- [x] 6.3 Typecheck and commit
 
 **Task done when:** real links from `content/docs/` resolve correctly, and a link to no known page produces a failure rather than a dead route.
 

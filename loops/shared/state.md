@@ -169,6 +169,22 @@ Template:
 
 **Affects:** Loop 3's `lib/patterns.ts` and `lib/tracks.ts`, and Loop 4's `lib/search.ts`. Write `from "./content.ts"`, not `from "./content"`, or your task's own Node-based verification step will not run.
 
+### D6 — the plan's `resolveContentLink` shipped two dead-route bugs; both are fixed, 2026-08-07, Loop 2
+
+**Decision:** `lib/links.ts` deviates from the plan's Task 6 Step 1 listing in two places.
+
+1. **A `.md` link outside `docs/` now falls through** instead of returning `null`. The plan's version tests `resolved.endsWith(".md")` first and returns `null` when no doc owns that path — which is every file under `patterns/`, `starters/` and `resources/`, all of them markdown. The rules below it could never be reached.
+2. **Pattern and starter slugs are validated against `content/`** via `listFiles()` before a `/patterns/<slug>/` route is emitted. The plan matches the slug shape with a regex and trusts it.
+
+**Because:** Step 2's probe over all 86 docs printed **12 `DEAD` lines** on the plan's logic — `docs/README.md` → `../patterns/README.md`, `../starters/README.md`, `../resources/sources.md`; six step pages → `../../resources/sources.md`; `docs/methods/pattern-picker.md` → `../../patterns/README.md`; two cheatsheets → `../../../starters/README.md`. None of those are broken course links; all are the resolver failing to reach its own later branches. After the fix: **272 links, 0 unresolved.**
+
+The second bug is the quieter one. Bug 1 fails loudly at the link check; bug 2 fails *silently* — `patterns/renamed-away.md` resolved to `/patterns/renamed-away/`, a route with no page behind it, and because `resolveContentLink` never returned `null` the check had nothing to flag. A resolver that invents routes defeats the point of returning `null` at all.
+
+**Affects:**
+- **Task 9's `check-links.mjs` must treat a `null` from `resolveContentLink` as a failure**, not as "unknown, skip". That is the entire mechanism protecting against a folder rename in the course repo.
+- **Loop 3 must not rename a pattern or starter slug away from its `content/` filename.** The route slug and the file stem are now the same string by construction; `/patterns/<slug>/` pages must be generated from `content/patterns/*.md` stems, or real links go null.
+- **Expect the Loop 2 gate to flag `/patterns/` and `/resources/`.** Real content links resolve there and those routes are Loop 3's. This is correct resolver output against an incomplete site — Task 9 decides how the check handles not-yet-built routes. Do not weaken the resolver to make the gate green.
+
 ---
 
 ## Open questions for the user
