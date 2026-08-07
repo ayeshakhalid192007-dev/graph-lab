@@ -1563,19 +1563,19 @@ git commit -m "feat: add remark/rehype render pipeline with Shiki, mermaid, and 
 - Consumes: `getAllDocs`, `getDoc`, `getSidebarTree`, `getPrevNext` (Task 5); `renderMarkdown` (Task 7).
 - Produces: the single component that renders all 86 pages. Every later fix to how a doc renders happens here, never in a per-page component.
 
-- [ ] **Step 1: Write `components/docs/DocSidebar.tsx`**
+- [x] **Step 1: Write `components/docs/DocSidebar.tsx`**
 
 Server component. Takes `{ activeRoute: string }`. Renders `getSidebarTree()` as `<nav aria-label="Course contents">` — one `<details open>` per section, labelled by `group.label`, containing the section's docs as links. The entry matching `activeRoute` gets `aria-current="page"` and an accent left rule. Below 768px the whole sidebar is inside a single collapsed `<details>` labelled `Contents`, so it costs no JavaScript. Sticky at `lg:` and up, `max-h-[calc(100vh-4rem)] overflow-y-auto`.
 
-- [ ] **Step 2: Write `components/docs/DocToc.tsx`**
+- [x] **Step 2: Write `components/docs/DocToc.tsx`**
 
 Client component. Takes `{ headings: Heading[] }`. Renders an `<nav aria-label="On this page">` of h2/h3 anchors, indenting depth 3. Uses an `IntersectionObserver` to mark the heading currently in view with `aria-current="true"`; the observer is skipped entirely when `matchMedia("(prefers-reduced-motion: reduce)").matches` is false is irrelevant — highlight is not motion, so keep it, but do not animate the transition. Renders nothing when `headings.length < 2`.
 
-- [ ] **Step 3: Write `components/docs/DocBreadcrumbs.tsx` and `DocFooterNav.tsx`**
+- [x] **Step 3: Write `components/docs/DocBreadcrumbs.tsx` and `DocFooterNav.tsx`**
 
 `DocBreadcrumbs` takes `{ doc: DocMeta }` and renders `graph-lab / <section label> / <title>` in mono, with the section linking to that section's index route when one exists. `DocFooterNav` takes `{ prev, next }: ReturnType<typeof getPrevNext>` and renders two hairline-ruled blocks — previous on the left, next on the right — each showing `← Previous` / `Next →` in mono above the page title. Renders one side only when the other is `null`.
 
-- [ ] **Step 4: Write `app/docs/[...slug]/page.tsx`**
+- [x] **Step 4: Write `app/docs/[...slug]/page.tsx`**
 
 ```tsx
 import type { Metadata } from "next";
@@ -1621,7 +1621,7 @@ export default async function DocPage({ params }: { params: Promise<{ slug: stri
 
 Add a `.prose-blueprint` block to `app/globals.css` styling `h1`–`h4`, `p`, `ul`, `ol`, `table`, `blockquote`, `details`, and `a` against the Blueprint tokens — mono for headings and inline `code`, sans for prose, hairline `border-rule` on table cells, `details` rendered as a bordered disclosure. This replaces a typography plugin; do not add one.
 
-- [ ] **Step 5: Write `app/docs/page.tsx` for the `/docs/` index**
+- [x] **Step 5: Write `app/docs/page.tsx` for the `/docs/` index**
 
 ```tsx
 import { getDoc, getPrevNext } from "@/lib/docs";
@@ -1645,7 +1645,7 @@ export default async function DocsIndex() {
 }
 ```
 
-- [ ] **Step 6: Build and count the emitted pages**
+- [x] **Step 6: Build and count the emitted pages**
 
 ```bash
 cd ~/graph-lab && npm run build
@@ -1654,7 +1654,7 @@ grep -rl 'graph-diagram\|mermaid' out/docs | wc -l   # expect 20
 ```
 Expected: `86` and `20`. A short count means `generateStaticParams` is dropping pages — fix it before the link check.
 
-- [ ] **Step 7: Commit**
+- [x] **Step 7: Commit**
 
 ```bash
 cd ~/graph-lab

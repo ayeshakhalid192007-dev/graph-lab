@@ -70,13 +70,13 @@ Tasks 5–9. Full detail is in `plan/2026-08-07-graph-lab-implementation-plan.md
 
 **Produces:** all 86 doc pages at `/docs/[...slug]/`, plus a `/docs/` index.
 
-- [ ] 8.1 Write `components/docs/DocSidebar.tsx`
-- [ ] 8.2 Write `components/docs/DocToc.tsx`
-- [ ] 8.3 Write `DocBreadcrumbs.tsx` and `DocFooterNav.tsx`
-- [ ] 8.4 Write `app/docs/[...slug]/page.tsx`
-- [ ] 8.5 Write `app/docs/page.tsx` for the `/docs/` index
-- [ ] 8.6 **Build and count the emitted pages** — expect 86 doc routes
-- [ ] 8.7 Commit
+- [x] 8.1 Write `components/docs/DocSidebar.tsx`
+- [x] 8.2 Write `components/docs/DocToc.tsx`
+- [x] 8.3 Write `DocBreadcrumbs.tsx` and `DocFooterNav.tsx`
+- [x] 8.4 Write `app/docs/[...slug]/page.tsx`
+- [x] 8.5 Write `app/docs/page.tsx` for the `/docs/` index
+- [x] 8.6 **Build and count the emitted pages** — expect 86 doc routes
+- [x] 8.7 Commit
 
 **Task done when:** the build emits 86 doc pages, each reachable from the sidebar, with working prev/next.
 

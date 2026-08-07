@@ -94,7 +94,25 @@ Template:
 **Verified by:** the command run, and what it printed.
 ```
 
-_None yet._
+### R1 — Loop 2 repaired Loop 1: `npm run lint` could not run, 2026-08-08
+
+**Symptom:** `npm run lint` exited non-zero without linting anything, printing `TypeError: Converting circular structure to JSON` from inside `@eslint/eslintrc`'s `config-validator`. First observed during Loop 2 Task 8; `lint` is not in `verify:1` or `verify:2`, which is why Loop 1's gate went green over it. It **is** in `verify:all`, so Loop 5 would have hit it.
+
+**Cause:** Task 1 Step 5's `eslint.config.mjs` loads `eslint-config-next` through `FlatCompat`, the pattern Next 14 and 15 needed. **`eslint-config-next` 16.2.11 ships flat configs directly** — `eslint-config-next/core-web-vitals` and `/typescript` each export a plain array. Handing an already-flat config to eslintrc made it fail schema validation, and the crash came from its *error formatter* choking on the circular plugin object, so the actual complaint was never printed.
+
+**Fix:** `eslint.config.mjs` imports the two flat configs and spreads them, with no `FlatCompat` and no `@eslint/eslintrc` involvement. The default export is assigned to a named const first, satisfying `import/no-anonymous-default-export`.
+
+**Verified by:** `npm run lint` now runs to completion. It immediately found three real problems — two of them repaired here and in R2, one in Loop 2's own `lib/markdown.ts` (`react/no-children-prop`, fixed in `e298676`). Clean afterwards, exit 0.
+
+### R2 — Loop 2 repaired Loop 1: `ThemeToggle` set state in an effect, 2026-08-08
+
+**Symptom:** `react-hooks/set-state-in-effect` error on `components/ui/ThemeToggle.tsx:8`, plus a visible blank placeholder in the toggle on every first paint.
+
+**Cause:** Task 4's toggle used the `mounted` flag pattern — `useEffect(() => setMounted(true), [])` — to avoid rendering a theme-dependent label during SSR. It works, but it costs a cascading render and guarantees a frame where the button shows neither label, which is the same class of problem C15's "no flash of wrong theme on load" exists to prevent.
+
+**Fix:** both labels now live in the DOM and CSS picks between them with the `dark:` variant. next-themes already sets `.dark` on `<html>` from a blocking script before first paint, so the correct label is right on the first frame with no state and no effect. `resolvedTheme` is read only inside `onClick`, which cannot fire before hydration. The accessible name comes from the visible label plus an `sr-only` phrase rather than `aria-label`, so it cannot fall out of step with what is displayed.
+
+**Verified by:** `npm run lint` exit 0; the emitted HTML carries both labels and the `sr-only` phrases, and the toggle is the only `<button>` on a doc page without an `aria-label` — correctly, because it now names itself from its content.
 
 ---
 
@@ -203,6 +221,18 @@ The second bug is the quieter one. Bug 1 fails loudly at the link check; bug 2 f
 **Because:** `@shikijs/rehype` does `parent.children[index] = fragment` — it *replaces* the `<pre>` node rather than annotating it, so the raw source and language must be captured onto a wrapper beforehand or they are gone. Given a wrapper, passing children is strictly better than passing `html`: producing an HTML string would mean serialising hast back to HTML with `hast-util-to-html`, which is **not in the plan's `package.json`** and would need a dependency Decision under C10 — to undo work the pipeline had already done.
 
 **Affects:** Loop 3's starter-kit file viewer and any other surface that frames code. Use `CodeBlock` with children. The one visible consequence is that `raw` is optional: a code block with no captured source renders without a copy button rather than with a button that copies nothing.
+
+### D9 — markdown-rewritten links are prefixed with `basePath` at render time, 2026-08-08, Loop 2
+
+**Decision:** `lib/links.ts` keeps returning bare logical routes (`/docs/…`), and `lib/markdown.ts` applies `withBasePath()` to every internal href as it writes it into the tree. The prefix is added at the rendering seam, not in the resolver.
+
+**Because:** the pipeline emits **plain `<a>` elements**, and Next only rewrites hrefs it controls — `next/link`, `next/image`, its own asset URLs. A bare `/docs/…` in course prose would have resolved correctly on a local build, where `PAGES_BASE_PATH` is unset, and 404'd on the project site at `/graph-lab/` (C8). Nothing before Task 8 had ever built with the variable set, so this was invisible. Verified by building with `PAGES_BASE_PATH=/graph-lab`: **zero** bare `/path` hrefs remain in the emitted HTML.
+
+Keeping `links.ts` pure matters for Task 9: `check-links.mjs` reasons about logical routes, and a resolver that already carried a deployment-specific prefix would force the checker to strip it back off.
+
+**Affects:**
+- **Loop 3 and Loop 4: any hand-built `href` or `src` string must go through `withBasePath()`.** Anything rendered by `next/link` is already handled. The ones to watch are `fetch("/search-index.json")` in Loop 4 Task 15 and the starter-kit payload fetches in Loop 3 Task 11 — neither is an href Next controls.
+- **`withBasePath()` reads `NEXT_PUBLIC_BASE_PATH`, while `next.config.ts` reads `PAGES_BASE_PATH`.** Two variables, deliberately: `PAGES_BASE_PATH` is not readable from client components. The plan's Task 22 workflow sets **both**, and they must stay equal — if only one is set, half the links get a prefix and half do not, and the local build will not show it.
 
 ---
 

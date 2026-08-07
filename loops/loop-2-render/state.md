@@ -1,6 +1,6 @@
 # Loop 2 state — Render Layer and the 86 Doc Pages
 
-**Tasks:** 5–9 · **Gate:** `npm run verify:2` · **Status:** in progress — Tasks 5, 6 and 7 done, Task 8 next
+**Tasks:** 5–9 · **Gate:** `npm run verify:2` · **Status:** in progress — Tasks 5–8 done, Task 9 (the gate) next
 
 Per-task log for this loop. Cross-loop material — gate entries, repairs to earlier loops, decisions binding later loops — goes in `../shared/state.md` instead.
 
@@ -106,6 +106,26 @@ CopyButton({ text: string })                                       // "use clien
 - **The hardest page in the content is `docs/advanced/multi-graph-federation.md`**, not the `docs/02-foundations/the-two-graphs.md` the plan's Step 4 names. The plan's page has 2 headings and zero diagrams, code blocks, tables and links — it would have passed while proving almost nothing. Ranked by feature density, use the federation page for any future pipeline change.
 - **Mermaid diagrams are absent from the prerendered HTML by design** — they render client-side and the `<pre>` source is what ships in `out/`. Loop 5's Definition of Done line "all 20 mermaid diagrams render as SVG in both themes" must be checked **in a browser**, not by grepping `out/`.
 - **Every fence in the content carries a language.** 84 opening fences, 84 labelled. `defaultLanguage`/`fallbackLanguage` are set to `text` anyway so a future unlabelled or unknown fence degrades instead of failing the build.
+
+### Task 8 — The doc route and its chrome
+
+**Date:** 2026-08-08
+**Landed:** All 86 doc pages, rendered. The site now has the thing it exists for: the whole course readable in a browser, with contents, breadcrumbs, an on-this-page list, and prev/next.
+**Files:** created `app/docs/[...slug]/page.tsx`, `app/docs/page.tsx`, `components/docs/DocSidebar.tsx`, `components/docs/DocToc.tsx`, `components/docs/DocBreadcrumbs.tsx`, `components/docs/DocFooterNav.tsx`. Modified `app/globals.css` (`.prose-blueprint`).
+**Produces:**
+```tsx
+DocSidebar({ activeRoute: string })                        // server, no JS
+DocToc({ headings: Heading[] })                            // "use client"
+DocBreadcrumbs({ doc: DocMeta })                           // server
+DocFooterNav({ prev, next }: ReturnType<typeof getPrevNext>) // server
+```
+Plus the `.prose-blueprint` class, which is the entire typography layer for course content — no typography plugin, by instruction.
+**Verified by:** `npm run build` emitting **86 `index.html` under `out/docs`** and 89 routes overall. Mermaid pages: **20**, and set-compared against the source, the 20 emitted routes are *exactly* the 20 `.md` files containing a ```` ```mermaid ```` fence — no drift in either direction. Chrome coverage across the 86: sidebar nav on 86, prev/next on 86, breadcrumbs on 85 (the `/docs/` index does not render them, per the plan's Step 5), a TOC on 66 (the other 20 have fewer than two headings and correctly render nothing), Shiki-highlighted code on 34. `tsc --noEmit` and `eslint` both clean. Page weight with the sidebar rendered twice: 144 KB of HTML, **16 KB gzipped**.
+**Next loop needs to know:**
+- **The plan's Step 6 count command over-reports.** `grep -rl 'graph-diagram\|mermaid' out/docs` returns **80**, not 20, because `grep -r` also reads the `.txt` RSC payload sidecars Next writes beside every `index.html`. Add `--include=index.html` and it returns 20. Any later loop counting things in `out/` should restrict to `index.html` or it will be counting each page twice over.
+- **`DocSidebar` renders the tree twice**, once for below 768px and once above. This is deliberate — CSS can close a `<details>` but cannot force one open, so one element would either bury the sidebar on desktop or push 86 links above the article on a phone. It is the same shape `NavBar` already uses. Consequence for Loop 5's a11y pass: every doc page contains **two** `nav[aria-label="Course contents"]` and **three** `aria-current` marks (two sidebars plus the breadcrumb); only one of each is in the accessibility tree at any width, since the other is `display: none`.
+- **`.prose-blueprint` styles inline code with `:not(pre) > code`.** A bare `code` rule would have put a border and background on every line of every Shiki block. Keep the `:not()` if this block is extended.
+- **Loop 3 and Loop 4 should reuse `.prose-blueprint`** for pattern specs, project briefs and resources — they render the same course markdown through the same pipeline, and a second prose class would drift from this one.
 
 ---
 
