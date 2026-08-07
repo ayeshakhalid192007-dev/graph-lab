@@ -14,10 +14,10 @@ Tasks 5–9. Full detail is in `plan/2026-08-07-graph-lab-implementation-plan.md
 
 **Produces:** the module set every page in Loops 2–4 imports by name — frontmatter reads, the slug map, the 17-step roadmap, the sidebar tree, prev/next. **Record the real shipped signatures in `state.md`.**
 
-- [ ] 5.1 Write `lib/content.ts` — reads `content/`, parses frontmatter, reads `SOURCE.json`
-- [ ] 5.2 Write `lib/docs.ts` — slug map, roadmap, sidebar tree, prev/next
-- [ ] 5.3 **Verify the counts the spec promises** — 86 doc pages, 17 roadmap steps
-- [ ] 5.4 Typecheck and commit
+- [x] 5.1 Write `lib/content.ts` — reads `content/`, parses frontmatter, reads `SOURCE.json`
+- [x] 5.2 Write `lib/docs.ts` — slug map, roadmap, sidebar tree, prev/next
+- [x] 5.3 **Verify the counts the spec promises** — 86 doc pages, 17 roadmap steps
+- [x] 5.4 Typecheck and commit
 
 **Task done when:** the counts match and `tsc --noEmit` is clean.
 

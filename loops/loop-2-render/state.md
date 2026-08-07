@@ -22,7 +22,34 @@ score, a page total. Not "green".
 **Next loop needs to know:** anything non-obvious. Delete if nothing.
 ```
 
-_No tasks completed yet._
+### Task 5 — `lib/content.ts` and `lib/docs.ts`
+
+**Date:** 2026-08-07
+**Landed:** The loaders every page in Loops 2–4 imports. `content/` is now addressable as typed data: 86 docs with routes, titles, sections and part numbers; a 17-section sidebar tree; the 7-part / 17-step roadmap; flat prev/next reading order.
+**Files:** created `lib/content.ts`, `lib/docs.ts`. Modified `tsconfig.json` (`allowImportingTsExtensions`, see D5).
+**Produces — shipped signatures, all exactly as the plan specifies:**
+```ts
+// lib/content.ts
+contentRoot: string
+readContent(relPath: string): string
+listFiles(tree: string, ext?: string): string[]      // paths relative to content/
+getSource(): Source                                   // { repo, commit, syncedAt, files }
+firstHeading(body: string, fallback: string): string  // not in the plan's Produces list, but exported and used by docs.ts
+type Source = { repo: string; commit: string; syncedAt: string; files: number }
+
+// lib/docs.ts
+type DocMeta = { slug: string[]; route: string; title: string; repoPath: string; section: string; part: number | null }
+getAllDocs(): DocMeta[]
+getDoc(slug: string[]): DocMeta & { body: string }
+getSidebarTree(): { section: string; label: string; docs: DocMeta[] }[]
+getRoadmap(): { part: number; dir: string; title: string; steps: DocMeta[] }[]
+getPrevNext(slug: string[]): { prev: DocMeta | null; next: DocMeta | null }
+```
+**Verified by:** the plan's Step 3 probe — `docs: 86`, `parts: 7`, `steps: 17`, `untitled: 0`. Per-part step counts are `P1=3 P2=2 P3=3 P4=2 P5=3 P6=2 P7=2`, and `getSidebarTree()` yields 17 non-empty sections. `npm run typecheck` exit 0; `next build` "Compiled successfully in 4.2s".
+**Next loop needs to know:**
+- **The per-part step counts (3/2/3/2/3/2/2) are identical to the per-part quiz-question counts** Loop 1's `check-content-shape.mjs` asserts. Convenient, and probably not a coincidence in how the course was written — but they are two independent facts. Do not derive one from the other in Loop 3.
+- **`getAllDocs()` memoises into a module-level `cache`.** Fine for a static build, where the process is short-lived and `content/` never changes mid-run. A later loop that mutates content at runtime would get a stale read; nothing does.
+- **`firstHeading` is exported from `lib/content.ts`** though the plan's Produces block omits it. It is part of the shipped surface.
 
 ---
 

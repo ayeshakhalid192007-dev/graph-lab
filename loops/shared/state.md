@@ -67,8 +67,8 @@ One row per gate, appended when the gate goes green and the loop stops.
 
 | Loop | Tasks | Gate command | Status | Date | Notes |
 | --- | --- | --- | --- | --- | --- |
-| 1 — Foundation & pipeline | 1–4 | `npm run verify:1` | gate green, awaiting review | 2026-08-07 | 224 files pinned to `af5321e3`; 7/7 quizzes, 6/6 flashcard sets; 2 routes exported. D2, D3, D4 recorded. |
-| 2 — Render layer & 86 doc pages | 5–9 | `npm run verify:2` | not started | — | — |
+| 1 — Foundation & pipeline | 1–4 | `npm run verify:1` | approved | 2026-08-07 | 224 files pinned to `af5321e3`; 7/7 quizzes, 6/6 flashcard sets; 2 routes exported. D2, D3, D4 recorded. Approved by the user on 2026-08-07 by instruction to start Loop 2. |
+| 2 — Render layer & 86 doc pages | 5–9 | `npm run verify:2` | in progress | 2026-08-07 | Branch `loop-2-render`, off `loop-1-foundation`. |
 | 3 — Interactive surfaces | 10–14 | `npm run verify:3` | not started | — | — |
 | 4 — Landing, identity, search | 15–18 | `npm run verify:4` | not started | — | — |
 | 5 — Polish, verify, deploy | 19–22 | `npm run verify:all` | not started | — | — |
@@ -158,6 +158,16 @@ Template:
 **Because:** Next 16 enforces the automatic React runtime and rewrites the file itself on every build. Reverting to `preserve` would be undone on the next `npm run build` and would produce a spurious diff in every loop.
 
 **Affects:** Nothing downstream — it is the setting Next requires. Recorded only so a later loop reading the plan does not "restore" `preserve` and then wonder why the file keeps changing back. `tsconfig.json` also reformats to one-array-entry-per-line on each build; that is Next's writer, not a hand edit.
+
+### D5 — relative imports between `lib/` modules carry the `.ts` extension, 2026-08-07, Loop 2
+
+**Decision:** `lib/docs.ts` imports `./content.ts`, not `./content` as the plan writes it. `tsconfig.json` gains `"allowImportingTsExtensions": true` (legal because `noEmit` is already true). **Every `lib/` module a later loop adds should follow the same convention** for its relative imports.
+
+**Because:** the plan verifies these modules by running them under bare Node — Task 5 Step 3, Task 6 Step 2, and the equivalents in Loops 3 and 4 all do `node --experimental-strip-types -e 'import("./lib/….ts")…'`. Node's ESM resolver requires an explicit extension on relative specifiers; only the bundler's `moduleResolution: "bundler"` makes `./content` work. As written, Step 3 died with `ERR_MODULE_NOT_FOUND: Cannot find module '/home/ayesha-khalid/graph-lab/lib/content' imported from …/lib/docs.ts`. This is the same property Loop 1 relies on for `check-content-shape.mjs` importing `lib/parse-content.ts` — that file happened to have no relative imports of its own, so the gap did not show until now.
+
+**Verified both ways:** `npm run typecheck` exit 0, and `next build` "Compiled successfully in 4.2s" — Turbopack resolves the explicit extension fine. So the one spelling satisfies the bundler, `tsc`, and bare Node.
+
+**Affects:** Loop 3's `lib/patterns.ts` and `lib/tracks.ts`, and Loop 4's `lib/search.ts`. Write `from "./content.ts"`, not `from "./content"`, or your task's own Node-based verification step will not run.
 
 ---
 

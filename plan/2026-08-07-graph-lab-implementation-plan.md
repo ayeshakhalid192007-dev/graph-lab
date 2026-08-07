@@ -1038,7 +1038,7 @@ Append Task 1–4 entries to `LOOP-STATE.md`, then **STOP Loop 1 permanently** a
   - `getRoadmap(): { part: number; dir: string; title: string; steps: DocMeta[] }[]` — 7 parts, 17 steps total
   - `getPrevNext(slug: string[]): { prev: DocMeta | null; next: DocMeta | null }`
 
-- [ ] **Step 1: Write `lib/content.ts`**
+- [x] **Step 1: Write `lib/content.ts`**
 
 ```typescript
 import { readFileSync, readdirSync, existsSync } from "node:fs";
@@ -1081,7 +1081,7 @@ export function firstHeading(body: string, fallback: string): string {
 }
 ```
 
-- [ ] **Step 2: Write `lib/docs.ts`**
+- [x] **Step 2: Write `lib/docs.ts`** — shipped with `from "./content.ts"`, not `from "./content"`; see **D5**.
 
 ```typescript
 import { listFiles, readContent, firstHeading } from "./content";
@@ -1194,7 +1194,7 @@ export function getPrevNext(slug: string[]) {
 }
 ```
 
-- [ ] **Step 3: Verify the counts the spec promises**
+- [x] **Step 3: Verify the counts the spec promises**
 
 ```bash
 cd ~/graph-lab && node --experimental-strip-types -e '
@@ -1209,7 +1209,7 @@ import("./lib/docs.ts").then(({ getAllDocs, getRoadmap }) => {
 ```
 Expected: `docs: 86`, `parts: 7`, `steps: 17`, `untitled: 0`. If `steps` is not 17, the step-file regex is wrong — fix it here, not downstream.
 
-- [ ] **Step 4: Typecheck and commit**
+- [x] **Step 4: Typecheck and commit**
 
 ```bash
 cd ~/graph-lab && npm run typecheck
