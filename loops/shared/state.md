@@ -2,7 +2,7 @@
 
 Cross-loop state for all five loops. Per-task detail lives in each loop's own `state.md`; this file holds only what **crosses a loop boundary**.
 
-**Status:** Loops 1–3 approved and merged to `main`. Loop 4 gate green, awaiting review. Loop 5 not started.
+**Status:** Loops 1–4 approved and merged to `main`. Loop 5 in progress.
 
 ---
 
@@ -284,8 +284,8 @@ One row per gate, appended when the gate goes green and the loop stops.
 | 1 — Foundation & pipeline | 1–4 | `npm run verify:1` | approved | 2026-08-07 | 224 files pinned to `af5321e3`; 7/7 quizzes, 6/6 flashcard sets; 2 routes exported. D2, D3, D4 recorded. Approved by the user on 2026-08-07 by instruction to start Loop 2. |
 | 2 — Render layer & 86 doc pages | 5–9 | `npm run verify:2` | approved | 2026-08-08 | Branch `loop-2-render`. 86 doc pages, 20 diagrams, 64 code blocks, 17,534 links checked with 0 broken. Repairs R1, R2; decisions D5–D10. Approved by the user on 2026-08-08 by instruction to start Loop 3, the same signal that approved Loop 1. |
 | 3 — Interactive surfaces | 10–14 | `npm run verify:3` | approved | 2026-08-08 | Branch `loop-3-interactive`. 131 pages, 18,662 links with 0 broken and `PENDING_ROUTES` empty. 4 tracks, 23 patterns, 24 kits, 7 quizzes, 6 flashcard sets, 8 projects, 10 sources, certificate downloaded. Repair R3; decisions D11, D12. Approved by the user on 2026-08-08 — merged to `main` as PR #3, then instructed to start Loop 4. |
-| 4 — Landing, identity, search | 15–18 | `npm run verify:4` | gate green, awaiting review | 2026-08-08 | Branch `loop-4-landing`. 131 pages, 18,716 links with 0 broken. Search index 175.7 KB, lazy, all three term classes correct. Landing copy independence-checked. 3 diagrams, reduced-motion and no-JS verified. Sitemap 128 locs, llms.txt, 404, OG image. Decisions D13–D15; D3 discharged. |
-| 5 — Polish, verify, deploy | 19–22 | `npm run verify:all` | not started | — | — |
+| 4 — Landing, identity, search | 15–18 | `npm run verify:4` | approved | 2026-08-08 | Branch `loop-4-landing`. 131 pages, 18,716 links with 0 broken. Search index 175.7 KB, lazy, all three term classes correct. Landing copy independence-checked. 3 diagrams, reduced-motion and no-JS verified. Sitemap 128 locs, llms.txt, 404, OG image. Decisions D13–D15; D3 discharged. Approved by the user on 2026-08-08 — merged to `main` as PR #4, then instructed to start Loop 5. |
+| 5 — Polish, verify, deploy | 19–22 | `npm run verify:all` | in progress | 2026-08-08 | Branch `loop-5-deploy`, off `main` at `4e0193f`. |
 
 Status values: `not started` → `in progress` → `gate green, awaiting review` → `approved`.
 
@@ -339,6 +339,46 @@ Template:
 **Verified by:** `content/` went from 224 to **256** files, the difference being exactly the 32 `.claude/` files. `npm run sync:check` → `sync:check OK — content/ matches af5321e3`, so the byte-for-byte guarantee still holds at the same pin. `npm run build:starters` → `24 kits, 124 files`, and **8 kits now carry both a `.claude/` and an `opencode/` tree** — the 7 patterns whose frontmatter declares `tools: [Claude Code, OpenCode]`, plus `_template`. Those 7 pattern pages render the harness switcher.
 
 **Worth noting:** the four synced trees contain no other dot entries, so this skip was dropping the Claude Code side of the pattern library and nothing else.
+
+### R4 — Loop 5 repaired Loop 4: Escape did not close the search dialog once anything was typed, 2026-08-08
+
+**Symptom:** with the search dialog open and a query typed, pressing Escape left `dialog.open === true`. A second Escape was needed to dismiss it. With an *empty* query one Escape closed it correctly, which is why the behaviour was easy to miss — the working case is the one nobody uses. The plan's Task 19 Step 2 names the requirement outright: "`Esc` closes and returns focus to the trigger".
+
+**Cause:** Task 15's `SearchDialog` relies on the native `<dialog>` for Escape handling, which is the right instinct — the component comment says so. But the field is `<input type="search">`, and Chrome gives that input a built-in Escape action: clear the value. That default consumes the first Escape keydown, so the dialog's own cancel never fires. The dialog was fine; the input in front of it was eating the key.
+
+**Fix:** `onInputKeyDown` now handles `Escape` explicitly — `preventDefault()` to suppress the native clear, then `dialogRef.current?.close()`. One press, one dismissal, regardless of query state.
+
+**Verified by:** the same probe, before and after. Before — empty query: `open=false` after 1 Escape; typed query: `open=true` after the 1st Escape, `open=false` only after the 2nd. After — both cases: `open=false` after the **first** Escape, with focus back on `<button>Search ⌘K` each time.
+
+### R5 — Loop 5 repaired Loop 1: `--muted` missed AA contrast on `--paper`, 2026-08-08
+
+**Symptom:** axe-core reported `color-contrast` (impact: **serious**) on **every one of the 12 page types**, always the same node — the `⌘K` badge in the search trigger, `<kbd class="… text-muted">` — plus the search-result excerpts inside the dialog. All three Lighthouse runs scored **100/100** over it.
+
+**Cause:** Task 4's light palette sets `--muted: #6b7280`. Against `--surface` (`#fffdf8`) that is 4.76:1 and passes; against `--paper` (`#f7f5f0`) it is **4.44:1**, just under the 4.5:1 AA threshold for normal text. Muted text sits on paper about as often as on surface, so the token was failing wherever the page background showed through. Dark mode was never affected (6.22:1 on paper, 5.78:1 on surface).
+
+**Fix:** light `--muted` darkened one step to `#5f6672` — **5.31:1 on `--paper`, 5.69:1 on `--surface`**. It still reads a clear step lighter than `--graphite` (9.00:1), so the three-level ink/graphite/muted hierarchy C11 describes is intact. The spec names the palette qualitatively and pins no hex values, so this is a defect fix and not a deviation.
+
+**Verified by:** computed contrast ratios for every foreground/background pair in both themes, and axe-core re-run: the `color-contrast` violation is gone from all 13 states.
+
+### R6 — Loop 5 repaired Loop 3: `/patterns/` cards skipped a heading level, 2026-08-08
+
+**Symptom:** axe-core `heading-order` (impact: moderate) on `/patterns/` — `<h3>document-to-facts</h3>` and its 22 siblings.
+
+**Cause:** Task 11's `PatternBrowser` renders each card's title as `<h3>`, but the only heading above the grid is the page's `<h1>Patterns</h1>`. There is no `<h2>`, so every card jumped h1 → h3.
+
+**Fix:** the card title is now `<h2>`. Visual size is unchanged — it was already `text-base`, set by class rather than by tag.
+
+**Verified by:** axe-core on `/patterns/`: 2 violations → **0**.
+
+### R7 — Loop 5 repaired Loop 3: the starter-kit file viewer was unreachable by keyboard, 2026-08-08
+
+**Symptom:** axe-core `scrollable-region-focusable` (impact: **serious**) on `/patterns/document-to-facts/` — the `<pre class="max-h-[32rem] overflow-auto">` holding the file contents.
+
+**Cause:** Task 11's `StarterViewer` caps the file pane at 32rem and scrolls it. The pane holds no focusable children, so a keyboard-only reader could reach the file *buttons* but could never scroll the file *body* — measured at 2148px wide and taller than the cap on the kits that matter. The Loop 3 gate exercised the switcher with a mouse, which is why it read as working.
+
+**Fix:** `tabIndex={0}` plus `role="region"` and an `aria-label` naming the file, so the pane is a labelled tab stop. The global `:focus-visible` rule gives it the same 2px accent outline as every other tab stop, at no extra cost.
+
+**Verified by:** axe-core on the pattern page: 2 violations → **0**. The keyboard sweep counts it as a tab stop with both a focus ring and an accessible name; totals stayed at 0 unnamed and 0 unringed.
 
 ---
 

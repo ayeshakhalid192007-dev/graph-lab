@@ -12,10 +12,10 @@ This loop **adds no features.** Anything missing is a defect to fix, not a surfa
 
 *Plan: `## Task 19` · 4 steps*
 
-- [ ] 19.1 **Check every page type at 375, 768, and 1280** — the sidebar must collapse below 768
-- [ ] 19.2 **Keyboard-only pass** — every interactive element reachable, with a visible focus state and an accessible name (constraint C14)
-- [ ] 19.3 **Lighthouse accessibility on three pages** — landing, one doc page, `/certification/`. Fix everything flagged critical. **Record all three scores in `state.md`**
-- [ ] 19.4 Commit
+- [x] 19.1 **Check every page type at 375, 768, and 1280** — the sidebar must collapse below 768
+- [x] 19.2 **Keyboard-only pass** — every interactive element reachable, with a visible focus state and an accessible name (constraint C14)
+- [x] 19.3 **Lighthouse accessibility on three pages** — landing, one doc page, `/certification/`. Fix everything flagged critical. **Record all three scores in `state.md`**
+- [x] 19.4 Commit
 
 **Task done when:** all three breakpoints checked on every page type, the keyboard pass is clean, and three Lighthouse scores are recorded with no critical issues outstanding.
 
