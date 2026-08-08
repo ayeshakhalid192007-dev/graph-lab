@@ -18,11 +18,11 @@ All components in this loop are **client components**; all persistence is **`loc
 `Track = { id: "G1"|"G2"|"G3"|"G4"; name: string; level: string; startsKnowing: string; finishesAbleTo: string; steps: string[]; firstStepRoute: string }`.
 `ProgressTracker` takes `{ steps: DocMeta[] }` and is **reused on the landing page by Loop 4**.
 
-- [ ] 10.1 Write `lib/tracks.ts` — the four G1–G4 definitions; structural site data, not course content
-- [ ] 10.2 Write `components/interactive/ProgressTracker.tsx` — records completed step slugs against the 17 steps
-- [ ] 10.3 Write `components/interactive/TrackSelector.tsx`
-- [ ] 10.4 Write `app/tracks/page.tsx`
-- [ ] 10.5 **Verify the track routes are real**, then build and commit
+- [x] 10.1 Write `lib/tracks.ts` — the four G1–G4 definitions; structural site data, not course content
+- [x] 10.2 Write `components/interactive/ProgressTracker.tsx` — records completed step slugs against the 17 steps
+- [x] 10.3 Write `components/interactive/TrackSelector.tsx`
+- [x] 10.4 Write `app/tracks/page.tsx`
+- [x] 10.5 **Verify the track routes are real**, then build and commit
 
 **Task done when:** 4 tracks render, 17 roadmap steps render, and every `firstStepRoute` points at a page that exists.
 
@@ -36,13 +36,13 @@ All components in this loop are **client components**; all persistence is **`loc
 
 **Produces:** `/patterns/` and `/patterns/[slug]/`, plus `public/starters/<slug>.json` payloads.
 
-- [ ] 11.1 Write `lib/patterns.ts` — registry + pattern specs + starter kits
-- [ ] 11.2 Write `scripts/build-starters.mjs` — emits per-kit JSON so files load on demand rather than inlining into pages
-- [ ] 11.2a **Wire it into `prebuild`** — add `"prebuild": "npm run build:starters"` to `package.json`. Loop 1 removed that key because it named scripts that did not exist yet; see **D3** in `../shared/state.md`. Skipping this builds cleanly and silently ships an empty pattern browser from a clean checkout.
-- [ ] 11.3 Write `components/interactive/PatternBrowser.tsx` — filters across category A–G, stage, and tool
-- [ ] 11.4 Write `components/interactive/StarterViewer.tsx` — file tree + content pane, with a Claude Code / OpenCode switcher where the kit ships both
-- [ ] 11.5 Write both pattern routes
-- [ ] 11.6 Build, verify counts, commit
+- [x] 11.1 Write `lib/patterns.ts` — registry + pattern specs + starter kits
+- [x] 11.2 Write `scripts/build-starters.mjs` — emits per-kit JSON so files load on demand rather than inlining into pages
+- [x] 11.2a **Wire it into `prebuild`** — add `"prebuild": "npm run build:starters"` to `package.json`. Loop 1 removed that key because it named scripts that did not exist yet; see **D3** in `../shared/state.md`. Skipping this builds cleanly and silently ships an empty pattern browser from a clean checkout.
+- [x] 11.3 Write `components/interactive/PatternBrowser.tsx` — filters across category A–G, stage, and tool
+- [x] 11.4 Write `components/interactive/StarterViewer.tsx` — file tree + content pane, with a Claude Code / OpenCode switcher where the kit ships both
+- [x] 11.5 Write both pattern routes
+- [x] 11.6 Build, verify counts, commit
 
 **Task done when:** **23 patterns** browse and filter correctly, and all **24 starter kits** have viewable files.
 
@@ -56,10 +56,10 @@ All components in this loop are **client components**; all persistence is **`loc
 
 **Produces:** `/quiz/[part]/` × 7 and `/flashcards/[part]/` × 6.
 
-- [ ] 12.1 Write `components/interactive/Quiz.tsx` — one question at a time, reveal-answer, running tally
-- [ ] 12.2 Write `components/interactive/Flashcards.tsx` — flip cards with a shuffle control
-- [ ] 12.3 Write both routes
-- [ ] 12.4 Build, verify counts, commit
+- [x] 12.1 Write `components/interactive/Quiz.tsx` — one question at a time, reveal-answer, running tally
+- [x] 12.2 Write `components/interactive/Flashcards.tsx` — flip cards with a shuffle control
+- [x] 12.3 Write both routes
+- [x] 12.4 Build, verify counts, commit
 
 **Task done when:** **7 quizzes** and **6 flashcard sets** are playable. Part 6 having no flashcards is by design — not a bug.
 
@@ -69,9 +69,9 @@ All components in this loop are **client components**; all persistence is **`loc
 
 *Plan: `## Task 13` · 3 steps*
 
-- [ ] 13.1 Write `app/projects/page.tsx` — 8 practice projects as cards, linking into `/docs/projects/…`
-- [ ] 13.2 Write `app/resources/page.tsx` — 10 attributed sources plus the anti-patterns summary
-- [ ] 13.3 Build, verify, commit
+- [x] 13.1 Write `app/projects/page.tsx` — 8 practice projects as cards, linking into `/docs/projects/…`
+- [x] 13.2 Write `app/resources/page.tsx` — 10 attributed sources plus the anti-patterns summary
+- [x] 13.3 Build, verify, commit
 
 **Task done when:** 8 projects and 10 sources render, and every project card's link resolves.
 
@@ -83,11 +83,11 @@ All components in this loop are **client components**; all persistence is **`loc
 
 **Consumes:** `getRoadmap()` (Task 5).
 
-- [ ] 14.1 Write `components/interactive/GraphReadyChecklist.tsx` — the seven Graph Ready criteria; **all seven unlock the generator**
-- [ ] 14.2 Write `components/interactive/CertificateGenerator.tsx` — renders to canvas, downloads as PNG; name typed in, no accounts
-- [ ] 14.3 Write `app/certification/page.tsx`
-- [ ] 14.4 **Run the Loop 3 gate** — `npm run verify:3`
-- [ ] 14.5 Commit and record loop state
+- [x] 14.1 Write `components/interactive/GraphReadyChecklist.tsx` — the seven Graph Ready criteria; **all seven unlock the generator**
+- [x] 14.2 Write `components/interactive/CertificateGenerator.tsx` — renders to canvas, downloads as PNG; name typed in, no accounts
+- [x] 14.3 Write `app/certification/page.tsx`
+- [x] 14.4 **Run the Loop 3 gate** — `npm run verify:3`
+- [x] 14.5 Commit and record loop state
 
 **Task done when:** the checklist unlocks at seven of seven and a certificate **actually downloads**. Report the downloaded file.
 
@@ -95,11 +95,11 @@ All components in this loop are **client components**; all persistence is **`loc
 
 ## Gate
 
-- [ ] `npm run verify:3` green
-- [ ] All Task 10–14 boxes above ticked
-- [ ] Five entries in `state.md`, one per task
-- [ ] A certificate downloaded and reported
-- [ ] Gate entry appended to `shared/state.md`, row set to `gate green, awaiting review`
-- [ ] **Stopped.** Loop 4 not started.
+- [x] `npm run verify:3` green
+- [x] All Task 10–14 boxes above ticked
+- [x] Five entries in `state.md`, one per task
+- [x] A certificate downloaded and reported
+- [x] Gate entry appended to `shared/state.md`, row set to `gate green, awaiting review`
+- [x] **Stopped.** Loop 4 not started.
 
 See `gate.md`.

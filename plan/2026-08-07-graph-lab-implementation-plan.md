@@ -1786,7 +1786,7 @@ Append Task 5–9 entries to `LOOP-STATE.md`, then **STOP Loop 2 permanently** a
 - Consumes: `getRoadmap()` (Task 5).
 - Produces: `TRACKS: Track[]` from `lib/tracks.ts` where `Track = { id: "G1"|"G2"|"G3"|"G4"; name: string; level: string; startsKnowing: string; finishesAbleTo: string; steps: string[]; firstStepRoute: string }`; `ProgressTracker` takes `{ steps: DocMeta[] }` and is reused on `/tracks/` and (Loop 4) the landing page.
 
-- [ ] **Step 1: Write `lib/tracks.ts`**
+- [x] **Step 1: Write `lib/tracks.ts`**
 
 Transcribed from the four-track table in the course repo's `graph-plan.md` §12.1 (lines 253–256), verified 2026-08-07. This is structural site data — the table is not itself a rendered doc page — which is why it is hardcoded here rather than parsed.
 
@@ -1852,7 +1852,7 @@ export const TRACKS: Track[] = [
 ];
 ```
 
-- [ ] **Step 2: Write `components/interactive/ProgressTracker.tsx`**
+- [x] **Step 2: Write `components/interactive/ProgressTracker.tsx`**
 
 ```tsx
 "use client";
@@ -1921,15 +1921,15 @@ export function ProgressTracker({ steps }: { steps: DocMeta[] }) {
 }
 ```
 
-- [ ] **Step 3: Write `components/interactive/TrackSelector.tsx`**
+- [x] **Step 3: Write `components/interactive/TrackSelector.tsx`**
 
 Client component, no props — imports `TRACKS`. Renders the four tracks as `<Panel>` cards in a responsive grid; selecting one (keyboard-reachable `<button>`, `aria-pressed`) expands its "you start knowing / you finish able to / covers steps N–M" detail and shows a `PillButton` to `firstStepRoute`. Selection is component state only — not persisted, since it is a browsing aid rather than progress.
 
-- [ ] **Step 4: Write `app/tracks/page.tsx`**
+- [x] **Step 4: Write `app/tracks/page.tsx`**
 
 Server component. Renders `<TrackSelector />`, then the full 17-step roadmap from `getRoadmap()` as seven `<Panel>`s (one per Part, mono part number, sans title) each listing its steps, and `<ProgressTracker steps={allSteps} />` where `allSteps` is the flattened 17.
 
-- [ ] **Step 5: Verify the track routes are real, then build and commit**
+- [x] **Step 5: Verify the track routes are real, then build and commit**
 
 ```bash
 cd ~/graph-lab && node --experimental-strip-types -e '
@@ -1960,7 +1960,7 @@ Expected: `all 4 track routes resolve`, then a green build and link check.
 - Consumes: `content/patterns/registry.yaml`, `content/patterns/*.md`, `content/starters/*/` (Loop 1 Task 2); `renderMarkdown` (Task 7).
 - Produces: `type PatternMeta = { slug: string; category: string; stage: string; cost: string; core: boolean; title: string }`, `getAllPatterns(): PatternMeta[]`, `getPatternBySlug(slug: string): PatternMeta & { body: string; repoPath: string; starterSlug: string | null }`. `build-starters.mjs` emits `public/starters/<slug>.json` shaped `{ files: { path: string; content: string | null }[] }`.
 
-- [ ] **Step 1: Write `lib/patterns.ts`**
+- [x] **Step 1: Write `lib/patterns.ts`**
 
 The registry's real shape, verified 2026-08-07: a top-level `patterns:` key holding a flat list of `name`, `category` (`A-extraction` … `G-…`), `stage`, `cost`, `core`. There is no `tool` field — the spec's "tool" filter is `core: true` (core) vs `false` (extended).
 
@@ -2055,7 +2055,7 @@ export function getPatternFacets() {
 }
 ```
 
-- [ ] **Step 2: Write `scripts/build-starters.mjs`**
+- [x] **Step 2: Write `scripts/build-starters.mjs`**
 
 ```javascript
 /**
@@ -2117,15 +2117,15 @@ console.log(`build:starters OK — ${kits} kits, ${files} files`);
 
 Expected on first run: `build:starters OK — 24 kits, <n> files`.
 
-- [ ] **Step 3: Write `components/interactive/PatternBrowser.tsx`**
+- [x] **Step 3: Write `components/interactive/PatternBrowser.tsx`**
 
 Client component, props `{ patterns: PatternMeta[]; facets: ReturnType<typeof getPatternFacets> }`. Three filter groups as `<fieldset>`s with real `<legend>`s — category (`A-extraction` … rendered as `A · Extraction`), stage, and tool (`core` matches `p.core === true`, `extended` matches `false`) — each option a toggle `<button aria-pressed>`. Filters combine as AND across groups and OR within a group. Results render as `<Panel>` cards linking to `/patterns/<slug>/`, with a live `aria-live="polite"` count (`23 patterns` / `4 patterns`). A no-results state names which filter to clear rather than showing an empty grid.
 
-- [ ] **Step 4: Write `components/interactive/StarterViewer.tsx`**
+- [x] **Step 4: Write `components/interactive/StarterViewer.tsx`**
 
 Client component, props `{ slug: string }`. On mount, `fetch(withBasePath(`/starters/${slug}.json`))`. Left pane: file tree (directories as `<details>`, files as buttons). Right pane: the selected file's content in a `<pre>`. When the kit ships both a `claude/` and an `opencode/` tree, render a two-option tool switcher above the tree that scopes which subtree is shown. Files with `content: null` show "Binary or oversized — view on GitHub" plus a link built from `getSource().repo` and `commit`. Loading and error states are both explicit; a failed fetch must not render an empty pane.
 
-- [ ] **Step 5: Write both pattern routes**
+- [x] **Step 5: Write both pattern routes**
 
 `app/patterns/page.tsx` — server component, `getAllPatterns()` and `getPatternFacets()` → `<PatternBrowser patterns={…} facets={…} />`, with an intro paragraph in site-chrome wording.
 
@@ -2139,7 +2139,7 @@ Client component, props `{ slug: string }`. On mount, `fetch(withBasePath(`/star
 )}
 ```
 
-- [ ] **Step 6: Build, verify counts, commit**
+- [x] **Step 6: Build, verify counts, commit**
 
 ```bash
 cd ~/graph-lab && npm run build
@@ -2164,7 +2164,7 @@ git commit -m "feat: add pattern browser, pattern pages, and on-demand starter v
 - Consumes: `parseQuiz`, `parseFlashcards`, `QuizQuestion`, `Flashcard` from `lib/parse-content.ts` (Loop 1 Task 3) — the same functions `check-content-shape.mjs` runs in CI, so a page can never disagree with the check that guards it. Also `getRoadmap()` (Task 5).
 - Produces: `Quiz` takes `{ part: number; questions: QuizQuestion[] }`; `Flashcards` takes `{ part: number; cards: Flashcard[] }`.
 
-- [ ] **Step 1: Write `components/interactive/Quiz.tsx`**
+- [x] **Step 1: Write `components/interactive/Quiz.tsx`**
 
 ```tsx
 "use client";
@@ -2244,11 +2244,11 @@ export function Quiz({ part, questions }: { part: number; questions: QuizQuestio
 }
 ```
 
-- [ ] **Step 2: Write `components/interactive/Flashcards.tsx`**
+- [x] **Step 2: Write `components/interactive/Flashcards.tsx`**
 
 Client component. One card at a time: term face, `Flip` button (also `Space`/`Enter` on the card itself, which is a `<button>` so it is keyboard-reachable by default), definition face, then `Previous` / `Next` and a `Shuffle` that reorders with Fisher-Yates and resets to the first card. The flip is a CSS transform that is disabled under `prefers-reduced-motion` — the definition still appears, it just does not rotate. Position shown as `CARD 3 OF 6` in mono.
 
-- [ ] **Step 3: Write both routes**
+- [x] **Step 3: Write both routes**
 
 ```tsx
 // app/quiz/[part]/page.tsx
@@ -2279,7 +2279,7 @@ export default async function QuizPage({ params }: { params: Promise<{ part: str
 
 `app/flashcards/[part]/page.tsx` mirrors this with `parseFlashcards` and `flashcards.md`, except `generateStaticParams` filters out Part 6 — it has no flashcards file, by design — so the route emits six pages, not seven.
 
-- [ ] **Step 4: Build, verify counts, commit**
+- [x] **Step 4: Build, verify counts, commit**
 
 ```bash
 cd ~/graph-lab && npm run build
@@ -2300,15 +2300,15 @@ git commit -m "feat: add 7 quizzes and 6 flashcard sets sharing the CI-guarded p
 **Interfaces:**
 - Consumes: `getAllDocs()`, `readContent`, `renderMarkdown`.
 
-- [ ] **Step 1: Write `app/projects/page.tsx`**
+- [x] **Step 1: Write `app/projects/page.tsx`**
 
 Server component. Takes the docs whose `section === "projects"`, drops the section README, and renders the remaining eight as `<Panel>` cards in a grid — title from `DocMeta.title`, a one-line excerpt taken from the first paragraph after the `#` heading, and a link into `/docs/projects/<slug>/`. Above the grid, render `docs/projects/README.md` through `renderMarkdown` so the section's own framing is course content, not restated site copy. Assert eight cards and throw with the actual count if not.
 
-- [ ] **Step 2: Write `app/resources/page.tsx`**
+- [x] **Step 2: Write `app/resources/page.tsx`**
 
 Server component. Renders `content/resources/sources.md` through `renderMarkdown` (all ten attributed sources, unmodified), then a compact anti-patterns section rendered from `content/docs/operating/anti-patterns.md` — both paths verified to exist on 2026-08-07. Each is rendered, not restated; the page's own contribution is the two section headings and the ordering.
 
-- [ ] **Step 3: Build, verify, commit**
+- [x] **Step 3: Build, verify, commit**
 
 ```bash
 cd ~/graph-lab && npm run build && npm run check:links
@@ -2329,15 +2329,15 @@ git commit -m "feat: add projects and resources pages"
 - Consumes: `content/docs/assessments/graph-ready-certification.md` for the seven criteria — read the file and take the wording from it rather than retyping it.
 - Produces: `GraphReadyChecklist` owns the checked state and renders `CertificateGenerator` itself once all seven are checked; `CertificateGenerator` takes `{ criteria: string[] }`.
 
-- [ ] **Step 1: Write `components/interactive/GraphReadyChecklist.tsx`**
+- [x] **Step 1: Write `components/interactive/GraphReadyChecklist.tsx`**
 
 Client component. Seven `<input type="checkbox">` with real `<label>`s, state persisted to `localStorage` under `graph-lab:graph-ready` and read on mount (same mount-then-read pattern as `ProgressTracker`, for the same hydration reason). A live region announces `4 of 7 met`. All seven checked renders `<CertificateGenerator />`; fewer renders a mono line stating how many remain. The seven criteria strings are passed in as a prop from the page, which parses them out of the doc — the component does not hardcode them.
 
-- [ ] **Step 2: Write `components/interactive/CertificateGenerator.tsx`**
+- [x] **Step 2: Write `components/interactive/CertificateGenerator.tsx`**
 
 Client component. A text `<input>` for the reader's name (labelled `Name on the certificate`, no accounts, nothing sent anywhere), then a `Download certificate` button that draws to a 1600×1200 `<canvas>`: Blueprint dot grid, hairline rule border with corner ticks, `GRAPH READY` in mono, the typed name, the date, and the seven criteria as small mono lines. Export with `canvas.toBlob` → object URL → `<a download="graph-ready-<name>.png">` → `URL.revokeObjectURL`. The button is disabled with an explanatory `aria-describedby` when the name field is empty.
 
-- [ ] **Step 3: Write `app/certification/page.tsx`**
+- [x] **Step 3: Write `app/certification/page.tsx`**
 
 Server component. Renders `content/docs/assessments/graph-ready-certification.md` through `renderMarkdown`, then parses the seven criteria out of that same file's `## The checklist` table — verified 2026-08-07 as a `| # | Item | Where it comes from |` table with rows 1–7. That page states outright that it is authoritative and the component "implements it and does not extend it", so the strings come from the file, never from a constant here.
 
@@ -2364,14 +2364,14 @@ function getCriteria(body: string): string[] {
 }
 ```
 
-- [ ] **Step 4: Run the Loop 3 gate**
+- [x] **Step 4: Run the Loop 3 gate**
 
 ```bash
 cd ~/graph-lab && npm run verify:3
 ```
 Then in `npm run dev`, walk the whole flow by hand: filter the pattern browser to one category and confirm the count; open a kit and switch tools; play a full quiz to the tally; flip and shuffle a flashcard set; check all seven certification boxes, type a name, download the PNG, and open it.
 
-- [ ] **Step 5: Commit and record loop state**
+- [x] **Step 5: Commit and record loop state**
 
 ```bash
 cd ~/graph-lab

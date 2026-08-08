@@ -33,11 +33,23 @@ const REPO = "ayeshakhalid192007-dev/graph-engineering-crash-course";
 /** Trees copied out of the course repo, and where they land under content/. */
 const TREES = ["docs", "patterns", "starters", "resources"];
 
-/** Every file under `dir`, recursively, relative to `dir`. Dotfiles skipped. */
+/**
+ * Entries never copied out of the course repo.
+ *
+ * This was `entry.name.startsWith(".")` and that was wrong: every one of the 24
+ * starter kits ships its Claude Code half as `.claude/skills/…` and
+ * `.claude/agents/…`, so a blanket dotfile skip silently dropped 32 files — the
+ * whole Claude Code side of the pattern library — while the OpenCode half came
+ * through. Nothing else under docs/, patterns/, starters/ or resources/ is a
+ * dotfile, so a denylist is both narrower and safer than a leading-dot test.
+ */
+const NEVER_COPY = new Set([".git", ".gitignore", ".DS_Store", "node_modules"]);
+
+/** Every file under `dir`, recursively, relative to `dir`. */
 async function walk(dir, base = dir) {
   const out = [];
   for (const entry of await readdir(dir, { withFileTypes: true })) {
-    if (entry.name.startsWith(".") || entry.name === "node_modules") continue;
+    if (NEVER_COPY.has(entry.name)) continue;
     const full = join(dir, entry.name);
     if (entry.isDirectory()) out.push(...(await walk(full, base)));
     else out.push(relative(base, full));
