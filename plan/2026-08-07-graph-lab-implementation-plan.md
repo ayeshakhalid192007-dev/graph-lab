@@ -173,7 +173,7 @@ graph-lab/
 - Consumes: nothing.
 - Produces: the npm scripts every later task runs (`sync:latest`, `sync:check`, `check:content-shape`, `build`, `verify:1`…`verify:all`); `withBasePath(path: string): string` from `lib/base-path.ts`, imported by every component that emits a bare `href`/`src` string.
 
-- [ ] **Step 1: Create the repo and pin Node**
+- [x] **Step 1: Create the repo and pin Node**
 
 ```bash
 mkdir -p ~/graph-lab && cd ~/graph-lab && git init -b main
@@ -181,7 +181,7 @@ echo 24 > .nvmrc
 printf 'node_modules/\n.next/\nout/\n.env*.local\n.DS_Store\n' > .gitignore
 ```
 
-- [ ] **Step 2: Write `package.json`**
+- [x] **Step 2: Write `package.json`**
 
 ```json
 {
@@ -245,7 +245,7 @@ printf 'node_modules/\n.next/\nout/\n.env*.local\n.DS_Store\n' > .gitignore
 
 The `verify:N` scripts are cumulative on purpose: Loop 3 cannot silently break Loop 2's link check.
 
-- [ ] **Step 3: Write `next.config.ts`**
+- [x] **Step 3: Write `next.config.ts`**
 
 ```typescript
 import type { NextConfig } from "next";
@@ -267,7 +267,7 @@ const nextConfig: NextConfig = {
 export default nextConfig;
 ```
 
-- [ ] **Step 4: Write `tsconfig.json`**
+- [x] **Step 4: Write `tsconfig.json`**
 
 ```json
 {
@@ -295,7 +295,7 @@ export default nextConfig;
 
 `content` is excluded so 86 markdown files never enter the TS program.
 
-- [ ] **Step 5: Write `postcss.config.mjs` and `eslint.config.mjs`**
+- [x] **Step 5: Write `postcss.config.mjs` and `eslint.config.mjs`**
 
 ```javascript
 // postcss.config.mjs
@@ -317,7 +317,7 @@ export default [
 ];
 ```
 
-- [ ] **Step 6: Write `lib/base-path.ts`**
+- [x] **Step 6: Write `lib/base-path.ts`**
 
 ```typescript
 /**
@@ -335,7 +335,7 @@ export function withBasePath(path: string): string {
 
 Add `NEXT_PUBLIC_BASE_PATH` to the build env alongside `PAGES_BASE_PATH` in Task 22's workflow — `process.env.PAGES_BASE_PATH` is not readable from client components.
 
-- [ ] **Step 7: Write `LOOP-STATE.md`**
+- [x] ~~**Step 7: Write `LOOP-STATE.md`**~~ — **superseded by D0**: no root `LOOP-STATE.md`; task entries go to `loops/loop-1-foundation/state.md`, gate entries to `loops/shared/state.md`.
 
 ```markdown
 # graph-lab loop state
@@ -352,14 +352,14 @@ Plan: `~/graph-landing/2026-08-07-graph-lab-implementation-plan.md`
 <a loop that fixes an earlier loop's defect records it here>
 ```
 
-- [ ] **Step 8: Install and verify the scaffold builds**
+- [x] **Step 8: Install and verify the scaffold builds**
 
 ```bash
 cd ~/graph-lab && npm install && npx tsc --noEmit
 ```
 Expected: install succeeds; `tsc` passes (nothing to typecheck yet beyond `lib/base-path.ts`). A config error here — not a missing-file error — means stop and fix before continuing.
 
-- [ ] **Step 9: Commit**
+- [x] **Step 9: Commit**
 
 ```bash
 cd ~/graph-lab
@@ -379,7 +379,7 @@ git commit -m "chore: scaffold graph-lab — Next 16 static export, Tailwind v4,
 - Consumes: `~/graph-engineering-course` (override with `COURSE_REPO`).
 - Produces: `content/docs/`, `content/patterns/`, `content/starters/`, `content/resources/` as byte-identical copies, and `content/SOURCE.json` with keys `repo`, `commit`, `syncedAt`, `files`. Every `lib/` module in Loop 2 reads from these paths.
 
-- [ ] **Step 1: Write `scripts/sync-docs.mjs`**
+- [x] **Step 1: Write `scripts/sync-docs.mjs`**
 
 ```javascript
 /**
@@ -490,7 +490,7 @@ try {
 }
 ```
 
-- [ ] **Step 2: Write `content/README.md`**
+- [x] **Step 2: Write `content/README.md`**
 
 ```markdown
 # This directory is generated
@@ -507,14 +507,14 @@ If a page reads wrong on the site, the fix belongs in the course repo's `docs/`.
 Then run `npm run sync:latest` and commit the resulting diff.
 ```
 
-- [ ] **Step 3: Run the first sync**
+- [x] **Step 3: Run the first sync**
 
 ```bash
 cd ~/graph-lab && mkdir -p content && npm run sync:latest
 ```
 Expected: `Synced <n> files from … @ <sha>`. `<n>` should be ~200+ (86 docs, 25 pattern files, 24 starter kits' worth of files, 2 resources).
 
-- [ ] **Step 4: Verify the copy is byte-identical and complete**
+- [x] **Step 4: Verify the copy is byte-identical and complete**
 
 ```bash
 cd ~/graph-lab
@@ -526,7 +526,7 @@ cat content/SOURCE.json
 ```
 Expected: `docs identical`, then `86`, `25`, `24`, and a SOURCE.json whose `commit` matches `git -C ../graph-engineering-course rev-parse HEAD`.
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 cd ~/graph-lab
@@ -547,7 +547,7 @@ git commit -m "feat: add sync-docs pipeline and vendor course content pinned to 
 - Consumes: `content/` and `content/SOURCE.json` (Task 2).
 - Produces: `parseQuiz(body: string): QuizQuestion[]` and `parseFlashcards(body: string): Flashcard[]` from `lib/parse-content.ts`, where `QuizQuestion = { n: number; title: string; question: string; answer: string }` and `Flashcard = { term: string; definition: string }`. Loop 3 Task 12 imports these exact functions — the CI check and the rendered page share one parser, so a page can never disagree with the check that guards it.
 
-- [ ] **Step 1: Write `lib/parse-content.ts`**
+- [x] **Step 1: Write `lib/parse-content.ts`**
 
 The shapes below were verified against the shipped content on 2026-08-07: a quiz section is `## N. Title`, then the question paragraph, then a `<details>` whose `<summary>` is `Reveal the answer`; a flashcard set is a `| Term | Definition |` GFM table whose term cells are bold.
 
@@ -608,7 +608,7 @@ export function parseFlashcards(body: string): Flashcard[] {
 }
 ```
 
-- [ ] **Step 2: Write `scripts/check-sync.mjs`**
+- [x] **Step 2: Write `scripts/check-sync.mjs`** — **shipped with a correction, see D2:** the `--exclude=SOURCE.json --exclude=README.md` args below are wrong (the globs match at every depth and exempted 43 course-content READMEs). The shipped script seeds those two files into the temp tree by exact path and diffs with no exclusions.
 
 ```javascript
 /**
@@ -657,7 +657,7 @@ try {
 }
 ```
 
-- [ ] **Step 3: Write `scripts/check-content-shape.mjs`**
+- [x] **Step 3: Write `scripts/check-content-shape.mjs`**
 
 ```javascript
 /**
@@ -724,14 +724,14 @@ if (failures.length) {
 console.log(`check:content-shape OK — 7 quizzes, 6 flashcard sets parse as expected`);
 ```
 
-- [ ] **Step 4: Run both checks**
+- [x] **Step 4: Run both checks**
 
 ```bash
 cd ~/graph-lab && npm run sync:check && npm run check:content-shape
 ```
 Expected: `sync:check OK — content/ matches <sha>` then `check:content-shape OK — 7 quizzes, 6 flashcard sets parse as expected`.
 
-- [ ] **Step 5: Prove `sync:check` actually catches a hand-edit**
+- [x] **Step 5: Prove `sync:check` actually catches a hand-edit** — **it did not, first time round.** The plan's version printed `sync:check OK`, exit 0, on an edited `content/docs/README.md`. Fixed per D2, then re-run: red on `content/docs/README.md`, red on `content/starters/audit-loop/README.md`, green after revert.
 
 ```bash
 cd ~/graph-lab
@@ -741,7 +741,7 @@ git checkout content/docs/README.md
 ```
 Expected: it fails, prints the diff, and `exit=1`. A green result here means the check is not doing its job — stop and fix it. Restore the file afterward.
 
-- [ ] **Step 6: Commit**
+- [x] **Step 6: Commit**
 
 ```bash
 cd ~/graph-lab
@@ -768,7 +768,7 @@ git commit -m "feat: add sync:check and content-shape CI gates with shared parse
 - Consumes: `withBasePath` (Task 1).
 - Produces: the CSS custom properties every later component styles against — `--paper`, `--ink`, `--graphite`, `--rule`, `--accent`, `--surface`, `--muted` — plus `<Section>`, `<Panel>`, `<PillButton>` from `components/ui/`. `Section` takes `{ id?: string; className?: string; children: React.ReactNode }`; `Panel` takes `{ className?: string; children: React.ReactNode }` and draws hairline rules with corner ticks; `PillButton` takes `{ href: string; variant?: "solid" | "outline"; children: React.ReactNode }`.
 
-- [ ] **Step 1: Write `app/globals.css`**
+- [x] **Step 1: Write `app/globals.css`**
 
 Tailwind v4 configures through CSS, not a `tailwind.config.ts`. Both palettes below are chosen for this site and share nothing with `loop-lab`.
 
@@ -848,7 +848,7 @@ body {
 }
 ```
 
-- [ ] **Step 2: Write `components/ui/ThemeProvider.tsx` and `ThemeToggle.tsx`**
+- [x] **Step 2: Write `components/ui/ThemeProvider.tsx` and `ThemeToggle.tsx`**
 
 ```tsx
 // components/ui/ThemeProvider.tsx
@@ -891,7 +891,7 @@ export function ThemeToggle() {
 }
 ```
 
-- [ ] **Step 3: Write `components/ui/Section.tsx`, `Panel.tsx`, `PillButton.tsx`**
+- [x] **Step 3: Write `components/ui/Section.tsx`, `Panel.tsx`, `PillButton.tsx`**
 
 ```tsx
 // components/ui/Section.tsx
@@ -935,11 +935,11 @@ export function PillButton({ href, variant = "solid", children }:
 }
 ```
 
-- [ ] **Step 4: Write `components/ui/NavBar.tsx`**
+- [x] **Step 4: Write `components/ui/NavBar.tsx`**
 
 Server component. Renders the wordmark (`graph-lab`, mono) linking to `/`, then `Link`s to `/docs/00-start-here/`, `/tracks/`, `/patterns/`, `/projects/`, `/resources/`, `/certification/`, then a slot for `SearchDialog`'s trigger (Loop 4 fills it — until then render nothing there) and `<ThemeToggle />`. Below 768px the links collapse behind a `<details>`-based disclosure so no JavaScript is needed for the mobile menu. Bottom edge is a 1px `border-rule`, no shadow.
 
-- [ ] **Step 5: Write `app/layout.tsx`**
+- [x] **Step 5: Write `app/layout.tsx`**
 
 ```tsx
 import type { Metadata } from "next";
@@ -970,7 +970,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 }
 ```
 
-- [ ] **Step 6: Write a placeholder `app/page.tsx`**
+- [x] **Step 6: Write a placeholder `app/page.tsx`**
 
 ```tsx
 import { Section } from "@/components/ui/Section";
@@ -987,7 +987,7 @@ export default function Home() {
 }
 ```
 
-- [ ] **Step 7: Run the Loop 1 gate**
+- [x] **Step 7: Run the Loop 1 gate** — **red on the first run:** `prebuild` named two scripts Loops 3 and 4 have not written yet. Deferred per **D3**, then green.
 
 ```bash
 cd ~/graph-lab && npm run verify:1
@@ -1000,7 +1000,7 @@ sleep 4 && curl -sf http://localhost:3000/ > /dev/null && echo "dev server OK"
 kill %1
 ```
 
-- [ ] **Step 8: Commit and record loop state**
+- [x] **Step 8: Commit and record loop state**
 
 ```bash
 cd ~/graph-lab
