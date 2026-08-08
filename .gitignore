@@ -14,3 +14,8 @@ public/search-index.json
 
 # Playwright MCP scratch output from the Task 14 walkthrough
 .playwright-mcp/
+
+# drafting originals that live at the repo root; plan/ holds the authoritative copies (D1)
+/2026-08-06-course-website-design.md
+/2026-08-07-graph-lab-implementation-plan.md
+/day-4-plan.md
