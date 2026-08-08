@@ -2,7 +2,7 @@
 
 Cross-loop state for all five loops. Per-task detail lives in each loop's own `state.md`; this file holds only what **crosses a loop boundary**.
 
-**Status:** Loop 1 complete, gate green, awaiting review. Loops 2–5 not started.
+**Status:** Loop 1 approved. Loop 2 complete, gate green, awaiting review. Loops 3–5 not started.
 
 ---
 
@@ -59,6 +59,76 @@ Against `gate.md`'s "what green must actually mean":
 
 **Status:** gate green, awaiting review.
 
+### Loop 2 gate — 2026-08-08
+
+**Command:** `npm run verify:2` → `verify:1` (`sync:check` → `check:content-shape` → `typecheck` → `build`) → `check:links`
+
+**Output:** exit 0.
+
+```
+> graph-lab@0.1.0 sync:check
+sync:check OK — content/ matches af5321e3
+
+> graph-lab@0.1.0 check:content-shape
+check:content-shape OK — 7 quizzes, 6 flashcard sets parse as expected
+
+> graph-lab@0.1.0 typecheck
+> tsc --noEmit
+(silent)
+
+> graph-lab@0.1.0 build
+> next build
+✓ Compiled successfully in 13.2s
+  Finished TypeScript in 5.6s
+✓ Generating static pages using 6 workers (89/89) in 19.1s
+
+Route (app)
+┌ ○ /
+├ ○ /_not-found
+├ ○ /docs
+└ ● /docs/[...slug]
+  └ [+82 more paths]
+
+> graph-lab@0.1.0 check:links
+check:links OK — 17534 internal links across 90 pages all resolve
+
+925 links point at 13 routes not built yet (see PENDING_ROUTES):
+  /certification/     180 links   Loop 3 Task 14
+  /patterns/          186 links   Loop 3 Task 11
+  /patterns/<8 slugs>  12 links   Loop 3 Task 11
+  /projects/          180 links   Loop 3 Task 13
+  /resources/         187 links   Loop 3 Task 13
+  /tracks/            180 links   Loop 3 Task 10
+```
+
+Against `gate.md`'s "what green must actually mean":
+
+| Claim | Observed |
+| --- | --- |
+| `next build` emitted 86 doc pages plus the `/docs/` index | **86** `index.html` under `out/docs`; 89 routes, 90 HTML files counting `/_not-found` |
+| `check:links` reported 0 unresolved internal links | **0** broken of **17,534** checked; 925 more point at 13 routes Loop 3 builds, each named with its owning task |
+| `sync:check` still diffs 0 files | 0, against `af5321e3` — Loop 2 did not touch `content/` |
+| `check:content-shape` still parses 7/7 and 6/6 | 7 quizzes, 6 flashcard sets |
+| `tsc --noEmit` clean | silent, exit 0 |
+| 20 mermaid fences across 20 files, each a `GraphDiagram` | **20**, and the 20 emitted routes set-compare *exactly* to the 20 source files (Task 8) |
+| Every other fence highlighted by Shiki — 41 markdown, 23 other | **64** blocks: 41 markdown, 15 json, 3 yaml, 3 text, 2 jsonl (Task 7) |
+| Three pages spot-checked by eye | **Four**, in both themes — see Task 9 in `../loop-2-render/state.md` |
+
+**Beyond the gate's list:**
+- **The link check was observed going red**, twice: an injected `<a href="/docs/no-such-page/">` gave `FAILED — 1 of 17535`, exit 1; a `PENDING_ROUTES` entry for a route that *does* exist gave `FAILED — 1 PENDING_ROUTES entries are now built and must be deleted`, exit 1. Both green again after reverting.
+- **Re-run under `basePath`:** built and checked with `PAGES_BASE_PATH=/graph-lab` — identical 17,534 / 90 / 925. D9's arrangement holds for the checker too.
+
+**Tasks completed:**
+- **Task 5** — `lib/content.ts`, `lib/docs.ts`: 86 docs, 7 parts, 17 steps, 0 untitled, 17 sidebar sections.
+- **Task 6** — `lib/links.ts`: 272 links across all 86 docs, 0 unresolved, after fixing two dead-route bugs in the plan's listing (D6).
+- **Task 7** — the render pipeline: run over all 86 pages, 0 failures; 20 diagrams, 64 code blocks, 501 headings, 272 anchors (265 internal, 7 external).
+- **Task 8** — the doc route: 86 pages emitted, sidebar and prev/next on all 86, breadcrumbs on 85, ToC on 66, 16 KB gzipped per page.
+- **Task 9** — `check-links.mjs` and this gate.
+
+**Carried forward:** D5–D9 (see below). One list Loop 3 must empty as it goes: **`PENDING_ROUTES` in `scripts/check-links.mjs`**, one line per task, failing the build if a line outlives the route it excuses.
+
+**Status:** gate green, awaiting review. Loop 3 not started.
+
 ---
 
 ## Gate ledger
@@ -67,8 +137,8 @@ One row per gate, appended when the gate goes green and the loop stops.
 
 | Loop | Tasks | Gate command | Status | Date | Notes |
 | --- | --- | --- | --- | --- | --- |
-| 1 — Foundation & pipeline | 1–4 | `npm run verify:1` | gate green, awaiting review | 2026-08-07 | 224 files pinned to `af5321e3`; 7/7 quizzes, 6/6 flashcard sets; 2 routes exported. D2, D3, D4 recorded. |
-| 2 — Render layer & 86 doc pages | 5–9 | `npm run verify:2` | not started | — | — |
+| 1 — Foundation & pipeline | 1–4 | `npm run verify:1` | approved | 2026-08-07 | 224 files pinned to `af5321e3`; 7/7 quizzes, 6/6 flashcard sets; 2 routes exported. D2, D3, D4 recorded. Approved by the user on 2026-08-07 by instruction to start Loop 2. |
+| 2 — Render layer & 86 doc pages | 5–9 | `npm run verify:2` | gate green, awaiting review | 2026-08-08 | Branch `loop-2-render`. 86 doc pages, 20 diagrams, 64 code blocks, 17,534 links checked with 0 broken. Repairs R1, R2; decisions D5–D9. |
 | 3 — Interactive surfaces | 10–14 | `npm run verify:3` | not started | — | — |
 | 4 — Landing, identity, search | 15–18 | `npm run verify:4` | not started | — | — |
 | 5 — Polish, verify, deploy | 19–22 | `npm run verify:all` | not started | — | — |
@@ -94,7 +164,25 @@ Template:
 **Verified by:** the command run, and what it printed.
 ```
 
-_None yet._
+### R1 — Loop 2 repaired Loop 1: `npm run lint` could not run, 2026-08-08
+
+**Symptom:** `npm run lint` exited non-zero without linting anything, printing `TypeError: Converting circular structure to JSON` from inside `@eslint/eslintrc`'s `config-validator`. First observed during Loop 2 Task 8; `lint` is not in `verify:1` or `verify:2`, which is why Loop 1's gate went green over it. It **is** in `verify:all`, so Loop 5 would have hit it.
+
+**Cause:** Task 1 Step 5's `eslint.config.mjs` loads `eslint-config-next` through `FlatCompat`, the pattern Next 14 and 15 needed. **`eslint-config-next` 16.2.11 ships flat configs directly** — `eslint-config-next/core-web-vitals` and `/typescript` each export a plain array. Handing an already-flat config to eslintrc made it fail schema validation, and the crash came from its *error formatter* choking on the circular plugin object, so the actual complaint was never printed.
+
+**Fix:** `eslint.config.mjs` imports the two flat configs and spreads them, with no `FlatCompat` and no `@eslint/eslintrc` involvement. The default export is assigned to a named const first, satisfying `import/no-anonymous-default-export`.
+
+**Verified by:** `npm run lint` now runs to completion. It immediately found three real problems — two of them repaired here and in R2, one in Loop 2's own `lib/markdown.ts` (`react/no-children-prop`, fixed in `e298676`). Clean afterwards, exit 0.
+
+### R2 — Loop 2 repaired Loop 1: `ThemeToggle` set state in an effect, 2026-08-08
+
+**Symptom:** `react-hooks/set-state-in-effect` error on `components/ui/ThemeToggle.tsx:8`, plus a visible blank placeholder in the toggle on every first paint.
+
+**Cause:** Task 4's toggle used the `mounted` flag pattern — `useEffect(() => setMounted(true), [])` — to avoid rendering a theme-dependent label during SSR. It works, but it costs a cascading render and guarantees a frame where the button shows neither label, which is the same class of problem C15's "no flash of wrong theme on load" exists to prevent.
+
+**Fix:** both labels now live in the DOM and CSS picks between them with the `dark:` variant. next-themes already sets `.dark` on `<html>` from a blocking script before first paint, so the correct label is right on the first frame with no state and no effect. `resolvedTheme` is read only inside `onClick`, which cannot fire before hydration. The accessible name comes from the visible label plus an `sr-only` phrase rather than `aria-label`, so it cannot fall out of step with what is displayed.
+
+**Verified by:** `npm run lint` exit 0; the emitted HTML carries both labels and the `sr-only` phrases, and the toggle is the only `<button>` on a doc page without an `aria-label` — correctly, because it now names itself from its content.
 
 ---
 
@@ -158,6 +246,80 @@ Template:
 **Because:** Next 16 enforces the automatic React runtime and rewrites the file itself on every build. Reverting to `preserve` would be undone on the next `npm run build` and would produce a spurious diff in every loop.
 
 **Affects:** Nothing downstream — it is the setting Next requires. Recorded only so a later loop reading the plan does not "restore" `preserve` and then wonder why the file keeps changing back. `tsconfig.json` also reformats to one-array-entry-per-line on each build; that is Next's writer, not a hand edit.
+
+### D5 — relative imports between `lib/` modules carry the `.ts` extension, 2026-08-07, Loop 2
+
+**Decision:** `lib/docs.ts` imports `./content.ts`, not `./content` as the plan writes it. `tsconfig.json` gains `"allowImportingTsExtensions": true` (legal because `noEmit` is already true). **Every `lib/` module a later loop adds should follow the same convention** for its relative imports.
+
+**Because:** the plan verifies these modules by running them under bare Node — Task 5 Step 3, Task 6 Step 2, and the equivalents in Loops 3 and 4 all do `node --experimental-strip-types -e 'import("./lib/….ts")…'`. Node's ESM resolver requires an explicit extension on relative specifiers; only the bundler's `moduleResolution: "bundler"` makes `./content` work. As written, Step 3 died with `ERR_MODULE_NOT_FOUND: Cannot find module '/home/ayesha-khalid/graph-lab/lib/content' imported from …/lib/docs.ts`. This is the same property Loop 1 relies on for `check-content-shape.mjs` importing `lib/parse-content.ts` — that file happened to have no relative imports of its own, so the gap did not show until now.
+
+**Verified both ways:** `npm run typecheck` exit 0, and `next build` "Compiled successfully in 4.2s" — Turbopack resolves the explicit extension fine. So the one spelling satisfies the bundler, `tsc`, and bare Node.
+
+**Affects:** Loop 3's `lib/patterns.ts` and `lib/tracks.ts`, and Loop 4's `lib/search.ts`. Write `from "./content.ts"`, not `from "./content"`, or your task's own Node-based verification step will not run.
+
+### D6 — the plan's `resolveContentLink` shipped two dead-route bugs; both are fixed, 2026-08-07, Loop 2
+
+**Decision:** `lib/links.ts` deviates from the plan's Task 6 Step 1 listing in two places.
+
+1. **A `.md` link outside `docs/` now falls through** instead of returning `null`. The plan's version tests `resolved.endsWith(".md")` first and returns `null` when no doc owns that path — which is every file under `patterns/`, `starters/` and `resources/`, all of them markdown. The rules below it could never be reached.
+2. **Pattern and starter slugs are validated against `content/`** via `listFiles()` before a `/patterns/<slug>/` route is emitted. The plan matches the slug shape with a regex and trusts it.
+
+**Because:** Step 2's probe over all 86 docs printed **12 `DEAD` lines** on the plan's logic — `docs/README.md` → `../patterns/README.md`, `../starters/README.md`, `../resources/sources.md`; six step pages → `../../resources/sources.md`; `docs/methods/pattern-picker.md` → `../../patterns/README.md`; two cheatsheets → `../../../starters/README.md`. None of those are broken course links; all are the resolver failing to reach its own later branches. After the fix: **272 links, 0 unresolved.**
+
+The second bug is the quieter one. Bug 1 fails loudly at the link check; bug 2 fails *silently* — `patterns/renamed-away.md` resolved to `/patterns/renamed-away/`, a route with no page behind it, and because `resolveContentLink` never returned `null` the check had nothing to flag. A resolver that invents routes defeats the point of returning `null` at all.
+
+**Affects:**
+- **Task 9's `check-links.mjs` must treat a `null` from `resolveContentLink` as a failure**, not as "unknown, skip". That is the entire mechanism protecting against a folder rename in the course repo.
+- **Loop 3 must not rename a pattern or starter slug away from its `content/` filename.** The route slug and the file stem are now the same string by construction; `/patterns/<slug>/` pages must be generated from `content/patterns/*.md` stems, or real links go null.
+- **Expect the Loop 2 gate to flag `/patterns/` and `/resources/`.** Real content links resolve there and those routes are Loop 3's. This is correct resolver output against an incomplete site — Task 9 decides how the check handles not-yet-built routes. Do not weaken the resolver to make the gate green.
+
+### D7 — the render pipeline splits `toHast` from `renderMarkdown`, 2026-08-08, Loop 2
+
+**Decision:** `lib/markdown.ts` exports **two** functions rather than the one the plan lists. `toHast(body, repoPath)` runs the whole remark/rehype pipeline and stops at hast; `renderMarkdown(body, repoPath)` calls it and maps the result to React, importing `GraphDiagram` and `CodeBlock` with a lazy `await import()` instead of at module scope. `lib/markdown.ts` contains no JSX — it uses `createElement`. The interface the plan promised is unchanged: `renderMarkdown` still returns `{ content, headings }`.
+
+**Because:** the plan's own Task 7 Step 4 verifies the module with `node --experimental-strip-types -e 'import("./lib/markdown.ts")'`, and the module as the plan writes it cannot be loaded that way twice over. Node's type stripping does not compile JSX, and a static `import … from "@/components/content/GraphDiagram"` resolves to a `.tsx` that bare Node rejects outright — confirmed: `TypeError: Unknown file extension ".tsx"`. Splitting the seam makes the pipeline core verifiable under Node while leaving the React path to the bundler, where it belongs.
+
+**Affects:**
+- **Pages call `renderMarkdown`.** `toHast` is the lower layer; it does no React mapping.
+- **Loop 4 Task 15 should build the search index on `toHast`.** `scripts/build-search-index.mjs` runs under plain Node, and this is the supported way to get course markdown reduced to structured text without importing React into a build script. Do not re-implement a second markdown parser there — a second definition of "what a heading is" is exactly the drift Loop 1 avoided with `lib/parse-content.ts`.
+- **Any `lib/` module a later loop wants verifiable under bare Node must avoid JSX and `.tsx` imports.** This is the same property D5 protects with explicit `.ts` extensions; D7 is its second half.
+
+### D8 — `CodeBlock` receives React children, not an HTML string, 2026-08-08, Loop 2
+
+**Decision:** the plan's `CodeBlock({ lang, html, raw })` ships as `CodeBlock({ lang, raw, children })`. A rehype step wraps each fence in a `<code-block lang raw>` element **before** shiki runs; shiki then highlights the `<pre>` still nested inside, and the highlighted markup reaches the component as ordinary React children.
+
+**Because:** `@shikijs/rehype` does `parent.children[index] = fragment` — it *replaces* the `<pre>` node rather than annotating it, so the raw source and language must be captured onto a wrapper beforehand or they are gone. Given a wrapper, passing children is strictly better than passing `html`: producing an HTML string would mean serialising hast back to HTML with `hast-util-to-html`, which is **not in the plan's `package.json`** and would need a dependency Decision under C10 — to undo work the pipeline had already done.
+
+**Affects:** Loop 3's starter-kit file viewer and any other surface that frames code. Use `CodeBlock` with children. The one visible consequence is that `raw` is optional: a code block with no captured source renders without a copy button rather than with a button that copies nothing.
+
+### D9 — markdown-rewritten links are prefixed with `basePath` at render time, 2026-08-08, Loop 2
+
+**Decision:** `lib/links.ts` keeps returning bare logical routes (`/docs/…`), and `lib/markdown.ts` applies `withBasePath()` to every internal href as it writes it into the tree. The prefix is added at the rendering seam, not in the resolver.
+
+**Because:** the pipeline emits **plain `<a>` elements**, and Next only rewrites hrefs it controls — `next/link`, `next/image`, its own asset URLs. A bare `/docs/…` in course prose would have resolved correctly on a local build, where `PAGES_BASE_PATH` is unset, and 404'd on the project site at `/graph-lab/` (C8). Nothing before Task 8 had ever built with the variable set, so this was invisible. Verified by building with `PAGES_BASE_PATH=/graph-lab`: **zero** bare `/path` hrefs remain in the emitted HTML.
+
+Keeping `links.ts` pure matters for Task 9: `check-links.mjs` reasons about logical routes, and a resolver that already carried a deployment-specific prefix would force the checker to strip it back off.
+
+**Affects:**
+- **Loop 3 and Loop 4: any hand-built `href` or `src` string must go through `withBasePath()`.** Anything rendered by `next/link` is already handled. The ones to watch are `fetch("/search-index.json")` in Loop 4 Task 15 and the starter-kit payload fetches in Loop 3 Task 11 — neither is an href Next controls.
+- **`withBasePath()` reads `NEXT_PUBLIC_BASE_PATH`, while `next.config.ts` reads `PAGES_BASE_PATH`.** Two variables, deliberately: `PAGES_BASE_PATH` is not readable from client components. The plan's Task 22 workflow sets **both**, and they must stay equal — if only one is set, half the links get a prefix and half do not, and the local build will not show it.
+
+### D10 — `check-links.mjs` carries a `PENDING_ROUTES` list that Loop 3 empties line by line, 2026-08-08, Loop 2
+
+**Decision:** `scripts/check-links.mjs` deviates from the plan's Task 9 listing in three ways.
+
+1. It scans `src="…"` as well as `href="…"`.
+2. It holds a `PENDING_ROUTES` map of routes that are linked to but deliberately not built yet, each valued with the task that builds it. A hit is reported as pending rather than broken.
+3. **A `PENDING_ROUTES` entry whose route now exists fails the check.** The list can only shrink.
+
+Seven entries are hand-written — `/tracks/`, `/patterns/`, `/projects/`, `/resources/`, `/certification/`, `/quizzes/`, `/flashcards/` — and one more is derived per pattern and starter slug found in `content/`, so `/patterns/<slug>/` is pending only for slugs that really exist. Entries are exact routes, never prefixes: `/patterns/` being pending does not excuse a broken `/patterns/anchor-and-freeze/`.
+
+**Because:** the plan's version cannot go green at the Loop 2 gate and says nothing about it. `NavBar` links five routes from all 90 pages, and real course prose links `/patterns/` and `/resources/` — 925 links to 13 routes that Loop 3 builds. The three ways out are to weaken `lib/links.ts` (D6 explicitly forbids it — a resolver that invents routes is worse than one that fails), to skip the gate, or to name the exemptions with an expiry. Deriving the pattern slugs from `content/` rather than allowlisting the whole `/patterns/` subtree keeps a genuinely broken pattern link broken, and rule 3 is what stops the list becoming permanent: building the route is what deletes the line.
+
+**Affects:**
+- **Loop 3 deletes a line in each of Tasks 10–14** — `/tracks/` in 10, `/patterns/` and the per-slug loop in 11, `/quizzes/` and `/flashcards/` in 12, `/projects/` and `/resources/` in 13, `/certification/` in 14. Forgetting to delete one **fails `verify:3`** with a message naming the line. That is the intended behaviour, not a bug to work around.
+- **The list must be empty before Loop 5 Task 21** walks the Definition of Done. A non-empty list at that point means a route in the spec's route table was never built.
+- **`check-links.mjs` reads `PAGES_BASE_PATH`.** Against a basePath build with the variable unset, every internal link fails at once. The Task 22 workflow must export it for the check step, not only for the build step — the same pairing D9 describes for `NEXT_PUBLIC_BASE_PATH`.
 
 ---
 

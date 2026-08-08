@@ -1038,7 +1038,7 @@ Append Task 1–4 entries to `LOOP-STATE.md`, then **STOP Loop 1 permanently** a
   - `getRoadmap(): { part: number; dir: string; title: string; steps: DocMeta[] }[]` — 7 parts, 17 steps total
   - `getPrevNext(slug: string[]): { prev: DocMeta | null; next: DocMeta | null }`
 
-- [ ] **Step 1: Write `lib/content.ts`**
+- [x] **Step 1: Write `lib/content.ts`**
 
 ```typescript
 import { readFileSync, readdirSync, existsSync } from "node:fs";
@@ -1081,7 +1081,7 @@ export function firstHeading(body: string, fallback: string): string {
 }
 ```
 
-- [ ] **Step 2: Write `lib/docs.ts`**
+- [x] **Step 2: Write `lib/docs.ts`** — shipped with `from "./content.ts"`, not `from "./content"`; see **D5**.
 
 ```typescript
 import { listFiles, readContent, firstHeading } from "./content";
@@ -1194,7 +1194,7 @@ export function getPrevNext(slug: string[]) {
 }
 ```
 
-- [ ] **Step 3: Verify the counts the spec promises**
+- [x] **Step 3: Verify the counts the spec promises**
 
 ```bash
 cd ~/graph-lab && node --experimental-strip-types -e '
@@ -1209,7 +1209,7 @@ import("./lib/docs.ts").then(({ getAllDocs, getRoadmap }) => {
 ```
 Expected: `docs: 86`, `parts: 7`, `steps: 17`, `untitled: 0`. If `steps` is not 17, the step-file regex is wrong — fix it here, not downstream.
 
-- [ ] **Step 4: Typecheck and commit**
+- [x] **Step 4: Typecheck and commit**
 
 ```bash
 cd ~/graph-lab && npm run typecheck
@@ -1228,7 +1228,7 @@ git commit -m "feat: add content and docs loaders — 86 pages, 7 parts, 17 step
 - Consumes: `getAllDocs()` (Task 5).
 - Produces: `resolveContentLink(href: string, fromRepoPath: string): { href: string; external: boolean } | null`. Returns `null` when the link resolves to no known page — Task 9's link check treats that as a failure rather than shipping a dead link. Task 7's rehype plugin is its only caller.
 
-- [ ] **Step 1: Write `lib/links.ts`**
+- [x] **Step 1: Write `lib/links.ts`**
 
 ```typescript
 import { posix } from "node:path";
@@ -1285,7 +1285,7 @@ export function resolveContentLink(
 }
 ```
 
-- [ ] **Step 2: Sanity-check the resolver against real links**
+- [x] **Step 2: Sanity-check the resolver against real links**
 
 ```bash
 cd ~/graph-lab && node --experimental-strip-types -e '
@@ -1304,7 +1304,7 @@ Promise.all([import("./lib/links.ts"), import("./lib/docs.ts")]).then(([L, D]) =
 ```
 Expected: a total in the hundreds and **0 unresolved**. Any `DEAD` line is either a resolver bug or a genuinely broken link in the course repo — read the path and decide which before moving on; if it is a broken course link, fix it in the course repo and re-sync rather than loosening the resolver.
 
-- [ ] **Step 3: Typecheck and commit**
+- [x] **Step 3: Typecheck and commit**
 
 ```bash
 cd ~/graph-lab && npm run typecheck
@@ -1325,7 +1325,7 @@ git commit -m "feat: rewrite relative markdown links to site routes"
 - Consumes: `resolveContentLink` (Task 6).
 - Produces: `renderMarkdown(body: string, repoPath: string): Promise<{ content: React.ReactElement; headings: Heading[] }>` where `Heading = { depth: 2 | 3; id: string; text: string }`. Tasks 8, 11, 13, and 14 all render course markdown through this one function.
 
-- [ ] **Step 1: Write `components/content/GraphDiagram.tsx`**
+- [x] **Step 1: Write `components/content/GraphDiagram.tsx`**
 
 ```tsx
 "use client";
@@ -1392,7 +1392,7 @@ export function GraphDiagram({ chart }: { chart: string }) {
 }
 ```
 
-- [ ] **Step 2: Write `components/content/CodeBlock.tsx`**
+- [x] **Step 2: Write `components/content/CodeBlock.tsx`**
 
 Shiki highlights at build time, so this is a server component with zero client JS. It receives already-highlighted HTML from the rehype pipeline and only supplies the frame plus a copy button.
 
@@ -1415,7 +1415,7 @@ export function CodeBlock({ lang, html, raw }:
 
 Also create `components/ui/CopyButton.tsx` — a `"use client"` button with `navigator.clipboard.writeText(text)`, an `aria-label` of `Copy code`, and a two-second `Copied` state.
 
-- [ ] **Step 3: Write `lib/markdown.ts`**
+- [x] **Step 3: Write `lib/markdown.ts`**
 
 ```typescript
 import { Fragment, type ReactElement } from "react";
@@ -1527,7 +1527,7 @@ export async function renderMarkdown(
 
 Note on `CodeBlock`: `@shikijs/rehype` emits its own `<pre class="shiki">`. Wire `CodeBlock` in by adding a small rehype step after shiki that wraps each `pre.shiki` in a `<code-block lang raw>` element and mapping that in the `components` map above — same mechanism as `graph-diagram`. Keep the raw text on the element before shiki replaces the children.
 
-- [ ] **Step 4: Verify the pipeline against the hardest real page**
+- [x] **Step 4: Verify the pipeline against the hardest real page**
 
 ```bash
 cd ~/graph-lab && node --experimental-strip-types -e '
@@ -1540,7 +1540,7 @@ import("./lib/markdown.ts").then(async (M) => {
 ```
 Expected: a non-zero heading count with real ids and text. An exception here is a pipeline wiring bug — fix before Task 8.
 
-- [ ] **Step 5: Typecheck and commit**
+- [x] **Step 5: Typecheck and commit**
 
 ```bash
 cd ~/graph-lab && npm run typecheck
@@ -1563,19 +1563,19 @@ git commit -m "feat: add remark/rehype render pipeline with Shiki, mermaid, and 
 - Consumes: `getAllDocs`, `getDoc`, `getSidebarTree`, `getPrevNext` (Task 5); `renderMarkdown` (Task 7).
 - Produces: the single component that renders all 86 pages. Every later fix to how a doc renders happens here, never in a per-page component.
 
-- [ ] **Step 1: Write `components/docs/DocSidebar.tsx`**
+- [x] **Step 1: Write `components/docs/DocSidebar.tsx`**
 
 Server component. Takes `{ activeRoute: string }`. Renders `getSidebarTree()` as `<nav aria-label="Course contents">` — one `<details open>` per section, labelled by `group.label`, containing the section's docs as links. The entry matching `activeRoute` gets `aria-current="page"` and an accent left rule. Below 768px the whole sidebar is inside a single collapsed `<details>` labelled `Contents`, so it costs no JavaScript. Sticky at `lg:` and up, `max-h-[calc(100vh-4rem)] overflow-y-auto`.
 
-- [ ] **Step 2: Write `components/docs/DocToc.tsx`**
+- [x] **Step 2: Write `components/docs/DocToc.tsx`**
 
 Client component. Takes `{ headings: Heading[] }`. Renders an `<nav aria-label="On this page">` of h2/h3 anchors, indenting depth 3. Uses an `IntersectionObserver` to mark the heading currently in view with `aria-current="true"`; the observer is skipped entirely when `matchMedia("(prefers-reduced-motion: reduce)").matches` is false is irrelevant — highlight is not motion, so keep it, but do not animate the transition. Renders nothing when `headings.length < 2`.
 
-- [ ] **Step 3: Write `components/docs/DocBreadcrumbs.tsx` and `DocFooterNav.tsx`**
+- [x] **Step 3: Write `components/docs/DocBreadcrumbs.tsx` and `DocFooterNav.tsx`**
 
 `DocBreadcrumbs` takes `{ doc: DocMeta }` and renders `graph-lab / <section label> / <title>` in mono, with the section linking to that section's index route when one exists. `DocFooterNav` takes `{ prev, next }: ReturnType<typeof getPrevNext>` and renders two hairline-ruled blocks — previous on the left, next on the right — each showing `← Previous` / `Next →` in mono above the page title. Renders one side only when the other is `null`.
 
-- [ ] **Step 4: Write `app/docs/[...slug]/page.tsx`**
+- [x] **Step 4: Write `app/docs/[...slug]/page.tsx`**
 
 ```tsx
 import type { Metadata } from "next";
@@ -1621,7 +1621,7 @@ export default async function DocPage({ params }: { params: Promise<{ slug: stri
 
 Add a `.prose-blueprint` block to `app/globals.css` styling `h1`–`h4`, `p`, `ul`, `ol`, `table`, `blockquote`, `details`, and `a` against the Blueprint tokens — mono for headings and inline `code`, sans for prose, hairline `border-rule` on table cells, `details` rendered as a bordered disclosure. This replaces a typography plugin; do not add one.
 
-- [ ] **Step 5: Write `app/docs/page.tsx` for the `/docs/` index**
+- [x] **Step 5: Write `app/docs/page.tsx` for the `/docs/` index**
 
 ```tsx
 import { getDoc, getPrevNext } from "@/lib/docs";
@@ -1645,7 +1645,7 @@ export default async function DocsIndex() {
 }
 ```
 
-- [ ] **Step 6: Build and count the emitted pages**
+- [x] **Step 6: Build and count the emitted pages**
 
 ```bash
 cd ~/graph-lab && npm run build
@@ -1654,7 +1654,7 @@ grep -rl 'graph-diagram\|mermaid' out/docs | wc -l   # expect 20
 ```
 Expected: `86` and `20`. A short count means `generateStaticParams` is dropping pages — fix it before the link check.
 
-- [ ] **Step 7: Commit**
+- [x] **Step 7: Commit**
 
 ```bash
 cd ~/graph-lab
@@ -1673,7 +1673,7 @@ git commit -m "feat: render all 86 doc pages with sidebar, toc, breadcrumbs, and
 - Consumes: the emitted `out/` directory (Task 8).
 - Produces: a non-zero exit on any internal link that resolves to no emitted file. Wired into `verify:2` and every later `verify:N`.
 
-- [ ] **Step 1: Write `scripts/check-links.mjs`**
+- [x] **Step 1: Write `scripts/check-links.mjs`**
 
 ```javascript
 /**
@@ -1742,21 +1742,21 @@ if (broken.length) {
 console.log(`check:links OK — ${checked} internal links across ${files.length} pages all resolve`);
 ```
 
-- [ ] **Step 2: Run the Loop 2 gate**
+- [x] **Step 2: Run the Loop 2 gate**
 
 ```bash
 cd ~/graph-lab && npm run verify:2
 ```
 Expected: every earlier check green, then `check:links OK — <n> internal links across <m> pages all resolve`.
 
-- [ ] **Step 3: Spot-check three pages by eye**
+- [x] **Step 3: Spot-check three pages by eye**
 
 ```bash
 cd ~/graph-lab && npm run dev
 ```
 Open `/docs/00-start-here/`, `/docs/02-foundations/the-two-graphs/` (has a mermaid diagram), and `/docs/09-part-7-staying-grounded/quiz/`. Confirm: diagram renders as SVG in both themes, code blocks are highlighted, the sidebar marks the current page, the ToC tracks scrolling, prev/next work.
 
-- [ ] **Step 4: Commit and record loop state**
+- [x] **Step 4: Commit and record loop state**
 
 ```bash
 cd ~/graph-lab
