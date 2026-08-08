@@ -38,9 +38,10 @@ const PENDING_ROUTES = new Map([
   ["/projects/", "Loop 3 Task 13"],
   ["/resources/", "Loop 3 Task 13"],
   ["/certification/", "Loop 3 Task 14"],
-  ["/quizzes/", "Loop 3 Task 12"],
-  ["/flashcards/", "Loop 3 Task 12"],
 ]);
+// /quizzes/ and /flashcards/ were listed here too. Neither is in the spec's route
+// table and the Loop 2 gate recorded zero links to either, so Task 12 deleted the
+// lines rather than inventing index routes to justify them — see D12.
 
 if (!existsSync(OUT)) {
   console.error("out/ not found. Run `npm run build` first.");

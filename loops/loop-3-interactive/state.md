@@ -131,3 +131,34 @@ _None._
 Working observations that are not yet handoff material — counts seen, oddities noticed, things to confirm. Anything here that turns out to matter to a later loop gets promoted into a task entry's *Next loop needs to know*, or into `../shared/state.md`.
 
 **Entry check:** confirm the Loop 2 row in `../shared/state.md` reads `approved` before Task 10 begins.
+
+---
+
+### Task 12 — Quizzes and flashcards
+
+**Date:** 2026-08-08
+**Landed:** `/quiz/[part]/` × 7 and `/flashcards/[part]/` × 6, both playable and
+both prerendered with their first item already in the HTML. `/tracks/` now links
+each Part panel to its quiz and, where one exists, its flashcard set.
+
+**Files:** created `components/interactive/Quiz.tsx`,
+`components/interactive/Flashcards.tsx`, `app/quiz/[part]/page.tsx`,
+`app/flashcards/[part]/page.tsx`; modified `app/tracks/page.tsx`,
+`scripts/check-links.mjs`.
+
+**Produces:** `Quiz({ part: number; questions: QuizQuestion[] })`,
+`Flashcards({ part: number; cards: Flashcard[] })`. Both import their types from
+`lib/parse-content.ts` — **no second parser was written**; these routes call the
+same `parseQuiz` and `parseFlashcards` that `check-content-shape.mjs` runs in CI.
+
+**Verified by:**
+- `find out/quiz -name index.html | wc -l` → **7**. `find out/flashcards -name index.html | wc -l` → **6**.
+- Per-part, through the shared parsers: questions **3 / 2 / 3 / 2 / 3 / 2 / 2**, cards **6 / 3 / 6 / 5 / 7 / – / 3**. Identical to the counts Loop 1's gate recorded, which is the point of sharing the parser.
+- Part 6 emits a quiz and **no** flashcard page, by design.
+- Rendered text scraped out of `out/quiz/1/index.html`: `PART 1 · QUESTION 1 OF 3 · 0 marked correct so far`, the question title, its body, and the `Reveal the answer` control. Out of `out/flashcards/1/index.html`: `PART 1 · CARD 1 OF 6`, `Term`, the first term, and `Previous` / `Next` / `Shuffle`.
+- `npm run build` → 128 pages. `npm run check:links` → `18568 internal links across 128 pages all resolve`, 0 broken, pending down to **3**.
+- `npm run typecheck` silent; `npm run lint` exit 0.
+
+**Next loop needs to know:** `/flashcards/[part]/` derives its six parts by testing
+for `docs/<dir>/flashcards.md` on disk rather than hardcoding `part !== 6`, so a
+Part that gains a set in the course repo gets a page from a re-sync alone.

@@ -56,6 +56,20 @@ export default function TracksPage() {
                 </li>
               ))}
             </ol>
+            <p className="mono mt-3 border-t border-rule pt-2 text-xs text-muted">
+              <Link href={`/quiz/${part.part}/`} className="hover:text-accent">
+                quiz
+              </Link>
+              {/* Part 6 is quiz-only by design — see D12 and the master plan. */}
+              {part.part !== 6 && (
+                <>
+                  {" · "}
+                  <Link href={`/flashcards/${part.part}/`} className="hover:text-accent">
+                    flashcards
+                  </Link>
+                </>
+              )}
+            </p>
           </Panel>
         ))}
       </div>

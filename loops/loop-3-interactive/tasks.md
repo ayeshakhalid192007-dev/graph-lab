@@ -56,10 +56,10 @@ All components in this loop are **client components**; all persistence is **`loc
 
 **Produces:** `/quiz/[part]/` × 7 and `/flashcards/[part]/` × 6.
 
-- [ ] 12.1 Write `components/interactive/Quiz.tsx` — one question at a time, reveal-answer, running tally
-- [ ] 12.2 Write `components/interactive/Flashcards.tsx` — flip cards with a shuffle control
-- [ ] 12.3 Write both routes
-- [ ] 12.4 Build, verify counts, commit
+- [x] 12.1 Write `components/interactive/Quiz.tsx` — one question at a time, reveal-answer, running tally
+- [x] 12.2 Write `components/interactive/Flashcards.tsx` — flip cards with a shuffle control
+- [x] 12.3 Write both routes
+- [x] 12.4 Build, verify counts, commit
 
 **Task done when:** **7 quizzes** and **6 flashcard sets** are playable. Part 6 having no flashcards is by design — not a bug.
 

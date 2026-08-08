@@ -2164,7 +2164,7 @@ git commit -m "feat: add pattern browser, pattern pages, and on-demand starter v
 - Consumes: `parseQuiz`, `parseFlashcards`, `QuizQuestion`, `Flashcard` from `lib/parse-content.ts` (Loop 1 Task 3) — the same functions `check-content-shape.mjs` runs in CI, so a page can never disagree with the check that guards it. Also `getRoadmap()` (Task 5).
 - Produces: `Quiz` takes `{ part: number; questions: QuizQuestion[] }`; `Flashcards` takes `{ part: number; cards: Flashcard[] }`.
 
-- [ ] **Step 1: Write `components/interactive/Quiz.tsx`**
+- [x] **Step 1: Write `components/interactive/Quiz.tsx`**
 
 ```tsx
 "use client";
@@ -2244,11 +2244,11 @@ export function Quiz({ part, questions }: { part: number; questions: QuizQuestio
 }
 ```
 
-- [ ] **Step 2: Write `components/interactive/Flashcards.tsx`**
+- [x] **Step 2: Write `components/interactive/Flashcards.tsx`**
 
 Client component. One card at a time: term face, `Flip` button (also `Space`/`Enter` on the card itself, which is a `<button>` so it is keyboard-reachable by default), definition face, then `Previous` / `Next` and a `Shuffle` that reorders with Fisher-Yates and resets to the first card. The flip is a CSS transform that is disabled under `prefers-reduced-motion` — the definition still appears, it just does not rotate. Position shown as `CARD 3 OF 6` in mono.
 
-- [ ] **Step 3: Write both routes**
+- [x] **Step 3: Write both routes**
 
 ```tsx
 // app/quiz/[part]/page.tsx
@@ -2279,7 +2279,7 @@ export default async function QuizPage({ params }: { params: Promise<{ part: str
 
 `app/flashcards/[part]/page.tsx` mirrors this with `parseFlashcards` and `flashcards.md`, except `generateStaticParams` filters out Part 6 — it has no flashcards file, by design — so the route emits six pages, not seven.
 
-- [ ] **Step 4: Build, verify counts, commit**
+- [x] **Step 4: Build, verify counts, commit**
 
 ```bash
 cd ~/graph-lab && npm run build
