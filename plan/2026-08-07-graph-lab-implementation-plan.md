@@ -2401,11 +2401,11 @@ Append Task 10–14 entries to `LOOP-STATE.md`, then **STOP Loop 3 permanently**
 - Consumes: `content/docs` and `lib/docs.ts`'s route table.
 - Produces: `public/search-index.json` shaped `{ records: SearchRecord[]; inverted: Record<string, number[]> }` with `SearchRecord = { route: string; title: string; section: string; headings: string[]; excerpt: string }`; `search(index: SearchIndex, query: string, limit?: number): { record: SearchRecord; score: number }[]` from `lib/search.ts`.
 
-- [ ] **Step 1: Write `scripts/build-search-index.mjs`**
+- [x] **Step 1: Write `scripts/build-search-index.mjs`**
 
 Import `lib/docs.ts` (Node 24 strips the types) so the route table has one definition. For each of the 86 docs emit one record: `route`, `title`, `section` label, every `##`/`###` heading text, and a body excerpt — markdown stripped of fences, links reduced to their text, truncated at a word boundary near 300 characters. Build `inverted` over lowercased, de-punctuated tokens of **title and headings only** (not body — that is what keeps the file small). Print the emitted byte size. **If it exceeds 400 KB, drop `excerpt` from every record and re-emit**, printing that the headings-only fallback was taken — this is the spec's stated mitigation, not an improvisation.
 
-- [ ] **Step 2: Write `lib/search.ts`**
+- [x] **Step 2: Write `lib/search.ts`**
 
 ```typescript
 export type SearchRecord = {
@@ -2453,11 +2453,11 @@ export function search(index: SearchIndex, query: string, limit = 20) {
 }
 ```
 
-- [ ] **Step 3: Write `components/ui/SearchDialog.tsx`**
+- [x] **Step 3: Write `components/ui/SearchDialog.tsx`**
 
 Client component. A trigger button showing `Search ⌘K`. Opens a `<dialog>` — real `showModal()`, so focus trapping and `Esc` come from the platform rather than hand-rolled. `Cmd/Ctrl-K` opens it; the listener is registered once in a `useEffect`. **The index is fetched lazily on the first keystroke or first open, never on page load** — that is the whole point of the design. Results group under their `section` label, are keyboard-navigable with arrow keys, and `Enter` navigates. `role="listbox"`/`option`, an `aria-live` count, and an explicit empty state naming the query.
 
-- [ ] **Step 4: Verify search against three known terms**
+- [x] **Step 4: Verify search against three known terms**
 
 ```bash
 cd ~/graph-lab && npm run build:search && ls -la public/search-index.json
@@ -2471,7 +2471,7 @@ import("./lib/search.ts").then(async (S) => {
 ```
 Expected: the file is under 400 KB, and each query's top hit is a page that genuinely is about that term — `glossary` must return `/docs/02-foundations/glossary/` first. If it does not, the scoring is wrong; fix it here.
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 cd ~/graph-lab

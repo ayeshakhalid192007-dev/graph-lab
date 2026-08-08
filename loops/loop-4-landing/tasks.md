@@ -14,12 +14,12 @@ Tasks 15–18. Full detail is in `plan/2026-08-07-graph-lab-implementation-plan.
 
 One record per page: route, title, breadcrumb section, heading list, body excerpt truncated to ~300 characters, plus a compact inverted index over title and heading tokens.
 
-- [ ] 15.1 Write `scripts/build-search-index.mjs` — runs before `next build`
-- [ ] 15.1a **Wire it into `prebuild`** — extend the key to `"prebuild": "npm run build:starters && npm run build:search"`. Loop 1 removed it, Loop 3 Task 11 restored the first half; see **D3** in `../shared/state.md`. Skipping this builds cleanly and silently ships dead search from a clean checkout.
-- [ ] 15.2 Write `lib/search.ts` — scored matching: **title hits > heading hits > body hits**, results grouped by course section
-- [ ] 15.3 Write `components/ui/SearchDialog.tsx` — index loads **lazily** on first keystroke or `Cmd/Ctrl-K`
-- [ ] 15.4 **Verify search against three known terms** — one from a body paragraph, one from a heading, one from a page title
-- [ ] 15.5 Commit
+- [x] 15.1 Write `scripts/build-search-index.mjs` — runs before `next build`
+- [x] 15.1a **Wire it into `prebuild`** — extend the key to `"prebuild": "npm run build:starters && npm run build:search"`. Loop 1 removed it, Loop 3 Task 11 restored the first half; see **D3** in `../shared/state.md`. Skipping this builds cleanly and silently ships dead search from a clean checkout.
+- [x] 15.2 Write `lib/search.ts` — scored matching: **title hits > heading hits > body hits**, results grouped by course section
+- [x] 15.3 Write `components/ui/SearchDialog.tsx` — index loads **lazily** on first keystroke or `Cmd/Ctrl-K`
+- [x] 15.4 **Verify search against three known terms** — one from a body paragraph, one from a heading, one from a page title
+- [x] 15.5 Commit
 
 **Task done when:** all three terms return correct results, and the index is **under ~400 KB** pre-compression. Over that, the fallback is headings-only with body excerpts dropped. **Record the actual size.**
 

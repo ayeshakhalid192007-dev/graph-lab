@@ -2,7 +2,7 @@
 
 Cross-loop state for all five loops. Per-task detail lives in each loop's own `state.md`; this file holds only what **crosses a loop boundary**.
 
-**Status:** Loops 1–2 approved. Loop 3 gate green, awaiting review. Loops 4–5 not started.
+**Status:** Loops 1–3 approved and merged to `main`. Loop 4 in progress. Loop 5 not started.
 
 ---
 
@@ -206,7 +206,7 @@ Against `gate.md`'s "what green must actually mean" — the number, not the word
 
 **Carried forward:** R3, D11, D12. One thing Loop 4 must not skip: **`prebuild` still reads `"npm run build:starters"` alone** — Task 15 extends it to `"npm run build:starters && npm run build:search"`, and D3's failure mode (a clean checkout shipping a dead search box, with local builds looking fine) is unchanged.
 
-**Status:** gate green, awaiting review. Loop 4 not started.
+**Status:** approved 2026-08-08 — merged to `main` as PR #3.
 
 ---
 
@@ -218,8 +218,8 @@ One row per gate, appended when the gate goes green and the loop stops.
 | --- | --- | --- | --- | --- | --- |
 | 1 — Foundation & pipeline | 1–4 | `npm run verify:1` | approved | 2026-08-07 | 224 files pinned to `af5321e3`; 7/7 quizzes, 6/6 flashcard sets; 2 routes exported. D2, D3, D4 recorded. Approved by the user on 2026-08-07 by instruction to start Loop 2. |
 | 2 — Render layer & 86 doc pages | 5–9 | `npm run verify:2` | approved | 2026-08-08 | Branch `loop-2-render`. 86 doc pages, 20 diagrams, 64 code blocks, 17,534 links checked with 0 broken. Repairs R1, R2; decisions D5–D10. Approved by the user on 2026-08-08 by instruction to start Loop 3, the same signal that approved Loop 1. |
-| 3 — Interactive surfaces | 10–14 | `npm run verify:3` | gate green, awaiting review | 2026-08-08 | Branch `loop-3-interactive`. 131 pages, 18,662 links with 0 broken and `PENDING_ROUTES` empty. 4 tracks, 23 patterns, 24 kits, 7 quizzes, 6 flashcard sets, 8 projects, 10 sources, certificate downloaded. Repair R3; decisions D11, D12. |
-| 4 — Landing, identity, search | 15–18 | `npm run verify:4` | not started | — | — |
+| 3 — Interactive surfaces | 10–14 | `npm run verify:3` | approved | 2026-08-08 | Branch `loop-3-interactive`. 131 pages, 18,662 links with 0 broken and `PENDING_ROUTES` empty. 4 tracks, 23 patterns, 24 kits, 7 quizzes, 6 flashcard sets, 8 projects, 10 sources, certificate downloaded. Repair R3; decisions D11, D12. Approved by the user on 2026-08-08 — merged to `main` as PR #3, then instructed to start Loop 4. |
+| 4 — Landing, identity, search | 15–18 | `npm run verify:4` | in progress | — | Branch `loop-4-landing`, off `main` (which now carries Loops 1–3). |
 | 5 — Polish, verify, deploy | 19–22 | `npm run verify:all` | not started | — | — |
 
 Status values: `not started` → `in progress` → `gate green, awaiting review` → `approved`.

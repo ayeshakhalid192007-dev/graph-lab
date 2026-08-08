@@ -1,12 +1,13 @@
 import Link from "next/link";
+import { SearchDialog } from "@/components/ui/SearchDialog";
 import { ThemeToggle } from "@/components/ui/ThemeToggle";
 
 /**
  * Site chrome. A server component — nothing here needs state, and the mobile
  * disclosure is a native <details>, so the menu works with JavaScript off.
  *
- * The SearchDialog trigger belongs between the links and the theme toggle.
- * Loop 4 Task 15 fills that slot; until then it renders nothing.
+ * The SearchDialog trigger sits between the links and the theme toggle, filled
+ * by Loop 4 Task 15. It carries its own dialog and loads the index lazily.
  */
 const LINKS = [
   { href: "/docs/00-start-here/", label: "docs" },
@@ -39,7 +40,7 @@ export function NavBar() {
         </nav>
 
         <div className="ml-auto flex items-center gap-3">
-          {/* SearchDialog trigger slot — Loop 4. */}
+          <SearchDialog />
           <ThemeToggle />
         </div>
       </div>
