@@ -1,6 +1,6 @@
 # Loop 3 state — Interactive Course Surfaces
 
-**Tasks:** 10–14 · **Gate:** `npm run verify:3` · **Status:** not started
+**Tasks:** 10–14 · **Gate:** `npm run verify:3` · **Status:** in progress — Tasks 10–13 done
 
 Per-task log for this loop. Cross-loop material — gate entries, repairs to earlier loops, decisions binding later loops — goes in `../shared/state.md` instead.
 
@@ -109,29 +109,6 @@ half. See `../shared/state.md`.
 
 ---
 
-## Blockers
-
-A blocker stops this loop. Record it here, then stop and report — do not invent an answer and do not work around it silently. Blocked ≠ done.
-
-```markdown
-### B<n> — <short title>, <date>
-
-**Blocked at:** Task <n>, Step <n>.
-**What is needed:** the specific input, decision, or clarification.
-**What was tried:** so the user does not repeat it.
-**Cannot proceed because:** why guessing would be wrong.
-```
-
-_None._
-
----
-
-## Notes
-
-Working observations that are not yet handoff material — counts seen, oddities noticed, things to confirm. Anything here that turns out to matter to a later loop gets promoted into a task entry's *Next loop needs to know*, or into `../shared/state.md`.
-
-**Entry check:** confirm the Loop 2 row in `../shared/state.md` reads `approved` before Task 10 begins.
-
 ---
 
 ### Task 12 — Quizzes and flashcards
@@ -162,3 +139,65 @@ same `parseQuiz` and `parseFlashcards` that `check-content-shape.mjs` runs in CI
 **Next loop needs to know:** `/flashcards/[part]/` derives its six parts by testing
 for `docs/<dir>/flashcards.md` on disk rather than hardcoding `part !== 6`, so a
 Part that gains a set in the course repo gets a page from a re-sync alone.
+
+---
+
+---
+
+### Task 13 — Projects and resources pages
+
+**Date:** 2026-08-08
+**Landed:** `/projects/` — the eight practice projects as cards, each linking into
+`/docs/projects/…` — and `/resources/` — the ten attributed sources plus the
+anti-patterns page. Both `PENDING_ROUTES` lines deleted.
+
+**Files:** created `app/projects/page.tsx`, `app/resources/page.tsx`; modified
+`scripts/check-links.mjs`.
+
+**Verified by:**
+- `/projects/`: the page throws unless it finds exactly 8, and it found **8**. The
+  eight `href="/docs/projects/<slug>/"` links are in the emitted HTML, one per card,
+  and all eight resolve under `check:links`.
+- Card copy is read out of each project page, not written here: the badges are its
+  `**Difficulty:**` and `**Time:**` fields and the excerpt is the opening sentence of
+  its `## The scenario` section. Rendered check on `out/projects/index.html` shows
+  e.g. `Project 1 · Nodes and Edges by Hand / Beginner · 15–20 minutes / You keep a
+  running list of books…`.
+- `/resources/`: the page throws unless `resources/sources.md` yields exactly 10
+  `## N.` headings, and it yielded **10**; `out/resources/index.html` carries 10
+  matching `<h2 id>` anchors. The anti-patterns page renders below it.
+- `npm run build` → 130 pages. `npm run check:links` → `18636 internal links across
+  130 pages all resolve`, 0 broken. **`PENDING_ROUTES` is down to one entry**,
+  `/certification/`, which Task 14 removes.
+- `npm run typecheck` silent; `npm run lint` exit 0.
+
+**Next loop needs to know:** `section === "projects"` matches **17** docs, not 8 —
+the section README and the eight reference solutions under `projects/solutions/`
+share the section. The page filters on `slug.length === 2`. Any later surface
+counting projects needs the same filter.
+
+---
+
+## Blockers
+
+A blocker stops this loop. Record it here, then stop and report — do not invent an answer and do not work around it silently. Blocked ≠ done.
+
+```markdown
+### B<n> — <short title>, <date>
+
+**Blocked at:** Task <n>, Step <n>.
+**What is needed:** the specific input, decision, or clarification.
+**What was tried:** so the user does not repeat it.
+**Cannot proceed because:** why guessing would be wrong.
+```
+
+_None._
+
+---
+
+## Notes
+
+Working observations that are not yet handoff material — counts seen, oddities noticed, things to confirm. Anything here that turns out to matter to a later loop gets promoted into a task entry's *Next loop needs to know*, or into `../shared/state.md`.
+
+**Entry check:** the Loop 2 row read `gate green, awaiting review` when this loop opened. The user's instruction to start Loop 3 is what moved it to `approved` — the same signal recorded against Loop 1 — and the ledger row now says so.
+

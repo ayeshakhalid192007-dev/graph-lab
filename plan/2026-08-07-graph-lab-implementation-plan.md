@@ -2300,15 +2300,15 @@ git commit -m "feat: add 7 quizzes and 6 flashcard sets sharing the CI-guarded p
 **Interfaces:**
 - Consumes: `getAllDocs()`, `readContent`, `renderMarkdown`.
 
-- [ ] **Step 1: Write `app/projects/page.tsx`**
+- [x] **Step 1: Write `app/projects/page.tsx`**
 
 Server component. Takes the docs whose `section === "projects"`, drops the section README, and renders the remaining eight as `<Panel>` cards in a grid — title from `DocMeta.title`, a one-line excerpt taken from the first paragraph after the `#` heading, and a link into `/docs/projects/<slug>/`. Above the grid, render `docs/projects/README.md` through `renderMarkdown` so the section's own framing is course content, not restated site copy. Assert eight cards and throw with the actual count if not.
 
-- [ ] **Step 2: Write `app/resources/page.tsx`**
+- [x] **Step 2: Write `app/resources/page.tsx`**
 
 Server component. Renders `content/resources/sources.md` through `renderMarkdown` (all ten attributed sources, unmodified), then a compact anti-patterns section rendered from `content/docs/operating/anti-patterns.md` — both paths verified to exist on 2026-08-07. Each is rendered, not restated; the page's own contribution is the two section headings and the ordering.
 
-- [ ] **Step 3: Build, verify, commit**
+- [x] **Step 3: Build, verify, commit**
 
 ```bash
 cd ~/graph-lab && npm run build && npm run check:links

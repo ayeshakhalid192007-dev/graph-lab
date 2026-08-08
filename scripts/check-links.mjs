@@ -35,8 +35,6 @@ const basePath = process.env.PAGES_BASE_PATH || "";
  * before Loop 5 Task 21 walks the Definition of Done.
  */
 const PENDING_ROUTES = new Map([
-  ["/projects/", "Loop 3 Task 13"],
-  ["/resources/", "Loop 3 Task 13"],
   ["/certification/", "Loop 3 Task 14"],
 ]);
 // /quizzes/ and /flashcards/ were listed here too. Neither is in the spec's route

@@ -69,9 +69,9 @@ All components in this loop are **client components**; all persistence is **`loc
 
 *Plan: `## Task 13` · 3 steps*
 
-- [ ] 13.1 Write `app/projects/page.tsx` — 8 practice projects as cards, linking into `/docs/projects/…`
-- [ ] 13.2 Write `app/resources/page.tsx` — 10 attributed sources plus the anti-patterns summary
-- [ ] 13.3 Build, verify, commit
+- [x] 13.1 Write `app/projects/page.tsx` — 8 practice projects as cards, linking into `/docs/projects/…`
+- [x] 13.2 Write `app/resources/page.tsx` — 10 attributed sources plus the anti-patterns summary
+- [x] 13.3 Build, verify, commit
 
 **Task done when:** 8 projects and 10 sources render, and every project card's link resolves.
 
