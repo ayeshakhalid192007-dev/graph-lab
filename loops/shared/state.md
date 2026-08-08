@@ -2,7 +2,7 @@
 
 Cross-loop state for all five loops. Per-task detail lives in each loop's own `state.md`; this file holds only what **crosses a loop boundary**.
 
-**Status:** Loops 1–2 approved. Loop 3 in progress. Loops 4–5 not started.
+**Status:** Loops 1–2 approved. Loop 3 gate green, awaiting review. Loops 4–5 not started.
 
 ---
 
@@ -129,6 +129,85 @@ Against `gate.md`'s "what green must actually mean":
 
 **Status:** gate green, awaiting review. Loop 3 not started.
 
+### Loop 3 gate — 2026-08-08
+
+**Command:** `npm run verify:3` → `verify:2` → `verify:1` (`sync:check` → `check:content-shape` → `typecheck` → `build`) → `check:links`
+
+**Output:** exit 0.
+
+```
+> graph-lab@0.1.0 sync:check
+sync:check OK — content/ matches af5321e3
+
+> graph-lab@0.1.0 check:content-shape
+check:content-shape OK — 7 quizzes, 6 flashcard sets parse as expected
+
+> graph-lab@0.1.0 typecheck
+> tsc --noEmit
+(silent)
+
+> graph-lab@0.1.0 build
+> npm run build:starters
+build:starters OK — 24 kits, 124 files
+> next build
+✓ Compiled successfully in 21.6s
+  Finished TypeScript in 7.3s
+✓ Generating static pages using 7 workers (130/130) in 30.8s
+
+Route (app)
+┌ ○ /
+├ ○ /_not-found
+├ ○ /certification
+├ ○ /docs
+├ ● /docs/[...slug]      [+82 more paths]
+├ ● /flashcards/[part]   [+3 more paths]
+├ ○ /patterns
+├ ● /patterns/[slug]     [+20 more paths]
+├ ○ /projects
+├ ● /quiz/[part]         [+4 more paths]
+├ ○ /resources
+└ ○ /tracks
+
+> graph-lab@0.1.0 check:links
+check:links OK — 18662 internal links across 131 pages all resolve
+```
+
+**`PENDING_ROUTES` is empty.** All seven hand-written entries and the derived per-slug block are gone — each deleted by the task that built its route, which is the only thing D10 accepts as a reason to delete one. There is no pending-routes footer under the `check:links` line any more, because there is nothing pending.
+
+Against `gate.md`'s "what green must actually mean" — the number, not the word:
+
+| Claim | Observed |
+| --- | --- |
+| `check:links` reported 0 unresolved internal links | **0** broken of **18,662** checked across 131 pages, and **0 pending** |
+| `sync:check` still diffs 0 files | 0 — but against **256** files now, not 224. See R3 |
+| `tsc --noEmit` clean | silent, exit 0. `npm run lint` also exit 0 |
+| **4 tracks** render; every `firstStepRoute` points at a page that exists | **4**; the Task 10 probe printed `all 4 track routes resolve`, and in the browser G2's card links `/docs/04-part-2-the-dag-of-work/` |
+| **17 roadmap steps** render, `ProgressTracker` records against them | **17** checkboxes. Ticking three moved the bar `Step 0 of 17` → `Step 3 of 17`, `aria-valuenow` 0 → 3, and **a reload came back at 3** |
+| **23 patterns** browse; filters work across category, stage, tool | **23**. `A · Extraction` → 3; `+ B · Resolution` → 6 (OR within a group); `OpenCode` → 7; `OpenCode + storage` → 1 (AND across groups); `E · Checker + storage` → 0 with a message naming which filter to clear |
+| **24 starter kits** have viewable files; the harness switcher works where a kit ships both | **24** payloads, **124 files**. **8 kits ship both** — 7 patterns plus `_template` — and the switcher swapped `.claude/agents` + `.claude/skills/extract-facts` for `opencode` + `opencode/skills/extract-facts` on `document-to-facts`, shared root files staying put. **Before R3 this number was 0**: the sync had dropped every `.claude/` tree |
+| **7 quizzes** playable — reveal-answer and running tally both work | **7** `index.html` under `out/quiz`. Played Part 1 end to end: revealed all three answers, answered had-it / didn't / had-it, tally read 0 → 1 → 1, final screen `You marked 2 of 3 correct.`, `Start over` reset it |
+| **6 flashcard sets** playable, with shuffle. Part 6 has none, by design | **6** under `out/flashcards`; no `/flashcards/6/`. Flip, Next, Previous and Shuffle all worked — shuffle returned the same six terms in a different order |
+| **8 projects** render, each linking into `/docs/projects/…` | **8** cards, 8 distinct `/docs/projects/<slug>/` hrefs, all resolving. The page throws unless it counts exactly 8 |
+| **10 sources** render, plus the anti-patterns summary | **10** `## N.` headings parsed and 10 matching `<h2 id>` anchors emitted; anti-patterns rendered below. The page throws unless it counts exactly 10 |
+| The Graph Ready checklist unlocks at **7 of 7** and a certificate **actually downloaded** | Opened at `0 of 7 met`; the seven labels matched the doc's table verbatim; all seven flipped it to `7 of 7 met` / `SEVEN OF SEVEN · CERTIFICATE UNLOCKED`. Download disabled while the name was empty. **`graph-ready-ayesha-khalid.png` — 185,434 bytes, PNG 1600 × 1200 8-bit RGBA** — downloaded and opened |
+
+**Beyond the gate's list:**
+- The walkthrough ran against the **built static export** served by a plain file server, not `npm run dev`, so what was exercised is what ships.
+- Per-part quiz and flashcard counts came out **3/2/3/2/3/2/2** and **6/3/6/5/7/–/3**, identical to what Loop 1's gate recorded — which is the point of Task 12 importing `parseQuiz`/`parseFlashcards` instead of writing a second parser.
+- `prebuild` was proven rather than assumed: `public/starters/` was deleted outright, and `npm run build` put all 24 payloads back.
+- The only browser console error anywhere was a 404 on `/favicon.ico` from the bare file server. Loop 4 Task 18 owns the icon.
+
+**Tasks completed:**
+- **Task 10** — `lib/tracks.ts`, `TrackSelector`, `ProgressTracker`, `/tracks/`.
+- **Task 11** — `lib/patterns.ts`, `build-starters.mjs`, `PatternBrowser`, `StarterViewer`, both pattern routes; `prebuild` wired; **R3**.
+- **Task 12** — `Quiz`, `Flashcards`, 7 + 6 routes, on the CI-guarded parsers.
+- **Task 13** — `/projects/` and `/resources/`.
+- **Task 14** — `GraphReadyChecklist`, `CertificateGenerator`, `/certification/`, and this gate.
+
+**Carried forward:** R3, D11, D12. One thing Loop 4 must not skip: **`prebuild` still reads `"npm run build:starters"` alone** — Task 15 extends it to `"npm run build:starters && npm run build:search"`, and D3's failure mode (a clean checkout shipping a dead search box, with local builds looking fine) is unchanged.
+
+**Status:** gate green, awaiting review. Loop 4 not started.
+
 ---
 
 ## Gate ledger
@@ -139,7 +218,7 @@ One row per gate, appended when the gate goes green and the loop stops.
 | --- | --- | --- | --- | --- | --- |
 | 1 — Foundation & pipeline | 1–4 | `npm run verify:1` | approved | 2026-08-07 | 224 files pinned to `af5321e3`; 7/7 quizzes, 6/6 flashcard sets; 2 routes exported. D2, D3, D4 recorded. Approved by the user on 2026-08-07 by instruction to start Loop 2. |
 | 2 — Render layer & 86 doc pages | 5–9 | `npm run verify:2` | approved | 2026-08-08 | Branch `loop-2-render`. 86 doc pages, 20 diagrams, 64 code blocks, 17,534 links checked with 0 broken. Repairs R1, R2; decisions D5–D10. Approved by the user on 2026-08-08 by instruction to start Loop 3, the same signal that approved Loop 1. |
-| 3 — Interactive surfaces | 10–14 | `npm run verify:3` | in progress | — | Branch `loop-3-interactive`, off `loop-2-render`. |
+| 3 — Interactive surfaces | 10–14 | `npm run verify:3` | gate green, awaiting review | 2026-08-08 | Branch `loop-3-interactive`. 131 pages, 18,662 links with 0 broken and `PENDING_ROUTES` empty. 4 tracks, 23 patterns, 24 kits, 7 quizzes, 6 flashcard sets, 8 projects, 10 sources, certificate downloaded. Repair R3; decisions D11, D12. |
 | 4 — Landing, identity, search | 15–18 | `npm run verify:4` | not started | — | — |
 | 5 — Polish, verify, deploy | 19–22 | `npm run verify:all` | not started | — | — |
 

@@ -2329,15 +2329,15 @@ git commit -m "feat: add projects and resources pages"
 - Consumes: `content/docs/assessments/graph-ready-certification.md` for the seven criteria — read the file and take the wording from it rather than retyping it.
 - Produces: `GraphReadyChecklist` owns the checked state and renders `CertificateGenerator` itself once all seven are checked; `CertificateGenerator` takes `{ criteria: string[] }`.
 
-- [ ] **Step 1: Write `components/interactive/GraphReadyChecklist.tsx`**
+- [x] **Step 1: Write `components/interactive/GraphReadyChecklist.tsx`**
 
 Client component. Seven `<input type="checkbox">` with real `<label>`s, state persisted to `localStorage` under `graph-lab:graph-ready` and read on mount (same mount-then-read pattern as `ProgressTracker`, for the same hydration reason). A live region announces `4 of 7 met`. All seven checked renders `<CertificateGenerator />`; fewer renders a mono line stating how many remain. The seven criteria strings are passed in as a prop from the page, which parses them out of the doc — the component does not hardcode them.
 
-- [ ] **Step 2: Write `components/interactive/CertificateGenerator.tsx`**
+- [x] **Step 2: Write `components/interactive/CertificateGenerator.tsx`**
 
 Client component. A text `<input>` for the reader's name (labelled `Name on the certificate`, no accounts, nothing sent anywhere), then a `Download certificate` button that draws to a 1600×1200 `<canvas>`: Blueprint dot grid, hairline rule border with corner ticks, `GRAPH READY` in mono, the typed name, the date, and the seven criteria as small mono lines. Export with `canvas.toBlob` → object URL → `<a download="graph-ready-<name>.png">` → `URL.revokeObjectURL`. The button is disabled with an explanatory `aria-describedby` when the name field is empty.
 
-- [ ] **Step 3: Write `app/certification/page.tsx`**
+- [x] **Step 3: Write `app/certification/page.tsx`**
 
 Server component. Renders `content/docs/assessments/graph-ready-certification.md` through `renderMarkdown`, then parses the seven criteria out of that same file's `## The checklist` table — verified 2026-08-07 as a `| # | Item | Where it comes from |` table with rows 1–7. That page states outright that it is authoritative and the component "implements it and does not extend it", so the strings come from the file, never from a constant here.
 
@@ -2364,14 +2364,14 @@ function getCriteria(body: string): string[] {
 }
 ```
 
-- [ ] **Step 4: Run the Loop 3 gate**
+- [x] **Step 4: Run the Loop 3 gate**
 
 ```bash
 cd ~/graph-lab && npm run verify:3
 ```
 Then in `npm run dev`, walk the whole flow by hand: filter the pattern browser to one category and confirm the count; open a kit and switch tools; play a full quiz to the tally; flip and shuffle a flashcard set; check all seven certification boxes, type a name, download the PNG, and open it.
 
-- [ ] **Step 5: Commit and record loop state**
+- [x] **Step 5: Commit and record loop state**
 
 ```bash
 cd ~/graph-lab

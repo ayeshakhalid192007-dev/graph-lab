@@ -1,6 +1,6 @@
 # Loop 3 state — Interactive Course Surfaces
 
-**Tasks:** 10–14 · **Gate:** `npm run verify:3` · **Status:** in progress — Tasks 10–13 done
+**Tasks:** 10–14 · **Gate:** `npm run verify:3` · **Status:** in progress — all five tasks done, gate green
 
 Per-task log for this loop. Cross-loop material — gate entries, repairs to earlier loops, decisions binding later loops — goes in `../shared/state.md` instead.
 
@@ -175,6 +175,70 @@ anti-patterns page. Both `PENDING_ROUTES` lines deleted.
 the section README and the eight reference solutions under `projects/solutions/`
 share the section. The page filters on `slug.length === 2`. Any later surface
 counting projects needs the same filter.
+
+---
+
+---
+
+### Task 14 — Certification
+
+**Date:** 2026-08-08
+**Landed:** `/certification/` — the seven Graph Ready criteria as a persisted
+checklist that unlocks a canvas certificate at seven of seven, plus the defining
+doc rendered below it. `PENDING_ROUTES` is now **empty**.
+
+**Files:** created `components/interactive/GraphReadyChecklist.tsx`,
+`components/interactive/CertificateGenerator.tsx`, `app/certification/page.tsx`;
+modified `scripts/check-links.mjs`, `.gitignore`.
+
+**Produces:** `GraphReadyChecklist({ criteria: string[] })` owns the checked state
+(localStorage `graph-lab:graph-ready`, via `useStoredSet`) and renders
+`CertificateGenerator({ criteria: string[] })` itself once all seven are checked.
+Neither component hardcodes a criterion; the page parses them out of
+`docs/assessments/graph-ready-certification.md` and throws unless it finds
+exactly 7 non-empty rows.
+
+**Verified by — a real walkthrough**, Playwright against the built `out/` served
+on `localhost:8321`, not the dev server:
+
+- **Pattern filters.** `A · Extraction` → `3 patterns` (document-to-facts,
+  code-change-to-graph, conversation-to-claims). Adding `B · Resolution` → `6`, so
+  within a group it ORs. `OpenCode` alone → `7 patterns`, exactly the 7 kits that
+  ship both harnesses. `OpenCode` + `storage` → `1 pattern` (sqlite-backed-graph),
+  so across groups it ANDs. `+ read` → `3`. `E · Checker` + `storage` → `0 patterns`
+  and the named-recovery message *"No pattern matches every filter at once. Clear the
+  category or stage filter to widen the set."*
+- **Starter kit + harness switcher**, on `/patterns/document-to-facts/`: the tree
+  loaded from the fetched JSON as `/`, `.claude/agents`, `.claude/skills/extract-facts`.
+  Clicking **OpenCode** swapped those for `opencode`, `opencode/skills/extract-facts`,
+  with the four shared root files staying put. Opening the OpenCode `SKILL.md` showed
+  `--- name: extract-facts description: OpenCode equivalent of the Claude Code extr…`.
+- **Quiz**, `/quiz/1/`: three questions, revealed each, answered *had it / didn't /
+  had it* → `You marked 2 of 3 correct.` The running tally read `0`, `1`, `1` on the
+  way through. `Start over` returned it to `QUESTION 1 OF 3 · 0 marked correct so far`.
+- **Flashcards**, `/flashcards/1/`: `CARD 1 OF 6`, term `Thin-memory trick`, flipped
+  to its definition, `Next`/`Previous` moved and auto-unflipped. `Shuffle` returned
+  the same six terms in a different order (set-equal, sequence-unequal).
+- **Tracks**: 4 track cards, 17 checkboxes. Expanding G2 revealed its start link
+  `/docs/04-part-2-the-dag-of-work/`. Ticking three steps moved the bar from
+  `Step 0 of 17` / `aria-valuenow="0"` to `Step 3 of 17` / `3` / `width: 17.6471%`,
+  and **a full page reload came back at `Step 3 of 17` with 3 boxes still checked.**
+- **Certification**: opened at `0 of 7 met` with *"7 criteria still to go. The
+  certificate unlocks at 7 of 7."* The seven labels matched the doc's table rows
+  verbatim. Ticking all seven flipped it to `7 of 7 met` and
+  `SEVEN OF SEVEN · CERTIFICATE UNLOCKED`. With the name field empty the download
+  button was `disabled`.
+- **The certificate downloaded.** Typed `Ayesha Khalid`, clicked *Download
+  certificate*, and the browser wrote **`graph-ready-ayesha-khalid.png`** —
+  **185,434 bytes, PNG 1600 × 1200, 8-bit RGBA**. Opened it: Blueprint paper ground,
+  dot grid, hairline border with accent corner ticks, `GRAPH READY` in mono, the
+  name, all seven criteria ticked and numbered, `August 8, 2026`, and
+  `Self-certified · graph-lab`.
+
+**Next loop needs to know:** the certificate is drawn in the **light** palette only,
+regardless of theme. A PNG has no theme to follow and it is meant to be printed on
+white; that is a deliberate choice, not a missed dark-mode pass, and Loop 5 Task 20's
+dual-theme sweep should not "fix" it.
 
 ---
 

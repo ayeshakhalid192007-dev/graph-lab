@@ -35,11 +35,14 @@ const basePath = process.env.PAGES_BASE_PATH || "";
  * before Loop 5 Task 21 walks the Definition of Done.
  */
 const PENDING_ROUTES = new Map([
-  ["/certification/", "Loop 3 Task 14"],
+  // Empty as of Loop 3 Task 14. Every route the spec's route table names is built
+  // except /sitemap.xml, /llms.txt and the landing page, which Loop 4 owns and
+  // which nothing links to by a route this checker would see.
+  //
+  // /quizzes/ and /flashcards/ were listed here too. Neither is in the spec's
+  // route table and the Loop 2 gate recorded zero links to either, so Task 12
+  // deleted the lines rather than inventing index routes to justify them — D12.
 ]);
-// /quizzes/ and /flashcards/ were listed here too. Neither is in the spec's route
-// table and the Loop 2 gate recorded zero links to either, so Task 12 deleted the
-// lines rather than inventing index routes to justify them — see D12.
 
 if (!existsSync(OUT)) {
   console.error("out/ not found. Run `npm run build` first.");

@@ -83,11 +83,11 @@ All components in this loop are **client components**; all persistence is **`loc
 
 **Consumes:** `getRoadmap()` (Task 5).
 
-- [ ] 14.1 Write `components/interactive/GraphReadyChecklist.tsx` — the seven Graph Ready criteria; **all seven unlock the generator**
-- [ ] 14.2 Write `components/interactive/CertificateGenerator.tsx` — renders to canvas, downloads as PNG; name typed in, no accounts
-- [ ] 14.3 Write `app/certification/page.tsx`
-- [ ] 14.4 **Run the Loop 3 gate** — `npm run verify:3`
-- [ ] 14.5 Commit and record loop state
+- [x] 14.1 Write `components/interactive/GraphReadyChecklist.tsx` — the seven Graph Ready criteria; **all seven unlock the generator**
+- [x] 14.2 Write `components/interactive/CertificateGenerator.tsx` — renders to canvas, downloads as PNG; name typed in, no accounts
+- [x] 14.3 Write `app/certification/page.tsx`
+- [x] 14.4 **Run the Loop 3 gate** — `npm run verify:3`
+- [x] 14.5 Commit and record loop state
 
 **Task done when:** the checklist unlocks at seven of seven and a certificate **actually downloads**. Report the downloaded file.
 
@@ -95,11 +95,11 @@ All components in this loop are **client components**; all persistence is **`loc
 
 ## Gate
 
-- [ ] `npm run verify:3` green
-- [ ] All Task 10–14 boxes above ticked
-- [ ] Five entries in `state.md`, one per task
-- [ ] A certificate downloaded and reported
-- [ ] Gate entry appended to `shared/state.md`, row set to `gate green, awaiting review`
-- [ ] **Stopped.** Loop 4 not started.
+- [x] `npm run verify:3` green
+- [x] All Task 10–14 boxes above ticked
+- [x] Five entries in `state.md`, one per task
+- [x] A certificate downloaded and reported
+- [x] Gate entry appended to `shared/state.md`, row set to `gate green, awaiting review`
+- [x] **Stopped.** Loop 4 not started.
 
 See `gate.md`.
