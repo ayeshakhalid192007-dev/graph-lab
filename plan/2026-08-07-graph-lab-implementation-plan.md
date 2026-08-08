@@ -2401,11 +2401,11 @@ Append Task 10–14 entries to `LOOP-STATE.md`, then **STOP Loop 3 permanently**
 - Consumes: `content/docs` and `lib/docs.ts`'s route table.
 - Produces: `public/search-index.json` shaped `{ records: SearchRecord[]; inverted: Record<string, number[]> }` with `SearchRecord = { route: string; title: string; section: string; headings: string[]; excerpt: string }`; `search(index: SearchIndex, query: string, limit?: number): { record: SearchRecord; score: number }[]` from `lib/search.ts`.
 
-- [ ] **Step 1: Write `scripts/build-search-index.mjs`**
+- [x] **Step 1: Write `scripts/build-search-index.mjs`**
 
 Import `lib/docs.ts` (Node 24 strips the types) so the route table has one definition. For each of the 86 docs emit one record: `route`, `title`, `section` label, every `##`/`###` heading text, and a body excerpt — markdown stripped of fences, links reduced to their text, truncated at a word boundary near 300 characters. Build `inverted` over lowercased, de-punctuated tokens of **title and headings only** (not body — that is what keeps the file small). Print the emitted byte size. **If it exceeds 400 KB, drop `excerpt` from every record and re-emit**, printing that the headings-only fallback was taken — this is the spec's stated mitigation, not an improvisation.
 
-- [ ] **Step 2: Write `lib/search.ts`**
+- [x] **Step 2: Write `lib/search.ts`**
 
 ```typescript
 export type SearchRecord = {
@@ -2453,11 +2453,11 @@ export function search(index: SearchIndex, query: string, limit = 20) {
 }
 ```
 
-- [ ] **Step 3: Write `components/ui/SearchDialog.tsx`**
+- [x] **Step 3: Write `components/ui/SearchDialog.tsx`**
 
 Client component. A trigger button showing `Search ⌘K`. Opens a `<dialog>` — real `showModal()`, so focus trapping and `Esc` come from the platform rather than hand-rolled. `Cmd/Ctrl-K` opens it; the listener is registered once in a `useEffect`. **The index is fetched lazily on the first keystroke or first open, never on page load** — that is the whole point of the design. Results group under their `section` label, are keyboard-navigable with arrow keys, and `Enter` navigates. `role="listbox"`/`option`, an `aria-live` count, and an explicit empty state naming the query.
 
-- [ ] **Step 4: Verify search against three known terms**
+- [x] **Step 4: Verify search against three known terms**
 
 ```bash
 cd ~/graph-lab && npm run build:search && ls -la public/search-index.json
@@ -2471,7 +2471,7 @@ import("./lib/search.ts").then(async (S) => {
 ```
 Expected: the file is under 400 KB, and each query's top hit is a page that genuinely is about that term — `glossary` must return `/docs/02-foundations/glossary/` first. If it does not, the scoring is wrong; fix it here.
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 cd ~/graph-lab
@@ -2495,28 +2495,28 @@ git commit -m "feat: add lazily-loaded local site search with scored matching"
 **Interfaces:**
 - Consumes: `getRoadmap()`, `getAllPatterns()`, `getSource()`.
 
-- [ ] **Step 1: Write the copy first, separately**
+- [x] **Step 1: Write the copy first, separately**
 
 Before writing any component, open both `~/graph-engineering-course/README.md` and `content/docs/README.md`, read how each phrases the pitch, and write the landing copy as a **third independent phrasing** — same claim, different sentences. This is the one place in the whole project where new prose is written; the Global Constraints require it be independent of both existing versions. Draft it in `LOOP-STATE.md` under "Landing copy" so the wording is reviewable on its own before it is buried in JSX.
 
-- [ ] **Step 2: Write `components/landing/Hero.tsx`**
+- [x] **Step 2: Write `components/landing/Hero.tsx`**
 
 The drafted headline and subhead, a `PillButton` to `/docs/00-start-here/` and an outline one to `/tracks/`, and a mono stat strip — `86 PAGES · 23 PATTERNS · 24 STARTER KITS · 7 QUIZZES` — with those numbers computed from `getAllDocs().length` and `getAllPatterns().length`, never typed as literals that can rot.
 
-- [ ] **Step 3: Write `Curriculum.tsx`, `PatternGrid.tsx`, `GetStarted.tsx`, `Maintainers.tsx`, `Footer.tsx`**
+- [x] **Step 3: Write `Curriculum.tsx`, `PatternGrid.tsx`, `GetStarted.tsx`, `Maintainers.tsx`, `Footer.tsx`**
 
 `Curriculum` — the seven Parts from `getRoadmap()` as a numbered list of `<Panel>`s with each Part's step count, linking to `/tracks/`. `PatternGrid` — the 23 patterns as a dense mono grid of slug chips linking to their pages, with a link to `/patterns/`. `GetStarted` — three numbered steps (read Start here → pick a track → clone a starter kit) with the clone command in a mono block plus a copy button. `Maintainers` — attribution and a link to the course repo. `Footer` — repo link, licence, and the sync provenance line from `getSource()`: `Content synced from <commit sha, 8 chars> on <syncedAt date>`, which is what makes the pinned-commit lag visible rather than hidden, per the spec's risk section.
 
-- [ ] **Step 4: Write `app/page.tsx`** composing Hero → TwoGraphsSplit (Task 17) → Curriculum → PatternGrid → GetStarted → Maintainers → Footer, each inside a `<Section>`.
+- [x] **Step 4: Write `app/page.tsx`** composing Hero → TwoGraphsSplit (Task 17) → Curriculum → PatternGrid → GetStarted → Maintainers → Footer, each inside a `<Section>`.
 
-- [ ] **Step 5: Build and check the copy against the constraint**
+- [x] **Step 5: Build and check the copy against the constraint**
 
 ```bash
 cd ~/graph-lab && npm run build
 ```
 Then diff the landing copy by eye against both READMEs. Any sentence that appears in either, or is a light paraphrase of one, gets rewritten now.
 
-- [ ] **Step 6: Commit**
+- [x] **Step 6: Commit**
 
 ```bash
 cd ~/graph-lab
@@ -2539,27 +2539,27 @@ git commit -m "feat: add landing page with independently worded site copy"
 - Consumes: nothing from `content/` — these are landing-page site chrome, not doc-page components. Per Global Constraints they are **not** registered for use inside doc pages; doing so would require inventing a marker convention in `docs/`.
 - Produces: `ScrollAnimator` takes `{ children: React.ReactNode; className?: string }` and adds a `.in-view` class when its subtree first intersects the viewport, so every diagram shares one observer implementation.
 
-- [ ] **Step 1: Write `components/ui/ScrollAnimator.tsx`**
+- [x] **Step 1: Write `components/ui/ScrollAnimator.tsx`**
 
 Client component wrapping an `IntersectionObserver` at `threshold: 0.25`, adding `.in-view` once and then disconnecting. **When `matchMedia("(prefers-reduced-motion: reduce)").matches`, it adds `.in-view` immediately on mount and never observes** — reduced motion means the finished state, not no state.
 
-- [ ] **Step 2: Write `TwoGraphsSplit.tsx`**
+- [x] **Step 2: Write `TwoGraphsSplit.tsx`**
 
 Hand-built inline SVG, not mermaid: a work-history graph on the left and a fact graph on the right, split by a hairline rule. Edges draw themselves via `stroke-dasharray`/`stroke-dashoffset` transitioning to 0 under `.in-view`; nodes snap in with a short `transform` transition, staggered by `transition-delay`. Props `{ highlightSide?: "work-history" | "fact" }` dims the other side. Add `role="img"` and an `aria-label` describing what the diagram shows, since the animation carries meaning a screen reader otherwise never gets.
 
-- [ ] **Step 3: Write `LifecycleDiagram.tsx`**
+- [x] **Step 3: Write `LifecycleDiagram.tsx`**
 
 Inline SVG of extraction → resolution → provenance as three linked stages, props `{ activeStage?: "extraction" | "resolution" | "provenance" }`, same draw-in treatment, same `role="img"` + `aria-label`.
 
-- [ ] **Step 4: Write `SubgraphViewer.tsx`**
+- [x] **Step 4: Write `SubgraphViewer.tsx`**
 
 Props `{ fullGraph: { nodes: string[]; edges: [string, string][] }; subgraphNodeIds: string[] }`. Renders the full graph and dims everything outside `subgraphNodeIds`; a toggle button switches between "full graph" and "bounded subgraph" with `aria-pressed`, and the dimming is a color transition, not a layout change, so nothing reflows.
 
-- [ ] **Step 5: Place all three on the landing page and verify reduced motion**
+- [x] **Step 5: Place all three on the landing page and verify reduced motion**
 
 Add `TwoGraphsSplit` after the hero, `LifecycleDiagram` in the curriculum section, `SubgraphViewer` before Get Started. Then verify in the browser with `prefers-reduced-motion: reduce` forced on (Chrome DevTools → Rendering → Emulate CSS media feature): all three must appear fully drawn, immediately, with no animation.
 
-- [ ] **Step 6: Commit**
+- [x] **Step 6: Commit**
 
 ```bash
 cd ~/graph-lab
@@ -2581,27 +2581,27 @@ git commit -m "feat: add three animated landing diagrams with reduced-motion sup
 **Interfaces:**
 - Consumes: `getAllDocs()`, `getAllPatterns()`, `getRoadmap()`.
 
-- [ ] **Step 1: Write `app/sitemap.ts`**
+- [x] **Step 1: Write `app/sitemap.ts`**
 
 Enumerate every emitted route — `/`, the 86 docs, `/tracks/`, `/patterns/` plus 23 pattern pages, 7 quizzes, 6 flashcard sets, `/projects/`, `/resources/`, `/certification/` — from the same loaders the pages use. Read the origin from `NEXT_PUBLIC_SITE_URL`, defaulting to `https://ayeshakhalid192007-dev.github.io/graph-lab`.
 
-- [ ] **Step 2: Write `scripts/generate-llms-txt.mjs`**
+- [x] **Step 2: Write `scripts/generate-llms-txt.mjs`**
 
 Import `lib/docs.ts` so the route list has one definition. Emit `public/llms.txt`: the site name, one line of description, then every route with its title grouped under section headings. Add it to `prebuild` alongside the other two generators.
 
-- [ ] **Step 3: Write `app/not-found.tsx`**
+- [x] **Step 3: Write `app/not-found.tsx`**
 
 Blueprint-styled 404 — mono `404`, one line of copy, links to `/`, `/docs/00-start-here/`, and a hint that `⌘K` searches.
 
-- [ ] **Step 4: Create `public/og-image.png`**
+- [x] **Step 4: Create `public/og-image.png`**
 
 1200×630, original artwork in the Blueprint palette: dot grid, the wordmark in mono, a hairline-ruled panel with corner ticks, a small node-and-edge motif. Generate it deterministically with a small node script writing to canvas, or draw it as SVG and rasterise — either way, **commit the script that produced it** next to the PNG so it can be regenerated rather than becoming an unexplained binary.
 
-- [ ] **Step 5: Wire metadata in `app/layout.tsx`**
+- [x] **Step 5: Wire metadata in `app/layout.tsx`**
 
 Add `metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "https://ayeshakhalid192007-dev.github.io/graph-lab")`, `openGraph` with `images: ["/og-image.png"]`, `type: "website"`, and a matching `twitter: { card: "summary_large_image" }`.
 
-- [ ] **Step 6: Run the Loop 4 gate**
+- [x] **Step 6: Run the Loop 4 gate**
 
 ```bash
 cd ~/graph-lab && npm run verify:4
@@ -2609,7 +2609,7 @@ grep -c '<loc>' out/sitemap.xml    # expect ~130
 head -20 out/llms.txt
 ```
 
-- [ ] **Step 7: Commit and record loop state**
+- [x] **Step 7: Commit and record loop state**
 
 ```bash
 cd ~/graph-lab

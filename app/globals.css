@@ -189,3 +189,43 @@ body {
     scroll-behavior: auto !important;
   }
 }
+
+/* ---- Landing diagrams -------------------------------------------------------
+   Edges draw themselves by retracting stroke-dashoffset; nodes snap in. Both are
+   latched by the .in-view class that ScrollAnimator adds once, so a diagram that
+   has already been seen never re-animates.
+
+   Every shape carries pathLength="1", so one dasharray value works regardless of
+   the real geometry — no measuring, no per-edge custom properties.
+
+   The global prefers-reduced-motion rule above collapses these transitions to
+   0.01ms, and ScrollAnimator adds .in-view on mount rather than on scroll under
+   the same query, so a reduced-motion reader gets the finished diagram instantly
+   (C13). No shadows, no gradients, no glow anywhere in here (C11). */
+.diagram .edge {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  transition: stroke-dashoffset 900ms ease-out;
+}
+.diagram.in-view .edge { stroke-dashoffset: 0; }
+
+.diagram .node {
+  opacity: 0;
+  transform: translateY(4px);
+  transition: opacity 380ms ease-out, transform 380ms ease-out;
+}
+.diagram.in-view .node { opacity: 1; transform: none; }
+
+/* Dimming is a colour change only — never a layout change, so nothing reflows. */
+.diagram .dimmed { opacity: 0.28; transition: opacity 300ms ease-out; }
+
+/* The finished state, reached without JavaScript.
+   ScrollAnimator adds .in-view on mount under reduced motion, but that only runs
+   after hydration — measured: immediately after load the edges were still at
+   stroke-dashoffset 1, so a reduced-motion reader saw a blank frame first. C13
+   asks for the finished diagram, not a late one, so the media query settles it in
+   CSS at first paint and the JS latch becomes a no-op here. */
+@media (prefers-reduced-motion: reduce) {
+  .diagram .edge { stroke-dashoffset: 0; }
+  .diagram .node { opacity: 1; transform: none; }
+}
