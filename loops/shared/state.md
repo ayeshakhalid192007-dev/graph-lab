@@ -2,7 +2,7 @@
 
 Cross-loop state for all five loops. Per-task detail lives in each loop's own `state.md`; this file holds only what **crosses a loop boundary**.
 
-**Status:** Loop 1 complete, gate green, awaiting review. Loops 2–5 not started.
+**Status:** Loop 1 approved. Loop 2 complete, gate green, awaiting review. Loops 3–5 not started.
 
 ---
 
@@ -59,6 +59,76 @@ Against `gate.md`'s "what green must actually mean":
 
 **Status:** gate green, awaiting review.
 
+### Loop 2 gate — 2026-08-08
+
+**Command:** `npm run verify:2` → `verify:1` (`sync:check` → `check:content-shape` → `typecheck` → `build`) → `check:links`
+
+**Output:** exit 0.
+
+```
+> graph-lab@0.1.0 sync:check
+sync:check OK — content/ matches af5321e3
+
+> graph-lab@0.1.0 check:content-shape
+check:content-shape OK — 7 quizzes, 6 flashcard sets parse as expected
+
+> graph-lab@0.1.0 typecheck
+> tsc --noEmit
+(silent)
+
+> graph-lab@0.1.0 build
+> next build
+✓ Compiled successfully in 13.2s
+  Finished TypeScript in 5.6s
+✓ Generating static pages using 6 workers (89/89) in 19.1s
+
+Route (app)
+┌ ○ /
+├ ○ /_not-found
+├ ○ /docs
+└ ● /docs/[...slug]
+  └ [+82 more paths]
+
+> graph-lab@0.1.0 check:links
+check:links OK — 17534 internal links across 90 pages all resolve
+
+925 links point at 13 routes not built yet (see PENDING_ROUTES):
+  /certification/     180 links   Loop 3 Task 14
+  /patterns/          186 links   Loop 3 Task 11
+  /patterns/<8 slugs>  12 links   Loop 3 Task 11
+  /projects/          180 links   Loop 3 Task 13
+  /resources/         187 links   Loop 3 Task 13
+  /tracks/            180 links   Loop 3 Task 10
+```
+
+Against `gate.md`'s "what green must actually mean":
+
+| Claim | Observed |
+| --- | --- |
+| `next build` emitted 86 doc pages plus the `/docs/` index | **86** `index.html` under `out/docs`; 89 routes, 90 HTML files counting `/_not-found` |
+| `check:links` reported 0 unresolved internal links | **0** broken of **17,534** checked; 925 more point at 13 routes Loop 3 builds, each named with its owning task |
+| `sync:check` still diffs 0 files | 0, against `af5321e3` — Loop 2 did not touch `content/` |
+| `check:content-shape` still parses 7/7 and 6/6 | 7 quizzes, 6 flashcard sets |
+| `tsc --noEmit` clean | silent, exit 0 |
+| 20 mermaid fences across 20 files, each a `GraphDiagram` | **20**, and the 20 emitted routes set-compare *exactly* to the 20 source files (Task 8) |
+| Every other fence highlighted by Shiki — 41 markdown, 23 other | **64** blocks: 41 markdown, 15 json, 3 yaml, 3 text, 2 jsonl (Task 7) |
+| Three pages spot-checked by eye | **Four**, in both themes — see Task 9 in `../loop-2-render/state.md` |
+
+**Beyond the gate's list:**
+- **The link check was observed going red**, twice: an injected `<a href="/docs/no-such-page/">` gave `FAILED — 1 of 17535`, exit 1; a `PENDING_ROUTES` entry for a route that *does* exist gave `FAILED — 1 PENDING_ROUTES entries are now built and must be deleted`, exit 1. Both green again after reverting.
+- **Re-run under `basePath`:** built and checked with `PAGES_BASE_PATH=/graph-lab` — identical 17,534 / 90 / 925. D9's arrangement holds for the checker too.
+
+**Tasks completed:**
+- **Task 5** — `lib/content.ts`, `lib/docs.ts`: 86 docs, 7 parts, 17 steps, 0 untitled, 17 sidebar sections.
+- **Task 6** — `lib/links.ts`: 272 links across all 86 docs, 0 unresolved, after fixing two dead-route bugs in the plan's listing (D6).
+- **Task 7** — the render pipeline: run over all 86 pages, 0 failures; 20 diagrams, 64 code blocks, 501 headings, 272 anchors (265 internal, 7 external).
+- **Task 8** — the doc route: 86 pages emitted, sidebar and prev/next on all 86, breadcrumbs on 85, ToC on 66, 16 KB gzipped per page.
+- **Task 9** — `check-links.mjs` and this gate.
+
+**Carried forward:** D5–D9 (see below). One list Loop 3 must empty as it goes: **`PENDING_ROUTES` in `scripts/check-links.mjs`**, one line per task, failing the build if a line outlives the route it excuses.
+
+**Status:** gate green, awaiting review. Loop 3 not started.
+
 ---
 
 ## Gate ledger
@@ -68,7 +138,7 @@ One row per gate, appended when the gate goes green and the loop stops.
 | Loop | Tasks | Gate command | Status | Date | Notes |
 | --- | --- | --- | --- | --- | --- |
 | 1 — Foundation & pipeline | 1–4 | `npm run verify:1` | approved | 2026-08-07 | 224 files pinned to `af5321e3`; 7/7 quizzes, 6/6 flashcard sets; 2 routes exported. D2, D3, D4 recorded. Approved by the user on 2026-08-07 by instruction to start Loop 2. |
-| 2 — Render layer & 86 doc pages | 5–9 | `npm run verify:2` | in progress | 2026-08-07 | Branch `loop-2-render`, off `loop-1-foundation`. |
+| 2 — Render layer & 86 doc pages | 5–9 | `npm run verify:2` | gate green, awaiting review | 2026-08-08 | Branch `loop-2-render`. 86 doc pages, 20 diagrams, 64 code blocks, 17,534 links checked with 0 broken. Repairs R1, R2; decisions D5–D9. |
 | 3 — Interactive surfaces | 10–14 | `npm run verify:3` | not started | — | — |
 | 4 — Landing, identity, search | 15–18 | `npm run verify:4` | not started | — | — |
 | 5 — Polish, verify, deploy | 19–22 | `npm run verify:all` | not started | — | — |
@@ -233,6 +303,23 @@ Keeping `links.ts` pure matters for Task 9: `check-links.mjs` reasons about logi
 **Affects:**
 - **Loop 3 and Loop 4: any hand-built `href` or `src` string must go through `withBasePath()`.** Anything rendered by `next/link` is already handled. The ones to watch are `fetch("/search-index.json")` in Loop 4 Task 15 and the starter-kit payload fetches in Loop 3 Task 11 — neither is an href Next controls.
 - **`withBasePath()` reads `NEXT_PUBLIC_BASE_PATH`, while `next.config.ts` reads `PAGES_BASE_PATH`.** Two variables, deliberately: `PAGES_BASE_PATH` is not readable from client components. The plan's Task 22 workflow sets **both**, and they must stay equal — if only one is set, half the links get a prefix and half do not, and the local build will not show it.
+
+### D10 — `check-links.mjs` carries a `PENDING_ROUTES` list that Loop 3 empties line by line, 2026-08-08, Loop 2
+
+**Decision:** `scripts/check-links.mjs` deviates from the plan's Task 9 listing in three ways.
+
+1. It scans `src="…"` as well as `href="…"`.
+2. It holds a `PENDING_ROUTES` map of routes that are linked to but deliberately not built yet, each valued with the task that builds it. A hit is reported as pending rather than broken.
+3. **A `PENDING_ROUTES` entry whose route now exists fails the check.** The list can only shrink.
+
+Seven entries are hand-written — `/tracks/`, `/patterns/`, `/projects/`, `/resources/`, `/certification/`, `/quizzes/`, `/flashcards/` — and one more is derived per pattern and starter slug found in `content/`, so `/patterns/<slug>/` is pending only for slugs that really exist. Entries are exact routes, never prefixes: `/patterns/` being pending does not excuse a broken `/patterns/anchor-and-freeze/`.
+
+**Because:** the plan's version cannot go green at the Loop 2 gate and says nothing about it. `NavBar` links five routes from all 90 pages, and real course prose links `/patterns/` and `/resources/` — 925 links to 13 routes that Loop 3 builds. The three ways out are to weaken `lib/links.ts` (D6 explicitly forbids it — a resolver that invents routes is worse than one that fails), to skip the gate, or to name the exemptions with an expiry. Deriving the pattern slugs from `content/` rather than allowlisting the whole `/patterns/` subtree keeps a genuinely broken pattern link broken, and rule 3 is what stops the list becoming permanent: building the route is what deletes the line.
+
+**Affects:**
+- **Loop 3 deletes a line in each of Tasks 10–14** — `/tracks/` in 10, `/patterns/` and the per-slug loop in 11, `/quizzes/` and `/flashcards/` in 12, `/projects/` and `/resources/` in 13, `/certification/` in 14. Forgetting to delete one **fails `verify:3`** with a message naming the line. That is the intended behaviour, not a bug to work around.
+- **The list must be empty before Loop 5 Task 21** walks the Definition of Done. A non-empty list at that point means a route in the spec's route table was never built.
+- **`check-links.mjs` reads `PAGES_BASE_PATH`.** Against a basePath build with the variable unset, every internal link fails at once. The Task 22 workflow must export it for the check step, not only for the build step — the same pairing D9 describes for `NEXT_PUBLIC_BASE_PATH`.
 
 ---
 

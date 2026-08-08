@@ -88,10 +88,10 @@ Tasks 5–9. Full detail is in `plan/2026-08-07-graph-lab-implementation-plan.md
 
 **Produces:** the link check that runs against the emitted `out/`, wired into `verify:2` and every later gate.
 
-- [ ] 9.1 Write `scripts/check-links.mjs`
-- [ ] 9.2 **Run the Loop 2 gate** — `npm run verify:2`
-- [ ] 9.3 **Spot-check three pages by eye** — not just green output
-- [ ] 9.4 Commit and record loop state
+- [x] 9.1 Write `scripts/check-links.mjs`
+- [x] 9.2 **Run the Loop 2 gate** — `npm run verify:2`
+- [x] 9.3 **Spot-check three pages by eye** — not just green output
+- [x] 9.4 Commit and record loop state
 
 **Task done when:** `verify:2` is green and three real pages have been looked at.
 
@@ -99,10 +99,10 @@ Tasks 5–9. Full detail is in `plan/2026-08-07-graph-lab-implementation-plan.md
 
 ## Gate
 
-- [ ] `npm run verify:2` green
-- [ ] All Task 5–9 boxes above ticked
-- [ ] Five entries in `state.md`, one per task, with the shipped interface signatures
-- [ ] Gate entry appended to `shared/state.md`, row set to `gate green, awaiting review`
-- [ ] **Stopped.** Loop 3 not started.
+- [x] `npm run verify:2` green
+- [x] All Task 5–9 boxes above ticked
+- [x] Five entries in `state.md`, one per task, with the shipped interface signatures
+- [x] Gate entry appended to `shared/state.md`, row set to `gate green, awaiting review`
+- [x] **Stopped.** Loop 3 not started.
 
 See `gate.md`.

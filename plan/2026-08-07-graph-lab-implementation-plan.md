@@ -1673,7 +1673,7 @@ git commit -m "feat: render all 86 doc pages with sidebar, toc, breadcrumbs, and
 - Consumes: the emitted `out/` directory (Task 8).
 - Produces: a non-zero exit on any internal link that resolves to no emitted file. Wired into `verify:2` and every later `verify:N`.
 
-- [ ] **Step 1: Write `scripts/check-links.mjs`**
+- [x] **Step 1: Write `scripts/check-links.mjs`**
 
 ```javascript
 /**
@@ -1742,21 +1742,21 @@ if (broken.length) {
 console.log(`check:links OK — ${checked} internal links across ${files.length} pages all resolve`);
 ```
 
-- [ ] **Step 2: Run the Loop 2 gate**
+- [x] **Step 2: Run the Loop 2 gate**
 
 ```bash
 cd ~/graph-lab && npm run verify:2
 ```
 Expected: every earlier check green, then `check:links OK — <n> internal links across <m> pages all resolve`.
 
-- [ ] **Step 3: Spot-check three pages by eye**
+- [x] **Step 3: Spot-check three pages by eye**
 
 ```bash
 cd ~/graph-lab && npm run dev
 ```
 Open `/docs/00-start-here/`, `/docs/02-foundations/the-two-graphs/` (has a mermaid diagram), and `/docs/09-part-7-staying-grounded/quiz/`. Confirm: diagram renders as SVG in both themes, code blocks are highlighted, the sidebar marks the current page, the ToC tracks scrolling, prev/next work.
 
-- [ ] **Step 4: Commit and record loop state**
+- [x] **Step 4: Commit and record loop state**
 
 ```bash
 cd ~/graph-lab

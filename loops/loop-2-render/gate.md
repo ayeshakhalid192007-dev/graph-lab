@@ -20,14 +20,14 @@ Cumulative on purpose — Loop 2 cannot silently break Loop 1's content checks.
 
 Read the output. Record the number, not the word:
 
-- [ ] `next build` emitted **86 doc pages** at `/docs/[...slug]/`, plus the `/docs/` index
-- [ ] `check:links` reported **0 unresolved internal links**
-- [ ] `sync:check` still diffs **0 files** — Loop 2 did not touch `content/`
-- [ ] `check:content-shape` still parses **7/7 quizzes** and **6/6 flashcard sets**
-- [ ] `tsc --noEmit` clean
-- [ ] **20 mermaid fences** found across **20 files**, each rendering as `GraphDiagram`
-- [ ] Every other fence syntax-highlighted by Shiki — **41 markdown**, **23 json/yaml/text/jsonl**
-- [ ] Three pages spot-checked **by eye** (Task 9.3), not just by exit code
+- [x] `next build` emitted **86 doc pages** at `/docs/[...slug]/`, plus the `/docs/` index
+- [x] `check:links` reported **0 unresolved internal links**
+- [x] `sync:check` still diffs **0 files** — Loop 2 did not touch `content/`
+- [x] `check:content-shape` still parses **7/7 quizzes** and **6/6 flashcard sets**
+- [x] `tsc --noEmit` clean
+- [x] **20 mermaid fences** found across **20 files**, each rendering as `GraphDiagram`
+- [x] Every other fence syntax-highlighted by Shiki — **41 markdown**, **23 json/yaml/text/jsonl**
+- [x] Three pages spot-checked **by eye** (Task 9.3), not just by exit code
 
 ---
 
@@ -43,14 +43,14 @@ From `shared/goal.md`. Not ticked here — Loop 5 Task 21 ticks them against the
 
 ## Before stopping
 
-- [ ] Every Task 5–9 checkbox in `tasks.md` ticked
-- [ ] Corresponding step checkboxes ticked in the plan
-- [ ] Five task entries in `state.md`, each with real verification output
-- [ ] **The shipped signatures from Tasks 5, 6, and 7 recorded** — Loops 3 and 4 import them by name
-- [ ] Gate entry appended to `shared/state.md`
-- [ ] Loop 2 row set to `gate green, awaiting review`
-- [ ] Any repairs, decisions, or blockers recorded
-- [ ] Committed
+- [x] Every Task 5–9 checkbox in `tasks.md` ticked
+- [x] Corresponding step checkboxes ticked in the plan
+- [x] Five task entries in `state.md`, each with real verification output
+- [x] **The shipped signatures from Tasks 5, 6, and 7 recorded** — Loops 3 and 4 import them by name
+- [x] Gate entry appended to `shared/state.md`
+- [x] Loop 2 row set to `gate green, awaiting review`
+- [x] Any repairs, decisions, or blockers recorded
+- [x] Committed
 
 ---
 
