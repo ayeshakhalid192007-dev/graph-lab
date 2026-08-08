@@ -10,13 +10,12 @@
  * Usage: npm run build && npm run check:links
  */
 import { readdir, readFile } from "node:fs/promises";
-import { existsSync, readdirSync } from "node:fs";
+import { existsSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 const OUT = join(root, "out");
-const CONTENT = join(root, "content");
 const basePath = process.env.PAGES_BASE_PATH || "";
 
 /**
@@ -36,35 +35,12 @@ const basePath = process.env.PAGES_BASE_PATH || "";
  * before Loop 5 Task 21 walks the Definition of Done.
  */
 const PENDING_ROUTES = new Map([
-  ["/patterns/", "Loop 3 Task 11"],
   ["/projects/", "Loop 3 Task 13"],
   ["/resources/", "Loop 3 Task 13"],
   ["/certification/", "Loop 3 Task 14"],
   ["/quizzes/", "Loop 3 Task 12"],
   ["/flashcards/", "Loop 3 Task 12"],
 ]);
-
-// The 23 pattern specs and 24 starter kits each own a /patterns/<slug>/ page that
-// Loop 3 Task 11 builds. Deriving the slugs from content/ rather than listing them
-// keeps rule 1 intact: this is the same set lib/links.ts validates against, so a
-// link to a pattern that does not exist is still broken, not pending.
-for (const slug of knownPatternSlugs()) {
-  PENDING_ROUTES.set(`/patterns/${slug}/`, "Loop 3 Task 11");
-}
-
-function knownPatternSlugs() {
-  const slugs = new Set();
-  for (const entry of readdirSync(join(CONTENT, "patterns"), { withFileTypes: true })) {
-    if (entry.isFile() && entry.name.endsWith(".md")) {
-      const slug = entry.name.slice(0, -".md".length);
-      if (slug !== "README" && slug !== "pattern-template") slugs.add(slug);
-    }
-  }
-  for (const entry of readdirSync(join(CONTENT, "starters"), { withFileTypes: true })) {
-    if (entry.isDirectory() && !entry.name.startsWith("_")) slugs.add(entry.name);
-  }
-  return slugs;
-}
 
 if (!existsSync(OUT)) {
   console.error("out/ not found. Run `npm run build` first.");

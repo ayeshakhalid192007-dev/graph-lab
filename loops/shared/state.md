@@ -184,6 +184,18 @@ Template:
 
 **Verified by:** `npm run lint` exit 0; the emitted HTML carries both labels and the `sr-only` phrases, and the toggle is the only `<button>` on a doc page without an `aria-label` — correctly, because it now names itself from its content.
 
+### R3 — Loop 3 repaired Loop 1: the sync dropped every starter kit's Claude Code half, 2026-08-08
+
+**Symptom:** no starter kit in `content/` ships a `.claude/` tree. Only 8 of the 24 kits had any harness files at all, all of them `opencode/`. Found at Task 11 Step 4, where the gate requires "the Claude Code / OpenCode switcher works where a kit ships both" — and *no* kit shipped both, so the switcher could never render. Loop 1's own gate entry records this in passing as "the only differences being the `.claude/` dotfile dirs the script deliberately skips", read at the time as harmless.
+
+**Cause:** Task 2's `scripts/sync-docs.mjs` walked with `if (entry.name.startsWith(".") || entry.name === "node_modules") continue;`. A blanket leading-dot test is the right instinct for `.git` and `.DS_Store`, but the course repo puts each kit's Claude Code half at `starters/<slug>/.claude/skills/…` and `.claude/agents/…`. Confirmed against the pinned commit: `git ls-tree -r af5321e3 -- starters` lists **32 `.claude/` files across all 24 kits**, none of which reached `content/`. `lib/content.ts`'s `listFiles()` carried the same skip, so even a re-sync would have stayed invisible to the site.
+
+**Fix:** the walk now uses an explicit denylist — `.git`, `.gitignore`, `.DS_Store`, `node_modules` — instead of a leading-dot test, and `listFiles()` no longer skips dot entries. Re-synced with `SYNC_PINNED=1` so the content stayed on `af5321e3` rather than drifting to whatever the course repo's `main` holds today.
+
+**Verified by:** `content/` went from 224 to **256** files, the difference being exactly the 32 `.claude/` files. `npm run sync:check` → `sync:check OK — content/ matches af5321e3`, so the byte-for-byte guarantee still holds at the same pin. `npm run build:starters` → `24 kits, 124 files`, and **8 kits now carry both a `.claude/` and an `opencode/` tree** — the 7 patterns whose frontmatter declares `tools: [Claude Code, OpenCode]`, plus `_template`. Those 7 pattern pages render the harness switcher.
+
+**Worth noting:** the four synced trees contain no other dot entries, so this skip was dropping the Claude Code side of the pattern library and nothing else.
+
 ---
 
 ## Decisions
@@ -336,3 +348,19 @@ _None yet._
 The spec is authoritative. Anything this build does differently, and why, goes here so the gap is visible rather than silent.
 
 _None yet._
+
+### D11 — the pattern browser's "tool" filter is real frontmatter, not `core`/`extended`, 2026-08-08, Loop 3
+
+**Decision:** `PatternMeta` gains `tools: string[]`, read from each pattern spec's own YAML frontmatter with `gray-matter`. `getPatternFacets().tools` returns `["Claude Code", "OpenCode"]`, derived from the specs rather than hardcoded. `core` stays on `PatternMeta` and is shown on each card as `core` / `extended`, but it is **not** the tool filter.
+
+**Because:** the plan's Task 11 Step 1 states outright *"There is no `tool` field — the spec's 'tool' filter is `core: true` (core) vs `false` (extended)."* That conclusion was drawn from `registry.yaml`, which indeed has no tool field. But the spec's line 185 says `PatternBrowser` "Filters across category A–G, stage, and tool", and every pattern spec's frontmatter carries `tools: [Claude Code]` or `tools: [Claude Code, OpenCode]` — 16 and 7 of the 23 respectively. Spec beats plan, and a real field beats a proxy: filtering by `core` would have answered a different question than the one the filter is labelled with, and it would have been unfalsifiable, since nothing would look broken. The 7 patterns declaring both tools are exactly the 7 kits that ship both a `.claude/` and an `opencode/` tree, so the frontmatter is accurate.
+
+**Affects:** anything reading `PatternMeta`. `getPatternFacets()` now returns tool *names*, not the `["core", "extended"] as const` tuple the plan listed, so its `tools` field is `string[]` and not a literal union. Loop 4's landing-page pattern grid should use `core` for "the core kit" framing and `tools` only where it means the harness.
+
+### D12 — `/quizzes/` and `/flashcards/` index routes are not built, 2026-08-08, Loop 3
+
+**Decision:** Task 12 deletes the `/quizzes/` and `/flashcards/` lines from `PENDING_ROUTES` without building either route. Only the per-Part routes `/quiz/[part]/` and `/flashcards/[part]/` are built.
+
+**Because:** the spec's route table has no index route for either — it lists `/quiz/[part]/` and `/flashcards/[part]/` and nothing else. The two entries were written into `PENDING_ROUTES` speculatively at Loop 2 Task 9, and the Loop 2 gate output confirms they were never hit: the 925 pending links resolved to 13 other routes, zero to these two. Deleting an entry nothing links to removes a line that could only ever grant a silent exemption. D10's rule 3 is satisfied either way — the routes do not exist, so the entries are not stale, they are simply unnecessary.
+
+**Affects:** the Parts are reachable through `/tracks/`, which links each Part panel to its quiz and flashcard set, and through the doc pages themselves. If Loop 4 or Loop 5 wants a "all quizzes" landing surface it is new work against the spec, not a route this loop skipped.

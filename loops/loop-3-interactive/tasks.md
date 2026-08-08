@@ -36,13 +36,13 @@ All components in this loop are **client components**; all persistence is **`loc
 
 **Produces:** `/patterns/` and `/patterns/[slug]/`, plus `public/starters/<slug>.json` payloads.
 
-- [ ] 11.1 Write `lib/patterns.ts` — registry + pattern specs + starter kits
-- [ ] 11.2 Write `scripts/build-starters.mjs` — emits per-kit JSON so files load on demand rather than inlining into pages
-- [ ] 11.2a **Wire it into `prebuild`** — add `"prebuild": "npm run build:starters"` to `package.json`. Loop 1 removed that key because it named scripts that did not exist yet; see **D3** in `../shared/state.md`. Skipping this builds cleanly and silently ships an empty pattern browser from a clean checkout.
-- [ ] 11.3 Write `components/interactive/PatternBrowser.tsx` — filters across category A–G, stage, and tool
-- [ ] 11.4 Write `components/interactive/StarterViewer.tsx` — file tree + content pane, with a Claude Code / OpenCode switcher where the kit ships both
-- [ ] 11.5 Write both pattern routes
-- [ ] 11.6 Build, verify counts, commit
+- [x] 11.1 Write `lib/patterns.ts` — registry + pattern specs + starter kits
+- [x] 11.2 Write `scripts/build-starters.mjs` — emits per-kit JSON so files load on demand rather than inlining into pages
+- [x] 11.2a **Wire it into `prebuild`** — add `"prebuild": "npm run build:starters"` to `package.json`. Loop 1 removed that key because it named scripts that did not exist yet; see **D3** in `../shared/state.md`. Skipping this builds cleanly and silently ships an empty pattern browser from a clean checkout.
+- [x] 11.3 Write `components/interactive/PatternBrowser.tsx` — filters across category A–G, stage, and tool
+- [x] 11.4 Write `components/interactive/StarterViewer.tsx` — file tree + content pane, with a Claude Code / OpenCode switcher where the kit ships both
+- [x] 11.5 Write both pattern routes
+- [x] 11.6 Build, verify counts, commit
 
 **Task done when:** **23 patterns** browse and filter correctly, and all **24 starter kits** have viewable files.
 

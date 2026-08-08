@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
-import { useEffect, useState } from "react";
 import type { DocMeta } from "@/lib/docs.ts";
+import { useStoredSet } from "@/lib/use-stored-set.ts";
 
 const KEY = "graph-lab:progress";
 
@@ -9,36 +9,12 @@ const KEY = "graph-lab:progress";
  * Reading progress across the 17 roadmap steps, kept in localStorage.
  *
  * No accounts, no backend — the spec's non-goals are explicit about it. The set is
- * read once on mount rather than during render so the server-rendered markup and
- * the first client render agree.
- *
- * Loop 4 reuses this on the landing page; the props are `{ steps: DocMeta[] }` and
- * nothing else, so the caller decides which steps are in scope.
+ * a DocMeta.route per completed step, so the caller decides which steps count;
+ * Loop 4 reuses this component on the landing page with the same single prop.
  */
 export function ProgressTracker({ steps }: { steps: DocMeta[] }) {
-  const [done, setDone] = useState<Set<string>>(new Set());
-  const [ready, setReady] = useState(false);
-
-  useEffect(() => {
-    try {
-      setDone(new Set(JSON.parse(localStorage.getItem(KEY) ?? "[]") as string[]));
-    } catch {
-      /* corrupt value — start clean rather than throwing on every page */
-    }
-    setReady(true);
-  }, []);
-
-  function toggle(route: string) {
-    setDone((prev) => {
-      const next = new Set(prev);
-      if (next.has(route)) next.delete(route);
-      else next.add(route);
-      localStorage.setItem(KEY, JSON.stringify([...next]));
-      return next;
-    });
-  }
-
-  const count = ready ? steps.filter((s) => done.has(s.route)).length : 0;
+  const { values: done, toggle } = useStoredSet(KEY);
+  const count = steps.filter((s) => done.has(s.route)).length;
 
   return (
     <div>

@@ -50,6 +50,65 @@ rather than adding two more `PENDING_ROUTES` entries to a list D10 says can only
 
 ---
 
+### Task 11 — Pattern browser and starter viewer
+
+**Date:** 2026-08-08
+**Landed:** `/patterns/` with a three-facet filter over all 23 specs, 23
+`/patterns/<slug>/` pages rendering the spec through `renderMarkdown`, and a
+starter viewer that fetches each kit's real files on demand. `prebuild` is wired.
+Along the way, **repair R3**: the sync had been dropping every kit's Claude Code
+half. See `../shared/state.md`.
+
+**Files:** created `lib/patterns.ts`, `lib/use-stored-set.ts`,
+`scripts/build-starters.mjs`, `components/interactive/PatternBrowser.tsx`,
+`components/interactive/StarterViewer.tsx`, `app/patterns/page.tsx`,
+`app/patterns/[slug]/page.tsx`; modified `scripts/sync-docs.mjs` (R3),
+`lib/content.ts` (R3), `content/` (re-synced, 224 → 256 files, same pinned commit),
+`components/interactive/ProgressTracker.tsx` (rewritten onto `useStoredSet`),
+`package.json` (`prebuild`), `.gitignore`, `scripts/check-links.mjs`.
+
+**Produces:**
+- `PatternMeta = { slug; category; stage; cost; core; tools: string[]; title }`,
+  `getAllPatterns()`, `getPatternBySlug()`, `getStarterSlugs()`,
+  `getPatternFacets()`, `type PatternFacets` — all from `lib/patterns.ts`.
+  `getPatternBySlug().body` is the spec **with frontmatter stripped** (gray-matter),
+  so the `---` block does not render as a table on the page.
+- `useStoredSet(key)` from `lib/use-stored-set.ts` → `{ values: Set<string>; toggle; clear }`.
+  Task 14's checklist uses it too.
+- `scripts/build-starters.mjs` → `public/starters/<slug>.json`, shaped
+  `{ files: { path: string; content: string | null }[] }`. Gitignored — `prebuild`
+  regenerates it from `content/` on every build.
+
+**Verified by:**
+- `lib/patterns.ts` under bare Node: **23 patterns**, **24 starter kits**, 7 core /
+  16 extended, 0 patterns without a kit. Facets came out as 7 categories
+  (`A-extraction` … `G-storage`), 4 stages (`governance`, `read`, `storage`, `write`),
+  2 tools (`Claude Code`, `OpenCode`).
+- `npm run build:starters` → `build:starters OK — 24 kits, 124 files`.
+- **`prebuild` proven, not assumed:** deleted `public/starters/` entirely, ran
+  `npm run build`, and the log shows `> npm run build:starters` → 24 JSON files back.
+- `npm run build`: **114 static pages**, `/patterns` plus 23 `/patterns/[slug]`.
+  `find out/patterns -maxdepth 1 -type d | tail -n +2 | wc -l` → **23**.
+  `ls public/starters/*.json | wc -l` → **24**.
+- `npm run check:links`: `18218 internal links across 115 pages all resolve`, 0 broken.
+  Pending routes 12 → **3**; the whole `/patterns/<slug>/` derived block is gone from
+  `PENDING_ROUTES`, along with its `knownPatternSlugs()` helper.
+- `npm run typecheck` silent, `npm run lint` exit 0 with no output.
+- **Kits shipping both harnesses: 8** — the 7 patterns whose frontmatter says
+  `tools: [Claude Code, OpenCode]`, plus `_template`. Those 7 pattern pages render
+  the harness switcher; the other 16 correctly do not.
+
+**Next loop needs to know:**
+- **`prebuild` is only half-wired.** It reads `"npm run build:starters"`. Loop 4
+  Task 15 must extend it to `"npm run build:starters && npm run build:search"` —
+  D3's warning is still live for the search index.
+- `public/starters/` and `public/search-index.json` are **gitignored**. They are
+  derived from `content/` and rebuilt by `prebuild`, so a clean checkout is fine,
+  but nothing in `public/` should be assumed to exist before a build.
+- The tool facet is real frontmatter, not `core`/`extended` — see **D11**.
+
+---
+
 ## Blockers
 
 A blocker stops this loop. Record it here, then stop and report — do not invent an answer and do not work around it silently. Blocked ≠ done.

@@ -9,14 +9,19 @@ export function readContent(relPath: string): string {
   return readFileSync(full, "utf8");
 }
 
-/** Every file under content/<tree>, recursively, as paths relative to content/. */
+/**
+ * Every file under content/<tree>, recursively, as paths relative to content/.
+ *
+ * Dot-directories are listed, not skipped: each starter kit's Claude Code half
+ * lives in `.claude/skills/…`. Skipping them here would hide 32 real kit files,
+ * which is the same mistake scripts/sync-docs.mjs made — see R3.
+ */
 export function listFiles(tree: string, ext = ""): string[] {
   const root = join(contentRoot, tree);
   if (!existsSync(root)) return [];
   const out: string[] = [];
   (function walk(dir: string) {
     for (const entry of readdirSync(dir, { withFileTypes: true })) {
-      if (entry.name.startsWith(".")) continue;
       const full = join(dir, entry.name);
       if (entry.isDirectory()) walk(full);
       else if (!ext || entry.name.endsWith(ext)) out.push(relative(contentRoot, full));
