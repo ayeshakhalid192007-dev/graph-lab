@@ -54,12 +54,12 @@ The footer surfaces the sync date from `SOURCE.json`, so the gap between the sit
 
 **Landing-page components only** — constraint C5. Not in doc pages.
 
-- [ ] 17.1 Write `components/ui/ScrollAnimator.tsx`
-- [ ] 17.2 Write `TwoGraphsSplit.tsx`
-- [ ] 17.3 Write `LifecycleDiagram.tsx`
-- [ ] 17.4 Write `SubgraphViewer.tsx`
-- [ ] 17.5 **Place all three on the landing page and verify reduced motion** — constraint C13
-- [ ] 17.6 Commit
+- [x] 17.1 Write `components/ui/ScrollAnimator.tsx`
+- [x] 17.2 Write `TwoGraphsSplit.tsx`
+- [x] 17.3 Write `LifecycleDiagram.tsx`
+- [x] 17.4 Write `SubgraphViewer.tsx`
+- [x] 17.5 **Place all three on the landing page and verify reduced motion** — constraint C13
+- [x] 17.6 Commit
 
 **Task done when:** all three render, edges draw via SVG `stroke-dashoffset`, nodes snap in on scroll, and **every animation is suppressed** under `prefers-reduced-motion: reduce` — verified, not assumed.
 

@@ -14,12 +14,15 @@ export function PatternGrid() {
         traffic. Each one ships a starter kit that runs under either harness.
       </p>
 
-      <ul className="mt-8 grid grid-cols-1 gap-px border border-rule bg-rule sm:grid-cols-2 lg:grid-cols-3">
+      {/* Hairline per chip rather than a gap-px grid over a ruled background: 23
+          patterns never fill a 3-column row, and that technique paints the empty
+          24th cell as a solid block of rule colour. */}
+      <ul className="mt-8 grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-3">
         {patterns.map((p) => (
-          <li key={p.slug} className="bg-surface">
+          <li key={p.slug} className="border border-rule bg-surface">
             <Link
               href={`/patterns/${p.slug}/`}
-              className="mono block px-3 py-2 text-xs text-graphite hover:bg-paper hover:text-accent"
+              className="mono block px-3 py-2 text-xs text-graphite hover:border-accent hover:bg-paper hover:text-accent"
             >
               <span className="block truncate text-ink">{p.slug}</span>
               <span className="mt-0.5 block text-[10px] uppercase tracking-wider text-muted">

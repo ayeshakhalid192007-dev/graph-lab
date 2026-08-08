@@ -1,6 +1,6 @@
 # Loop 4 state — Landing Page, Blueprint Identity, Search
 
-**Tasks:** 15–18 · **Gate:** `npm run verify:4` · **Status:** in progress — Tasks 15–16 done
+**Tasks:** 15–18 · **Gate:** `npm run verify:4` · **Status:** in progress — Tasks 15–17 done
 
 Per-task log for this loop. Cross-loop material — gate entries, repairs to earlier loops, decisions binding later loops — goes in `../shared/state.md` instead.
 
@@ -90,6 +90,60 @@ grid, Get started, Maintainers, and a footer carrying the sync provenance line.
 Step 5 places `TwoGraphsSplit`, `LifecycleDiagram` and `SubgraphViewer` into it. The
 hero stat strip is a plain `<ul>`, not a `<dl>`: a screen reader was hearing
 "PAGES, 86 PAGES" from the sr-only `<dt>`.
+
+---
+
+### Task 17 — The three animated diagrams
+
+**Date:** 2026-08-08
+**Landed:** `ScrollAnimator` plus `TwoGraphsSplit`, `LifecycleDiagram` and
+`SubgraphViewer`, all three placed on the landing page. Hand-built inline SVG, not
+mermaid. Landing page only (C5).
+
+**Files:** created `components/ui/ScrollAnimator.tsx`,
+`components/landing/TwoGraphsSplit.tsx`, `LifecycleDiagram.tsx`,
+`SubgraphViewer.tsx`; modified `app/page.tsx`, `app/globals.css`,
+`app/layout.tsx`, `components/landing/PatternGrid.tsx`.
+
+**Produces:** `ScrollAnimator({ children, className? })` — adds `.in-view` once on
+first intersection at `threshold: 0.25`, then disconnects. The CSS contract is
+`.diagram .edge` (draws via `stroke-dashoffset`, every shape carries
+`pathLength="1"`) and `.diagram .node` (opacity + translate), latched by
+`.diagram.in-view`.
+
+**Verified by:** four measured conditions, via Playwright `emulateMedia` against
+the built export. 3 diagram wrappers, **15 edges, 19 nodes**:
+
+| Condition | latched | edges drawn | nodes visible | transition |
+| --- | --- | --- | --- | --- |
+| Normal motion, before scrolling | 0/3 | 0/15 | 0/19 | 0.9s |
+| Normal motion, after scrolling through | **3/3** | **15/15** | **19/19** | 0.9s |
+| `prefers-reduced-motion: reduce`, at first paint | **3/3** | **15/15** | **19/19** | **1e-05s** |
+| JavaScript disabled entirely | 0/3 | **15/15** | **19/19** | 0.9s |
+
+All three carry `role="img"` and a full sentence `aria-label` describing what the
+diagram shows, since the animation carries meaning a screen reader never gets.
+
+**Two defects found by that verification, both fixed:**
+
+1. **Reduced motion showed a blank frame first.** `ScrollAnimator` adds `.in-view`
+   on mount under reduced motion, but mount is after hydration — measured, the edges
+   were still at `stroke-dashoffset: 1` at first paint. C13 asks for the finished
+   diagram, not a late one. Fixed in CSS with a `@media (prefers-reduced-motion:
+   reduce)` block that settles the final state at first paint, making the JS latch a
+   no-op on that path.
+2. **With JavaScript off, all three diagrams were permanently blank** — the draw-in
+   is an enhancement, but the undrawn state was the default. Fixed with a `<noscript>`
+   style block in `app/layout.tsx`.
+3. Cosmetic, caught by screenshot: the pattern grid's `gap-px` over a ruled
+   background painted the empty 24th cell as a solid block, because 23 patterns never
+   fill a 3-column row. Now a hairline per chip.
+
+**Next loop needs to know:** the `.diagram` CSS contract lives in `app/globals.css`
+and is depended on by three components plus a `<noscript>` block in the layout.
+Loop 5's theme pass should check the diagrams in dark mode — the strokes use
+`var(--accent)` and `var(--ink)`, so they follow the palette, but that is reasoned,
+not yet observed.
 
 ---
 

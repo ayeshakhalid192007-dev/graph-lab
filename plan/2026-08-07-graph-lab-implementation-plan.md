@@ -2539,27 +2539,27 @@ git commit -m "feat: add landing page with independently worded site copy"
 - Consumes: nothing from `content/` — these are landing-page site chrome, not doc-page components. Per Global Constraints they are **not** registered for use inside doc pages; doing so would require inventing a marker convention in `docs/`.
 - Produces: `ScrollAnimator` takes `{ children: React.ReactNode; className?: string }` and adds a `.in-view` class when its subtree first intersects the viewport, so every diagram shares one observer implementation.
 
-- [ ] **Step 1: Write `components/ui/ScrollAnimator.tsx`**
+- [x] **Step 1: Write `components/ui/ScrollAnimator.tsx`**
 
 Client component wrapping an `IntersectionObserver` at `threshold: 0.25`, adding `.in-view` once and then disconnecting. **When `matchMedia("(prefers-reduced-motion: reduce)").matches`, it adds `.in-view` immediately on mount and never observes** — reduced motion means the finished state, not no state.
 
-- [ ] **Step 2: Write `TwoGraphsSplit.tsx`**
+- [x] **Step 2: Write `TwoGraphsSplit.tsx`**
 
 Hand-built inline SVG, not mermaid: a work-history graph on the left and a fact graph on the right, split by a hairline rule. Edges draw themselves via `stroke-dasharray`/`stroke-dashoffset` transitioning to 0 under `.in-view`; nodes snap in with a short `transform` transition, staggered by `transition-delay`. Props `{ highlightSide?: "work-history" | "fact" }` dims the other side. Add `role="img"` and an `aria-label` describing what the diagram shows, since the animation carries meaning a screen reader otherwise never gets.
 
-- [ ] **Step 3: Write `LifecycleDiagram.tsx`**
+- [x] **Step 3: Write `LifecycleDiagram.tsx`**
 
 Inline SVG of extraction → resolution → provenance as three linked stages, props `{ activeStage?: "extraction" | "resolution" | "provenance" }`, same draw-in treatment, same `role="img"` + `aria-label`.
 
-- [ ] **Step 4: Write `SubgraphViewer.tsx`**
+- [x] **Step 4: Write `SubgraphViewer.tsx`**
 
 Props `{ fullGraph: { nodes: string[]; edges: [string, string][] }; subgraphNodeIds: string[] }`. Renders the full graph and dims everything outside `subgraphNodeIds`; a toggle button switches between "full graph" and "bounded subgraph" with `aria-pressed`, and the dimming is a color transition, not a layout change, so nothing reflows.
 
-- [ ] **Step 5: Place all three on the landing page and verify reduced motion**
+- [x] **Step 5: Place all three on the landing page and verify reduced motion**
 
 Add `TwoGraphsSplit` after the hero, `LifecycleDiagram` in the curriculum section, `SubgraphViewer` before Get Started. Then verify in the browser with `prefers-reduced-motion: reduce` forced on (Chrome DevTools → Rendering → Emulate CSS media feature): all three must appear fully drawn, immediately, with no animation.
 
-- [ ] **Step 6: Commit**
+- [x] **Step 6: Commit**
 
 ```bash
 cd ~/graph-lab
