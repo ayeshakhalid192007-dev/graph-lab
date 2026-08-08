@@ -1786,7 +1786,7 @@ Append Task 5–9 entries to `LOOP-STATE.md`, then **STOP Loop 2 permanently** a
 - Consumes: `getRoadmap()` (Task 5).
 - Produces: `TRACKS: Track[]` from `lib/tracks.ts` where `Track = { id: "G1"|"G2"|"G3"|"G4"; name: string; level: string; startsKnowing: string; finishesAbleTo: string; steps: string[]; firstStepRoute: string }`; `ProgressTracker` takes `{ steps: DocMeta[] }` and is reused on `/tracks/` and (Loop 4) the landing page.
 
-- [ ] **Step 1: Write `lib/tracks.ts`**
+- [x] **Step 1: Write `lib/tracks.ts`**
 
 Transcribed from the four-track table in the course repo's `graph-plan.md` §12.1 (lines 253–256), verified 2026-08-07. This is structural site data — the table is not itself a rendered doc page — which is why it is hardcoded here rather than parsed.
 
@@ -1852,7 +1852,7 @@ export const TRACKS: Track[] = [
 ];
 ```
 
-- [ ] **Step 2: Write `components/interactive/ProgressTracker.tsx`**
+- [x] **Step 2: Write `components/interactive/ProgressTracker.tsx`**
 
 ```tsx
 "use client";
@@ -1921,15 +1921,15 @@ export function ProgressTracker({ steps }: { steps: DocMeta[] }) {
 }
 ```
 
-- [ ] **Step 3: Write `components/interactive/TrackSelector.tsx`**
+- [x] **Step 3: Write `components/interactive/TrackSelector.tsx`**
 
 Client component, no props — imports `TRACKS`. Renders the four tracks as `<Panel>` cards in a responsive grid; selecting one (keyboard-reachable `<button>`, `aria-pressed`) expands its "you start knowing / you finish able to / covers steps N–M" detail and shows a `PillButton` to `firstStepRoute`. Selection is component state only — not persisted, since it is a browsing aid rather than progress.
 
-- [ ] **Step 4: Write `app/tracks/page.tsx`**
+- [x] **Step 4: Write `app/tracks/page.tsx`**
 
 Server component. Renders `<TrackSelector />`, then the full 17-step roadmap from `getRoadmap()` as seven `<Panel>`s (one per Part, mono part number, sans title) each listing its steps, and `<ProgressTracker steps={allSteps} />` where `allSteps` is the flattened 17.
 
-- [ ] **Step 5: Verify the track routes are real, then build and commit**
+- [x] **Step 5: Verify the track routes are real, then build and commit**
 
 ```bash
 cd ~/graph-lab && node --experimental-strip-types -e '

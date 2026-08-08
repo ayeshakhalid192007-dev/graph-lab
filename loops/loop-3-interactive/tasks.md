@@ -18,11 +18,11 @@ All components in this loop are **client components**; all persistence is **`loc
 `Track = { id: "G1"|"G2"|"G3"|"G4"; name: string; level: string; startsKnowing: string; finishesAbleTo: string; steps: string[]; firstStepRoute: string }`.
 `ProgressTracker` takes `{ steps: DocMeta[] }` and is **reused on the landing page by Loop 4**.
 
-- [ ] 10.1 Write `lib/tracks.ts` — the four G1–G4 definitions; structural site data, not course content
-- [ ] 10.2 Write `components/interactive/ProgressTracker.tsx` — records completed step slugs against the 17 steps
-- [ ] 10.3 Write `components/interactive/TrackSelector.tsx`
-- [ ] 10.4 Write `app/tracks/page.tsx`
-- [ ] 10.5 **Verify the track routes are real**, then build and commit
+- [x] 10.1 Write `lib/tracks.ts` — the four G1–G4 definitions; structural site data, not course content
+- [x] 10.2 Write `components/interactive/ProgressTracker.tsx` — records completed step slugs against the 17 steps
+- [x] 10.3 Write `components/interactive/TrackSelector.tsx`
+- [x] 10.4 Write `app/tracks/page.tsx`
+- [x] 10.5 **Verify the track routes are real**, then build and commit
 
 **Task done when:** 4 tracks render, 17 roadmap steps render, and every `firstStepRoute` points at a page that exists.
 

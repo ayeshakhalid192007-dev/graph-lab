@@ -36,7 +36,6 @@ const basePath = process.env.PAGES_BASE_PATH || "";
  * before Loop 5 Task 21 walks the Definition of Done.
  */
 const PENDING_ROUTES = new Map([
-  ["/tracks/", "Loop 3 Task 10"],
   ["/patterns/", "Loop 3 Task 11"],
   ["/projects/", "Loop 3 Task 13"],
   ["/resources/", "Loop 3 Task 13"],
