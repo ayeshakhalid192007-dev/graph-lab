@@ -2495,28 +2495,28 @@ git commit -m "feat: add lazily-loaded local site search with scored matching"
 **Interfaces:**
 - Consumes: `getRoadmap()`, `getAllPatterns()`, `getSource()`.
 
-- [ ] **Step 1: Write the copy first, separately**
+- [x] **Step 1: Write the copy first, separately**
 
 Before writing any component, open both `~/graph-engineering-course/README.md` and `content/docs/README.md`, read how each phrases the pitch, and write the landing copy as a **third independent phrasing** — same claim, different sentences. This is the one place in the whole project where new prose is written; the Global Constraints require it be independent of both existing versions. Draft it in `LOOP-STATE.md` under "Landing copy" so the wording is reviewable on its own before it is buried in JSX.
 
-- [ ] **Step 2: Write `components/landing/Hero.tsx`**
+- [x] **Step 2: Write `components/landing/Hero.tsx`**
 
 The drafted headline and subhead, a `PillButton` to `/docs/00-start-here/` and an outline one to `/tracks/`, and a mono stat strip — `86 PAGES · 23 PATTERNS · 24 STARTER KITS · 7 QUIZZES` — with those numbers computed from `getAllDocs().length` and `getAllPatterns().length`, never typed as literals that can rot.
 
-- [ ] **Step 3: Write `Curriculum.tsx`, `PatternGrid.tsx`, `GetStarted.tsx`, `Maintainers.tsx`, `Footer.tsx`**
+- [x] **Step 3: Write `Curriculum.tsx`, `PatternGrid.tsx`, `GetStarted.tsx`, `Maintainers.tsx`, `Footer.tsx`**
 
 `Curriculum` — the seven Parts from `getRoadmap()` as a numbered list of `<Panel>`s with each Part's step count, linking to `/tracks/`. `PatternGrid` — the 23 patterns as a dense mono grid of slug chips linking to their pages, with a link to `/patterns/`. `GetStarted` — three numbered steps (read Start here → pick a track → clone a starter kit) with the clone command in a mono block plus a copy button. `Maintainers` — attribution and a link to the course repo. `Footer` — repo link, licence, and the sync provenance line from `getSource()`: `Content synced from <commit sha, 8 chars> on <syncedAt date>`, which is what makes the pinned-commit lag visible rather than hidden, per the spec's risk section.
 
-- [ ] **Step 4: Write `app/page.tsx`** composing Hero → TwoGraphsSplit (Task 17) → Curriculum → PatternGrid → GetStarted → Maintainers → Footer, each inside a `<Section>`.
+- [x] **Step 4: Write `app/page.tsx`** composing Hero → TwoGraphsSplit (Task 17) → Curriculum → PatternGrid → GetStarted → Maintainers → Footer, each inside a `<Section>`.
 
-- [ ] **Step 5: Build and check the copy against the constraint**
+- [x] **Step 5: Build and check the copy against the constraint**
 
 ```bash
 cd ~/graph-lab && npm run build
 ```
 Then diff the landing copy by eye against both READMEs. Any sentence that appears in either, or is a light paraphrase of one, gets rewritten now.
 
-- [ ] **Step 6: Commit**
+- [x] **Step 6: Commit**
 
 ```bash
 cd ~/graph-lab

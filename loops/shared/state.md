@@ -443,3 +443,16 @@ _None yet._
 **Because:** the spec's route table has no index route for either — it lists `/quiz/[part]/` and `/flashcards/[part]/` and nothing else. The two entries were written into `PENDING_ROUTES` speculatively at Loop 2 Task 9, and the Loop 2 gate output confirms they were never hit: the 925 pending links resolved to 13 other routes, zero to these two. Deleting an entry nothing links to removes a line that could only ever grant a silent exemption. D10's rule 3 is satisfied either way — the routes do not exist, so the entries are not stale, they are simply unnecessary.
 
 **Affects:** the Parts are reachable through `/tracks/`, which links each Part panel to its quiz and flashcard set, and through the doc pages themselves. If Loop 4 or Loop 5 wants a "all quizzes" landing surface it is new work against the spec, not a route this loop skipped.
+
+### D13 — the search index covers body tokens, not just titles and headings, 2026-08-08, Loop 4
+
+**Decision:** `public/search-index.json` carries **two** token maps: `inverted` over titles and headings, and `body` over body prose. `lib/search.ts` scores them in three bands — title 10, heading 4, body 1, each doubled on an exact rather than prefix match. The plan's Task 15 Step 1 says to build the inverted index over *"title and headings only (not body — that is what keeps the file small)"* and to let the 300-character excerpt carry body matching. That instruction is not followed.
+
+**Because:** it cannot satisfy the spec. The Definition of Done requires *"Search returns correct results for a term drawn from a body paragraph, a heading, and a page title"*, and with a ~300-character excerpt a word in paragraph twelve is simply unreachable. Measured on the plan's own design: **`heartbeat` appears in 4 doc pages and returned NO RESULTS**; so did `idempotent`-class terms generally. Average excerpt length came out at 296 characters against pages many thousands of characters long, so this was not an edge case — body search was broken for almost the whole corpus.
+
+The plan's reason for the restriction was file size, and that reason is measurable: the body map costs **121 KB**, taking the whole index from 59.4 KB to **175.7 KB**. The spec's cap is ~400 KB. Nothing is traded away — the constraint the plan was protecting is still satisfied with 224 KB to spare. Body tokens that already appear in a page's title or headings are skipped rather than stored twice.
+
+**Affects:**
+- **The fallback ladder now has three stages, not two.** Full → drop excerpts → drop the body map. The spec names dropping excerpts as *the* mitigation, so the body map is shed last: it is the stage that costs a Definition-of-Done line, and `build-search-index.mjs` says so in the message it prints.
+- **`SearchIndex.body` is optional** in `lib/search.ts`. A future index built at a fallback stage still loads and still searches; body-paragraph hits just stop appearing.
+- **Loop 5 Task 21** should test a body-paragraph term when it walks the DoD, not only a title and a heading. `heartbeat` is a known-good one, and it is the term that exposed this.

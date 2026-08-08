@@ -1,12 +1,35 @@
 import { Section } from "@/components/ui/Section";
+import { Hero } from "@/components/landing/Hero";
+import { Curriculum } from "@/components/landing/Curriculum";
+import { PatternGrid } from "@/components/landing/PatternGrid";
+import { GetStarted } from "@/components/landing/GetStarted";
+import { Maintainers } from "@/components/landing/Maintainers";
+import { Footer } from "@/components/landing/Footer";
 
-// Placeholder so the export has a root route. Loop 4 Task 16 replaces this
-// wholesale with the real landing page.
-export default function Home() {
+export default function LandingPage() {
   return (
-    <Section>
-      <h1 className="mono text-2xl">graph-lab</h1>
-      <p className="mt-4 text-graphite">Landing page lands in Loop 4.</p>
-    </Section>
+    <>
+      <Section>
+        <Hero />
+      </Section>
+
+      <Section className="border-t border-rule">
+        <Curriculum />
+      </Section>
+
+      <Section className="border-t border-rule">
+        <PatternGrid />
+      </Section>
+
+      <Section className="border-t border-rule">
+        <GetStarted />
+      </Section>
+
+      <Section className="border-t border-rule">
+        <Maintainers />
+      </Section>
+
+      <Footer />
+    </>
   );
 }

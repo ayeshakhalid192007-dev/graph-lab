@@ -35,12 +35,12 @@ No external search service. No third-party script.
 
 **Produces:** the real `app/page.tsx`, replacing Loop 1's placeholder.
 
-- [ ] 16.1 **Write the copy first, separately** — read `~/graph-engineering-course/README.md` and `content/docs/README.md`, then draft a **third independent phrasing** under "Landing copy" in `state.md`. Not a paraphrase of either. This is the only new prose in the project (constraint C2)
-- [ ] 16.2 Write `components/landing/Hero.tsx`
-- [ ] 16.3 Write `Curriculum.tsx`, `PatternGrid.tsx`, `GetStarted.tsx`, `Maintainers.tsx`, `Footer.tsx`
-- [ ] 16.4 Write `app/page.tsx` — Hero → TwoGraphsSplit (Task 17) → Curriculum → PatternGrid → GetStarted → Maintainers → Footer, each inside a `<Section>`
-- [ ] 16.5 **Build and check the copy against the constraint** — confirm it reads as independent of both READMEs
-- [ ] 16.6 Commit
+- [x] 16.1 **Write the copy first, separately** — read `~/graph-engineering-course/README.md` and `content/docs/README.md`, then draft a **third independent phrasing** under "Landing copy" in `state.md`. Not a paraphrase of either. This is the only new prose in the project (constraint C2)
+- [x] 16.2 Write `components/landing/Hero.tsx`
+- [x] 16.3 Write `Curriculum.tsx`, `PatternGrid.tsx`, `GetStarted.tsx`, `Maintainers.tsx`, `Footer.tsx`
+- [x] 16.4 Write `app/page.tsx` — Hero → TwoGraphsSplit (Task 17) → Curriculum → PatternGrid → GetStarted → Maintainers → Footer, each inside a `<Section>`
+- [x] 16.5 **Build and check the copy against the constraint** — confirm it reads as independent of both READMEs
+- [x] 16.6 Commit
 
 **Task done when:** the landing page builds and the copy has been checked against both source READMEs, not just written.
 
