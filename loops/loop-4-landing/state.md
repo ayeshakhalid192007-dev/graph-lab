@@ -1,6 +1,6 @@
 # Loop 4 state — Landing Page, Blueprint Identity, Search
 
-**Tasks:** 15–18 · **Gate:** `npm run verify:4` · **Status:** in progress — Tasks 15–17 done
+**Tasks:** 15–18 · **Gate:** `npm run verify:4` · **Status:** all four tasks done, gate green
 
 Per-task log for this loop. Cross-loop material — gate entries, repairs to earlier loops, decisions binding later loops — goes in `../shared/state.md` instead.
 
@@ -144,6 +144,44 @@ and is depended on by three components plus a `<noscript>` block in the layout.
 Loop 5's theme pass should check the diagrams in dark mode — the strokes use
 `var(--accent)` and `var(--ink)`, so they follow the palette, but that is reasoned,
 not yet observed.
+
+---
+
+### Task 18 — Sitemap, llms.txt, 404, OG image, metadata
+
+**Date:** 2026-08-08
+**Landed:** `/sitemap.xml`, `/llms.txt`, `/404`, `public/og-image.png` and the
+Open Graph + Twitter metadata. With this the site is feature-complete: every route
+in the spec's route table renders.
+
+**Files:** created `app/sitemap.ts`, `app/not-found.tsx`,
+`scripts/generate-llms-txt.mjs`, `scripts/generate-og.mjs`, `public/og-image.png`;
+modified `app/layout.tsx`, `package.json`, `.gitignore`.
+
+**Verified by:**
+- `out/sitemap.xml` — **128 `<loc>` entries**, which is exactly 1 landing + 1
+  `/docs/` + 85 doc pages + `/tracks/` + `/patterns/` + 23 pattern pages + 7 quizzes
+  + 6 flashcard sets + projects + resources + certification. Enumerated from the same
+  loaders the pages use, not hand-listed.
+- `npm run build:llms` → `86 docs across 17 sections, 182 lines, 15705 bytes`;
+  `out/llms.txt` emits at 15,705 bytes with the pinned commit in its header.
+- `out/404.html` emits at 18,366 bytes. `out/og-image.png` at 42,889 bytes,
+  **1200×630**, and opened by eye: dot grid, hairline border with accent corner
+  ticks, mono wordmark, node-and-edge motif, Blueprint palette, no shadows or
+  gradients.
+- Emitted metadata carries `og:title`, `og:description`, `og:url`, `og:site_name`,
+  `og:image` (+ width/height/alt) and `twitter:card=summary_large_image`. The image
+  URL resolves to `https://ayeshakhalid192007-dev.github.io/graph-lab/og-image.png` —
+  basePath included, once, via `metadataBase`.
+- **`npm run verify:4` exit 0.** Full output in `../shared/state.md`.
+
+**The gate went red first.** `Failed to collect page data for /sitemap.xml`, whose
+real cause was one stack frame up: `output: "export"` requires a route handler to
+declare `export const dynamic = "force-static"`. Recorded as **D15**.
+
+**Next loop needs to know:** `prebuild` now runs **three** generators —
+`build:starters && build:search && build:llms`. `build:og` is deliberately **not**
+among them; it is manual, the PNG is committed, and CI never runs `sharp` (D14).
 
 ---
 

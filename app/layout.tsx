@@ -3,10 +3,35 @@ import "./globals.css";
 import { ThemeProvider } from "@/components/ui/ThemeProvider";
 import { NavBar } from "@/components/ui/NavBar";
 
+const SITE_URL =
+  process.env.NEXT_PUBLIC_SITE_URL ?? "https://ayeshakhalid192007-dev.github.io/graph-lab";
+
+const DESCRIPTION =
+  "Work through Graph Engineering in the browser: 86 pages, 23 patterns, 24 starter kits, quizzes, and the Graph Ready certification.";
+
+/**
+ * metadataBase already carries the basePath, so the image is given as a bare
+ * "/og-image.png" and Next resolves it against that origin. Passing it through
+ * withBasePath() here would double the prefix to /graph-lab/graph-lab/og-image.png.
+ */
 export const metadata: Metadata = {
+  metadataBase: new URL(SITE_URL),
   title: { default: "graph-lab", template: "%s — graph-lab" },
-  description:
-    "Work through Graph Engineering in the browser: 86 pages, 23 patterns, 24 starter kits, quizzes, and the Graph Ready certification.",
+  description: DESCRIPTION,
+  openGraph: {
+    type: "website",
+    siteName: "graph-lab",
+    title: "graph-lab — Graph Engineering, in the browser",
+    description: DESCRIPTION,
+    url: SITE_URL,
+    images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "graph-lab" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "graph-lab — Graph Engineering, in the browser",
+    description: DESCRIPTION,
+    images: ["/og-image.png"],
+  },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

@@ -69,13 +69,13 @@ The footer surfaces the sync date from `SOURCE.json`, so the gap between the sit
 
 *Plan: `## Task 18` · 7 steps*
 
-- [ ] 18.1 Write `app/sitemap.ts`
-- [ ] 18.2 Write `scripts/generate-llms-txt.mjs`
-- [ ] 18.3 Write `app/not-found.tsx`
-- [ ] 18.4 Create `public/og-image.png`
-- [ ] 18.5 Wire metadata in `app/layout.tsx`
-- [ ] 18.6 **Run the Loop 4 gate** — `npm run verify:4`
-- [ ] 18.7 Commit and record loop state
+- [x] 18.1 Write `app/sitemap.ts`
+- [x] 18.2 Write `scripts/generate-llms-txt.mjs`
+- [x] 18.3 Write `app/not-found.tsx`
+- [x] 18.4 Create `public/og-image.png`
+- [x] 18.5 Wire metadata in `app/layout.tsx`
+- [x] 18.6 **Run the Loop 4 gate** — `npm run verify:4`
+- [x] 18.7 Commit and record loop state
 
 **Task done when:** `/sitemap.xml`, `/llms.txt`, and `/404` all emit, and the OG image resolves through `withBasePath()`.
 
@@ -83,12 +83,12 @@ The footer surfaces the sync date from `SOURCE.json`, so the gap between the sit
 
 ## Gate
 
-- [ ] `npm run verify:4` green
-- [ ] All Task 15–18 boxes above ticked
-- [ ] Four entries in `state.md`, one per task
-- [ ] Landing copy drafted in `state.md` and checked against both READMEs
-- [ ] Search index size recorded
-- [ ] Gate entry appended to `shared/state.md`, row set to `gate green, awaiting review`
-- [ ] **Stopped.** Loop 5 not started.
+- [x] `npm run verify:4` green
+- [x] All Task 15–18 boxes above ticked
+- [x] Four entries in `state.md`, one per task
+- [x] Landing copy drafted in `state.md` and checked against both READMEs
+- [x] Search index size recorded
+- [x] Gate entry appended to `shared/state.md`, row set to `gate green, awaiting review`
+- [x] **Stopped.** Loop 5 not started.
 
 See `gate.md`.

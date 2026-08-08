@@ -2581,27 +2581,27 @@ git commit -m "feat: add three animated landing diagrams with reduced-motion sup
 **Interfaces:**
 - Consumes: `getAllDocs()`, `getAllPatterns()`, `getRoadmap()`.
 
-- [ ] **Step 1: Write `app/sitemap.ts`**
+- [x] **Step 1: Write `app/sitemap.ts`**
 
 Enumerate every emitted route — `/`, the 86 docs, `/tracks/`, `/patterns/` plus 23 pattern pages, 7 quizzes, 6 flashcard sets, `/projects/`, `/resources/`, `/certification/` — from the same loaders the pages use. Read the origin from `NEXT_PUBLIC_SITE_URL`, defaulting to `https://ayeshakhalid192007-dev.github.io/graph-lab`.
 
-- [ ] **Step 2: Write `scripts/generate-llms-txt.mjs`**
+- [x] **Step 2: Write `scripts/generate-llms-txt.mjs`**
 
 Import `lib/docs.ts` so the route list has one definition. Emit `public/llms.txt`: the site name, one line of description, then every route with its title grouped under section headings. Add it to `prebuild` alongside the other two generators.
 
-- [ ] **Step 3: Write `app/not-found.tsx`**
+- [x] **Step 3: Write `app/not-found.tsx`**
 
 Blueprint-styled 404 — mono `404`, one line of copy, links to `/`, `/docs/00-start-here/`, and a hint that `⌘K` searches.
 
-- [ ] **Step 4: Create `public/og-image.png`**
+- [x] **Step 4: Create `public/og-image.png`**
 
 1200×630, original artwork in the Blueprint palette: dot grid, the wordmark in mono, a hairline-ruled panel with corner ticks, a small node-and-edge motif. Generate it deterministically with a small node script writing to canvas, or draw it as SVG and rasterise — either way, **commit the script that produced it** next to the PNG so it can be regenerated rather than becoming an unexplained binary.
 
-- [ ] **Step 5: Wire metadata in `app/layout.tsx`**
+- [x] **Step 5: Wire metadata in `app/layout.tsx`**
 
 Add `metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "https://ayeshakhalid192007-dev.github.io/graph-lab")`, `openGraph` with `images: ["/og-image.png"]`, `type: "website"`, and a matching `twitter: { card: "summary_large_image" }`.
 
-- [ ] **Step 6: Run the Loop 4 gate**
+- [x] **Step 6: Run the Loop 4 gate**
 
 ```bash
 cd ~/graph-lab && npm run verify:4
@@ -2609,7 +2609,7 @@ grep -c '<loc>' out/sitemap.xml    # expect ~130
 head -20 out/llms.txt
 ```
 
-- [ ] **Step 7: Commit and record loop state**
+- [x] **Step 7: Commit and record loop state**
 
 ```bash
 cd ~/graph-lab
