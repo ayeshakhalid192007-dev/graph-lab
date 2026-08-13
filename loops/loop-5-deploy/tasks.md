@@ -12,10 +12,10 @@ This loop **adds no features.** Anything missing is a defect to fix, not a surfa
 
 *Plan: `## Task 19` · 4 steps*
 
-- [ ] 19.1 **Check every page type at 375, 768, and 1280** — the sidebar must collapse below 768
-- [ ] 19.2 **Keyboard-only pass** — every interactive element reachable, with a visible focus state and an accessible name (constraint C14)
-- [ ] 19.3 **Lighthouse accessibility on three pages** — landing, one doc page, `/certification/`. Fix everything flagged critical. **Record all three scores in `state.md`**
-- [ ] 19.4 Commit
+- [x] 19.1 **Check every page type at 375, 768, and 1280** — the sidebar must collapse below 768
+- [x] 19.2 **Keyboard-only pass** — every interactive element reachable, with a visible focus state and an accessible name (constraint C14)
+- [x] 19.3 **Lighthouse accessibility on three pages** — landing, one doc page, `/certification/`. Fix everything flagged critical. **Record all three scores in `state.md`**
+- [x] 19.4 Commit
 
 **Task done when:** all three breakpoints checked on every page type, the keyboard pass is clean, and three Lighthouse scores are recorded with no critical issues outstanding.
 
@@ -27,11 +27,11 @@ Record the observation, not the verdict — "sidebar collapsed at 767px, expande
 
 *Plan: `## Task 20` · 5 steps*
 
-- [ ] 20.1 **Check every page type in both themes** — body prose, mono labels, hairline rules against both surfaces, `Panel` corner ticks, the accent on buttons and links, disabled states
-- [ ] 20.2 **Check all 20 mermaid diagrams in dark mode specifically** — node fills, edge lines, and label text all legible against `--paper` dark. If any is unreadable, adjust `GraphDiagram`'s `themeVariables`, **not the course content**
-- [ ] 20.3 **Check Shiki in both themes** — confirm the dual-theme CSS variables actually switch. A code block stuck light-themed in dark mode means the `@shikijs/rehype` `.dark` selector needs configuring
-- [ ] 20.4 **Confirm no flash of wrong theme on load** — hard refresh, in both themes
-- [ ] 20.5 Commit
+- [x] 20.1 **Check every page type in both themes** — body prose, mono labels, hairline rules against both surfaces, `Panel` corner ticks, the accent on buttons and links, disabled states
+- [x] 20.2 **Check all 20 mermaid diagrams in dark mode specifically** — node fills, edge lines, and label text all legible against `--paper` dark. If any is unreadable, adjust `GraphDiagram`'s `themeVariables`, **not the course content**
+- [x] 20.3 **Check Shiki in both themes** — confirm the dual-theme CSS variables actually switch. A code block stuck light-themed in dark mode means the `@shikijs/rehype` `.dark` selector needs configuring
+- [x] 20.4 **Confirm no flash of wrong theme on load** — hard refresh, in both themes
+- [x] 20.5 Commit
 
 **Task done when:** every page type has been seen in both themes, all 20 diagrams are legible in dark, Shiki switches, and there is no flash on hard refresh.
 
@@ -41,10 +41,10 @@ Record the observation, not the verdict — "sidebar collapsed at 767px, expande
 
 *Plan: `## Task 21` · 4 steps*
 
-- [ ] 21.1 **Run the full gate** — `npm run verify:all`
-- [ ] 21.2 **Walk the spec's Definition of Done line by line** against the running site. For each of the ten bullets, record in `state.md` **what was checked and what was observed** — not "done", but the actual count or the actual behaviour. **Any bullet that cannot be confirmed is a defect to fix now, not a note to file**
-- [ ] 21.3 **Verify the emitted export one more time**
-- [ ] 21.4 Commit
+- [x] 21.1 **Run the full gate** — `npm run verify:all`
+- [x] 21.2 **Walk the spec's Definition of Done line by line** against the running site. For each of the ten bullets, record in `state.md` **what was checked and what was observed** — not "done", but the actual count or the actual behaviour. **Any bullet that cannot be confirmed is a defect to fix now, not a note to file**
+- [x] 21.3 **Verify the emitted export one more time**
+- [x] 21.4 Commit
 
 The ten bullets are in `../shared/goal.md` under *Definition of Done*, taken verbatim from `plan/2026-08-06-course-website-design.md`. **This is where they get ticked** — the only place in the project.
 
@@ -71,13 +71,13 @@ The ten bullets are in `../shared/goal.md` under *Definition of Done*, taken ver
 
 ## Gate
 
-- [ ] `npm run verify:all` green
-- [ ] Task 19, 20, 21 boxes above ticked
-- [ ] Three Lighthouse scores recorded in `state.md`
-- [ ] All ten DoD bullets in `../shared/goal.md` ticked, each with what was observed
-- [ ] Four entries in `state.md`
-- [ ] Any cross-loop repairs recorded in `shared/state.md`
-- [ ] Gate entry appended to `shared/state.md`, row set to `gate green, awaiting review`
+- [x] `npm run verify:all` green
+- [x] Task 19, 20, 21 boxes above ticked
+- [x] Three Lighthouse scores recorded in `state.md`
+- [x] All ten DoD bullets in `../shared/goal.md` ticked, each with what was observed
+- [x] Four entries in `state.md`
+- [x] Any cross-loop repairs recorded in `shared/state.md`
+- [x] Gate entry appended to `shared/state.md`, row set to `gate green, awaiting review`
 - [ ] **Stopped at Task 22, awaiting explicit deploy confirmation**
 
 See `gate.md`.

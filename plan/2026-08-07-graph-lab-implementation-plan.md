@@ -2631,19 +2631,19 @@ Append Task 15–18 entries to `LOOP-STATE.md`, then **STOP Loop 4 permanently**
 
 **Files:** Modify across `components/` and `app/` as issues are found. No new files expected.
 
-- [ ] **Step 1: Check every page type at 375, 768, and 1280**
+- [x] **Step 1: Check every page type at 375, 768, and 1280**
 
 Landing, a doc page, `/tracks/`, `/patterns/`, a pattern page with a starter kit, a quiz, a flashcard set, `/projects/`, `/resources/`, `/certification/`, and the 404. At 375 confirm no horizontal scroll on the body — wide tables, code blocks, and diagrams each scroll inside their own container. **Below 768 the doc sidebar must be collapsed**, per the spec's DoD; fix `DocSidebar` here if it is not.
 
-- [ ] **Step 2: Keyboard-only pass**
+- [x] **Step 2: Keyboard-only pass**
 
 Tab through the whole site with no mouse. Every interactive element must be reachable, show a visible focus ring, and be operable with `Enter`/`Space`. Specifically check: the nav disclosure, `SearchDialog` (open with `⌘K`, arrow through results, `Esc` closes and returns focus to the trigger), pattern filters, the starter file tree, quiz buttons, flashcard flip, checklist checkboxes, and the certificate download.
 
-- [ ] **Step 3: Lighthouse accessibility on three pages**
+- [x] **Step 3: Lighthouse accessibility on three pages**
 
 Run the Chrome DevTools Lighthouse accessibility category against the landing page, one doc page, and `/certification/`. Fix everything it flags as critical. Record the three scores in `LOOP-STATE.md`.
 
-- [ ] **Step 4: Commit**
+- [x] **Step 4: Commit**
 
 ```bash
 cd ~/graph-lab && git add -A && git commit -m "fix: responsive and accessibility pass across every page type"

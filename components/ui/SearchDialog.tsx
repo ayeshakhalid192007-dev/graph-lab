@@ -81,6 +81,13 @@ export function SearchDialog() {
     } else if (event.key === "Enter" && flat[active]) {
       event.preventDefault();
       go(flat[active].record.route);
+    } else if (event.key === "Escape") {
+      // <input type="search"> eats the first Escape to clear itself, so the
+      // platform's own "Escape closes a modal dialog" never fires while the
+      // reader has typed anything — which is every real use. Close it here and
+      // suppress the clear, so one press always means one dismissal.
+      event.preventDefault();
+      dialogRef.current?.close();
     }
   }
 

@@ -160,11 +160,13 @@ export function PatternBrowser({
                 <p className="mono text-xs tracking-wider text-muted">
                   {categoryLabel(p.category)}
                 </p>
-                <h3 className="mono mt-1 text-base">
+                {/* h2, not h3: the page's only heading above these cards is the
+                    <h1>, so an h3 skips a level. */}
+                <h2 className="mono mt-1 text-base">
                   <Link href={`/patterns/${p.slug}/`} className="text-ink hover:text-accent">
                     {p.title}
                   </Link>
-                </h3>
+                </h2>
                 <dl className="mono mt-3 flex flex-wrap gap-x-3 gap-y-1 text-[11px] text-muted">
                   <div>
                     <dt className="sr-only">Stage</dt>

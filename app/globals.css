@@ -8,7 +8,10 @@
   --surface: #fffdf8;
   --ink: #16324f;
   --graphite: #3d4450;
-  --muted: #6b7280;
+  /* 4.44:1 on --paper at #6b7280 — a hair under AA for normal text, and muted
+     text sits on paper as often as on surface. #5f6672 clears it on both
+     (5.31 / 5.69) and still reads a full step lighter than --graphite. */
+  --muted: #5f6672;
   --rule: #cfc9bd;
   --accent: #1d4ed8;
   --grid-dot: #d6d0c4;

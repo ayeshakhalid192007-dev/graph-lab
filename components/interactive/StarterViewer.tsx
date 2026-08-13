@@ -218,7 +218,15 @@ export function StarterViewer({
           ) : (
             <>
               <p className="mono mb-2 truncate text-xs text-muted">{current.path}</p>
-              <pre className="mono max-h-[32rem] overflow-auto border border-rule bg-paper p-3 text-xs leading-relaxed text-graphite">
+              {/* tabIndex makes the scroll box reachable without a mouse — a file
+                  longer than 32rem is otherwise unreadable by keyboard alone.
+                  The label names which file, since the region is now a tab stop. */}
+              <pre
+                tabIndex={0}
+                role="region"
+                aria-label={`${current.path} contents`}
+                className="mono max-h-[32rem] overflow-auto border border-rule bg-paper p-3 text-xs leading-relaxed text-graphite"
+              >
                 {current.content}
               </pre>
             </>
