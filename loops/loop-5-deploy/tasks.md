@@ -27,11 +27,11 @@ Record the observation, not the verdict — "sidebar collapsed at 767px, expande
 
 *Plan: `## Task 20` · 5 steps*
 
-- [ ] 20.1 **Check every page type in both themes** — body prose, mono labels, hairline rules against both surfaces, `Panel` corner ticks, the accent on buttons and links, disabled states
-- [ ] 20.2 **Check all 20 mermaid diagrams in dark mode specifically** — node fills, edge lines, and label text all legible against `--paper` dark. If any is unreadable, adjust `GraphDiagram`'s `themeVariables`, **not the course content**
-- [ ] 20.3 **Check Shiki in both themes** — confirm the dual-theme CSS variables actually switch. A code block stuck light-themed in dark mode means the `@shikijs/rehype` `.dark` selector needs configuring
-- [ ] 20.4 **Confirm no flash of wrong theme on load** — hard refresh, in both themes
-- [ ] 20.5 Commit
+- [x] 20.1 **Check every page type in both themes** — body prose, mono labels, hairline rules against both surfaces, `Panel` corner ticks, the accent on buttons and links, disabled states
+- [x] 20.2 **Check all 20 mermaid diagrams in dark mode specifically** — node fills, edge lines, and label text all legible against `--paper` dark. If any is unreadable, adjust `GraphDiagram`'s `themeVariables`, **not the course content**
+- [x] 20.3 **Check Shiki in both themes** — confirm the dual-theme CSS variables actually switch. A code block stuck light-themed in dark mode means the `@shikijs/rehype` `.dark` selector needs configuring
+- [x] 20.4 **Confirm no flash of wrong theme on load** — hard refresh, in both themes
+- [x] 20.5 Commit
 
 **Task done when:** every page type has been seen in both themes, all 20 diagrams are legible in dark, Shiki switches, and there is no flash on hard refresh.
 

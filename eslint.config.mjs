@@ -6,7 +6,7 @@ import typescript from "eslint-config-next/typescript";
 // flat config and die with "Converting circular structure to JSON", which is a
 // crash in its error *formatter*, so the real schema complaint is never printed.
 const config = [
-  { ignores: ["content/**", "out/**", ".next/**", "public/**"] },
+  { ignores: ["content/**", "out/**", ".next/**", ".claude/**", "public/**", "server.js", "server.ts", "start-server.js", "test_server.pid", "server.pid", "test_server_*.pid", "*.log"] },
   ...coreWebVitals,
   ...typescript,
 ];

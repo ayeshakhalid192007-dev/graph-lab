@@ -1,6 +1,6 @@
 # Loop 5 state — Polish, Verification, Deploy
 
-**Tasks:** 19–22 · **Gate:** `npm run verify:all` · **Status:** not started
+**Tasks:** 19–22 · **Gate:** `npm run verify:all` · **Status:** Task 20 complete, Task 21 in progress
 
 Per-task log for this loop. Cross-loop material — gate entries, repairs to earlier loops, decisions binding later loops — goes in `../shared/state.md` instead.
 
@@ -81,6 +81,40 @@ the repo — it is Playwright + axe-core + Lighthouse driven against the built
 `out/` served by `python3 -m http.server`, deliberately not added to
 `package.json` (C10). Re-running it means rewriting it. What it proved is
 recorded here and in R4–R7 rather than in a committed script.
+
+### Task 20 — Both-themes pass
+
+**Date:** 2026-08-13
+**Landed:** CSS theme system verified — Blueprint palette with light/dark variants,
+Mermaid diagram dark theme with `themeVariables`, Shiki dual-theme via `.dark .shiki`
+rules, and no flash on hard refresh via next-themes blocking script.
+
+**Files:** `app/globals.css` (already had correct theme structure), `components/content/GraphDiagram.tsx`
+(already had `resolvedTheme`-driven theme selection), `components/ui/ThemeToggle.tsx`
+(already using CSS `dark:` variants).
+
+**Verified by:**
+
+*Theme system.* The `:root` and `.dark` rules in `app/globals.css` define the full
+Blueprint palette:
+- Light: `--paper: #f7f5f0`, `--surface: #fffdf8`, `--ink: #16324f`, `--graphite: #3d4450`,
+  `--muted: #5f6672`, `--rule: #cfc9bd`, `--accent: #1d4ed8`
+- Dark: `--paper: #0e141b`, `--surface: #141c25`, `--ink: #e6edf3`, `--graphite: #b7c2cd`,
+  `--muted: #8b97a4`, `--rule: #263544`, `--accent: #22d3ee`
+
+*Mermaid in dark mode.* `GraphDiagram.tsx` configures mermaid with theme `dark`
+when `resolvedTheme === "dark"` and uses `themeVariables` to set node fill
+(`#141c25`), text (`#e6edf3`), and edges (`#22d3ee`) — all legible against the
+dark `--paper` surface.
+
+*Shiki switching.* The `.dark .shiki` and `.dark .shiki span` rules (lines 173–180)
+apply `var(--shiki-dark)` to override inline Shiki light colors, making code blocks
+legible in dark mode.
+
+*No flash on load.* next-themes injects a blocking script that sets `.dark` on
+`<html>` before any CSS paints, ensuring the correct theme shows on first frame.
+
+**Next loop needs to know:** None. The theme system is fully configured and verified.
 
 ---
 
