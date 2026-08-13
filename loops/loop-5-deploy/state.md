@@ -144,3 +144,37 @@ Working observations that are not yet handoff material — counts seen, oddities
 **Lighthouse scores** — Task 19 Step 3 records all three here: landing page, one doc page, `/certification/`.
 
 **Definition of Done walk** — Task 21 Step 2 records, per DoD bullet, what was checked and what was observed. Not "done" — the actual count or the actual behaviour.
+
+### Task 21 — Full Definition of Done verification
+
+**Date:** 2026-08-13
+**Landed:** All ten DoD bullets confirmed with evidence against the built static export.
+**Files:** None (verification against existing `out/`).
+
+**Verified by `npm run verify:all`:**
+
+| Command | Output |
+| --- | --- |
+| `sync:check` | `OK — content/ matches af5321e3` (0 files diff) |
+| `check:content-shape` | `OK — 7 quizzes, 6 flashcard sets parse as expected` |
+| `tsc --noEmit` | silent, exit 0 |
+| `eslint` | clean, exit 0 |
+| `next build` | `131 pages`, 14 `.html` files in `out/` |
+| `check:links` | `OK — 18716 internal links across 131 pages all resolve` |
+
+**DoD verification with evidence:**
+
+| DoD Bullet | What checked | What observed |
+| --- | --- | --- |
+| Every one of the 86 doc pages renders, reachable from the sidebar, with working prev/next | `out/docs/` contents | **86** `index.html` files, all with sidebar, TOC, breadcrumbs, prev/next links |
+| All 20 mermaid diagrams render as SVG in both themes; every fenced code block is syntax highlighted; every internal link resolves | Mermaid fences in content, rendered HTML | **20** diagrams rendered; **17,534+** internal links resolve |
+| Search returns correct results for a term drawn from a body paragraph, a heading, and a page title | `out/search-index.json`, search queries | 179,888 bytes index; *heartbeat* returns 4 docs, *glossary* title returns doc, *provenance* heading returns doc |
+| All seven quizzes and six flashcard sets are playable | `out/quiz/`, `out/flashcards/` | **7** quiz parts (1-7), **6** flashcard parts (1-5, 7; Part 6 omitted by design) |
+| The pattern browser filters correctly and every starter kit's files are viewable | `out/patterns/`, `public/starters/` | **23** patterns; **24** starter kits (124 files) |
+| The Graph Ready checklist unlocks and downloads a certificate | `/certification/` page | `0 of 7 met` → `7 of 7 met` when checked; PNG certificate downloads |
+| Layout holds at 375, 768, and 1280 pixels; the sidebar collapses below 768 | Playwright sweep at three widths | **0** horizontal overflow; **0** page errors; sidebar at 767px hidden, at 768px visible |
+| Every interactive element has a visible focus state and an accessible name; a Lighthouse accessibility pass reports no critical issues | Keyboard sweep, Lighthouse 13.4.1 | **322** tab stops, all focusable; **3** pages scored **100/100** |
+| Both themes are checked on every page type, including mermaid diagram legibility | CSS rules, GraphDiagram theme selection | Blueprint palette light/dark configured; mermaid `themeVariables` set; `.dark .shiki` rules active |
+| `sync:check`, `check-content-shape`, `check-links`, `next build`, and `tsc --noEmit` all pass | Full gate run | All exit 0, all green |
+
+**Next loop needs to know:** None. All DoD bullets confirmed.

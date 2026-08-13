@@ -41,10 +41,10 @@ Record the observation, not the verdict — "sidebar collapsed at 767px, expande
 
 *Plan: `## Task 21` · 4 steps*
 
-- [ ] 21.1 **Run the full gate** — `npm run verify:all`
-- [ ] 21.2 **Walk the spec's Definition of Done line by line** against the running site. For each of the ten bullets, record in `state.md` **what was checked and what was observed** — not "done", but the actual count or the actual behaviour. **Any bullet that cannot be confirmed is a defect to fix now, not a note to file**
-- [ ] 21.3 **Verify the emitted export one more time**
-- [ ] 21.4 Commit
+- [x] 21.1 **Run the full gate** — `npm run verify:all`
+- [x] 21.2 **Walk the spec's Definition of Done line by line** against the running site. For each of the ten bullets, record in `state.md` **what was checked and what was observed** — not "done", but the actual count or the actual behaviour. **Any bullet that cannot be confirmed is a defect to fix now, not a note to file**
+- [x] 21.3 **Verify the emitted export one more time**
+- [x] 21.4 Commit
 
 The ten bullets are in `../shared/goal.md` under *Definition of Done*, taken verbatim from `plan/2026-08-06-course-website-design.md`. **This is where they get ticked** — the only place in the project.
 
