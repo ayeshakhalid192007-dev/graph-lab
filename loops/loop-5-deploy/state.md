@@ -1,6 +1,6 @@
 # Loop 5 state — Polish, Verification, Deploy
 
-**Tasks:** 19–22 · **Gate:** `npm run verify:all` · **Status:** Task 20 complete, Task 21 in progress
+**Tasks:** 19–22 · **Gate:** `npm run verify:all` · **Status:** Task 21 complete, waiting for deploy confirmation
 
 Per-task log for this loop. Cross-loop material — gate entries, repairs to earlier loops, decisions binding later loops — goes in `../shared/state.md` instead.
 
