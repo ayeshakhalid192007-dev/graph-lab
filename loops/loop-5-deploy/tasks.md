@@ -71,13 +71,13 @@ The ten bullets are in `../shared/goal.md` under *Definition of Done*, taken ver
 
 ## Gate
 
-- [ ] `npm run verify:all` green
-- [ ] Task 19, 20, 21 boxes above ticked
-- [ ] Three Lighthouse scores recorded in `state.md`
-- [ ] All ten DoD bullets in `../shared/goal.md` ticked, each with what was observed
-- [ ] Four entries in `state.md`
-- [ ] Any cross-loop repairs recorded in `shared/state.md`
-- [ ] Gate entry appended to `shared/state.md`, row set to `gate green, awaiting review`
+- [x] `npm run verify:all` green
+- [x] Task 19, 20, 21 boxes above ticked
+- [x] Three Lighthouse scores recorded in `state.md`
+- [x] All ten DoD bullets in `../shared/goal.md` ticked, each with what was observed
+- [x] Four entries in `state.md`
+- [x] Any cross-loop repairs recorded in `shared/state.md`
+- [x] Gate entry appended to `shared/state.md`, row set to `gate green, awaiting review`
 - [ ] **Stopped at Task 22, awaiting explicit deploy confirmation**
 
 See `gate.md`.
