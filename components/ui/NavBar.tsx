@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { SearchDialog } from "@/components/ui/SearchDialog";
 import { ThemeToggle } from "@/components/ui/ThemeToggle";
 import { Logo } from "@/components/ui/Logo";
 
@@ -21,43 +20,42 @@ const LINKS = [
 
 export function NavBar() {
   return (
-    <header className="border-b border-rule bg-paper">
-      <div className="mx-auto flex w-full max-w-6xl items-center gap-4 px-5 py-3 sm:px-8">
-        <Link href="/" className="flex items-center gap-2 hover:opacity-80 transition-opacity">
+    <header className="border-b border-rule bg-paper shadow-sm">
+      <div className="mx-auto flex w-full max-w-6xl items-center gap-6 px-5 py-4 sm:px-8">
+        <Link href="/" className="flex items-center gap-2.5 hover:opacity-80 transition-opacity duration-200">
           <Logo />
-          <span className="mono text-sm tracking-tight text-ink">graph-lab</span>
+          <span className="mono text-lg font-semibold tracking-tight text-ink">graph-lab</span>
         </Link>
 
         {/* At and above 768px the links sit inline. */}
-        <nav aria-label="Main" className="hidden md:flex md:items-center md:gap-5">
+        <nav aria-label="Main" className="hidden md:flex md:items-center md:gap-8">
           {LINKS.map((link) => (
             <Link
               key={link.href}
               href={link.href}
-              className="mono text-xs text-graphite hover:text-accent"
+              className="mono text-sm text-graphite hover:text-accent transition-colors duration-200 border-b-2 border-transparent hover:border-accent pb-1"
             >
               {link.label}
             </Link>
           ))}
         </nav>
 
-        <div className="ml-auto flex items-center gap-3">
-          <SearchDialog />
+        <div className="ml-auto flex items-center gap-4">
           <ThemeToggle />
         </div>
       </div>
 
       {/* Below 768px the same links collapse behind a native disclosure. */}
       <details className="border-t border-rule md:hidden">
-        <summary className="mono cursor-pointer px-5 py-2 text-xs text-graphite marker:text-rule">
+        <summary className="mono cursor-pointer px-5 py-3 text-sm text-graphite marker:text-rule font-medium hover:bg-surface transition-colors">
           menu
         </summary>
-        <nav aria-label="Main, collapsed" className="flex flex-col gap-1 px-5 pb-3">
+        <nav aria-label="Main, collapsed" className="flex flex-col gap-2 px-5 pb-4">
           {LINKS.map((link) => (
             <Link
               key={link.href}
               href={link.href}
-              className="mono py-1 text-xs text-graphite hover:text-accent"
+              className="mono py-2 text-sm text-graphite hover:text-accent transition-colors duration-200"
             >
               {link.label}
             </Link>
