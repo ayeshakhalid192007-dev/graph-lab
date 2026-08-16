@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { SearchDialog } from "@/components/ui/SearchDialog";
 import { ThemeToggle } from "@/components/ui/ThemeToggle";
+import { Logo } from "@/components/ui/Logo";
 
 /**
  * Site chrome. A server component — nothing here needs state, and the mobile
@@ -22,8 +23,9 @@ export function NavBar() {
   return (
     <header className="border-b border-rule bg-paper">
       <div className="mx-auto flex w-full max-w-6xl items-center gap-4 px-5 py-3 sm:px-8">
-        <Link href="/" className="mono text-sm tracking-tight text-ink">
-          graph-lab
+        <Link href="/" className="flex items-center gap-2 hover:opacity-80 transition-opacity">
+          <Logo />
+          <span className="mono text-sm tracking-tight text-ink">graph-lab</span>
         </Link>
 
         {/* At and above 768px the links sit inline. */}

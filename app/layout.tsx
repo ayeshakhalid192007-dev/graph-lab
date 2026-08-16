@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { ThemeProvider } from "@/components/ui/ThemeProvider";
 import { NavBar } from "@/components/ui/NavBar";
+import { AnimatedBackground } from "@/components/ui/AnimatedBackground";
 
 const SITE_URL =
   process.env.NEXT_PUBLIC_SITE_URL ?? "https://ayeshakhalid192007-dev.github.io/graph-lab";
@@ -18,6 +19,10 @@ export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: { default: "graph-lab", template: "%s — graph-lab" },
   description: DESCRIPTION,
+  icons: {
+    icon: "/favicon.svg",
+    apple: "/favicon.svg",
+  },
   openGraph: {
     type: "website",
     siteName: "graph-lab",
@@ -47,6 +52,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
       <body className="min-h-screen font-sans antialiased">
         <ThemeProvider>
+          <AnimatedBackground />
           <a href="#main" className="mono sr-only focus:not-sr-only focus:absolute focus:p-3">
             Skip to content
           </a>

@@ -3,30 +3,35 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 :root {
-  /* Blueprint — light: warm paper, ink blue, graphite */
-  --paper: #f7f5f0;
-  --surface: #fffdf8;
-  --ink: #16324f;
-  --graphite: #3d4450;
-  /* 4.44:1 on --paper at #6b7280 — a hair under AA for normal text, and muted
-     text sits on paper as often as on surface. #5f6672 clears it on both
-     (5.31 / 5.69) and still reads a full step lighter than --graphite. */
-  --muted: #5f6672;
-  --rule: #cfc9bd;
-  --accent: #1d4ed8;
-  --grid-dot: #d6d0c4;
+  /* Graph Lab Theme — light: royal blue, gold, light gray */
+  --paper: #f8f9fc;
+  --surface: #ffffff;
+  --ink: #0B1325;
+  --graphite: #2c3e50;
+  --muted: #5a6c7d;
+  --rule: #d4d8e0;
+  --accent: #4169E1;
+  --grid-dot: #e0e4eb;
+  --primary: #4169E1;
+  --dark-node: #0B1325;
+  --accent-node: #D4AF37;
+  --supporting-node: #E2E8F0;
 }
 
 .dark {
-  /* Blueprint — dark: deep slate, cyan */
-  --paper: #0e141b;
-  --surface: #141c25;
-  --ink: #e6edf3;
-  --graphite: #b7c2cd;
-  --muted: #8b97a4;
-  --rule: #263544;
-  --accent: #22d3ee;
-  --grid-dot: #1e2b38;
+  /* Graph Lab Theme — dark: deep navy, gold accents */
+  --paper: #0B1325;
+  --surface: #141e2e;
+  --ink: #e8ecf1;
+  --graphite: #b8c5d6;
+  --muted: #8a9aad;
+  --rule: #253548;
+  --accent: #D4AF37;
+  --grid-dot: #1a2840;
+  --primary: #4169E1;
+  --dark-node: #0B1325;
+  --accent-node: #D4AF37;
+  --supporting-node: #E2E8F0;
 }
 
 @theme inline {
@@ -37,6 +42,10 @@
   --color-muted: var(--muted);
   --color-rule: var(--rule);
   --color-accent: var(--accent);
+  --color-primary: var(--primary);
+  --color-dark-node: var(--dark-node);
+  --color-accent-node: var(--accent-node);
+  --color-supporting-node: var(--supporting-node);
   --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
   --font-mono: ui-monospace, "SF Mono", "Cascadia Code", "JetBrains Mono", monospace;
 }
@@ -44,9 +53,46 @@
 body {
   background-color: var(--paper);
   color: var(--ink);
-  /* Faint dot grid — the drafting surface. No gradients, no shadows anywhere. */
-  background-image: radial-gradient(var(--grid-dot) 1px, transparent 1px);
-  background-size: 24px 24px;
+  background-image:
+    radial-gradient(var(--grid-dot) 1px, transparent 1px),
+    linear-gradient(135deg, transparent 0%, rgba(65, 105, 225, 0.03) 50%, transparent 100%);
+  background-size: 24px 24px, 100% 100%;
+  position: relative;
+  overflow-x: hidden;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background:
+    radial-gradient(circle at 20% 50%, rgba(65, 105, 225, 0.08) 0%, transparent 50%),
+    radial-gradient(circle at 80% 80%, rgba(212, 175, 55, 0.06) 0%, transparent 50%),
+    radial-gradient(circle at 40% 20%, rgba(226, 232, 240, 0.04) 0%, transparent 50%);
+  pointer-events: none;
+  animation: breathe 8s ease-in-out infinite;
+  z-index: -1;
+}
+
+@keyframes breathe {
+  0%, 100% {
+    opacity: 0.5;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.8;
+    transform: scale(1.05);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body::before {
+    animation: none;
+    opacity: 0.5;
+  }
 }
 
 /* Monospace carries the identity: node names, edge labels, section numbers,
@@ -94,6 +140,7 @@ body {
   color: var(--accent);
   text-decoration: underline;
   text-underline-offset: 2px;
+  transition: color 200ms ease, text-decoration-thickness 200ms ease;
 }
 .prose-blueprint a:hover { text-decoration-thickness: 2px; }
 
