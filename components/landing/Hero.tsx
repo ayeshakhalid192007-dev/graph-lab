@@ -4,13 +4,8 @@ import { getRoadmap } from "@/lib/docs.ts";
 import { PillButton } from "@/components/ui/PillButton";
 
 /**
- * The one place in this project where new prose is written (C2). The wording is
- * drafted and independence-checked in loops/loop-4-landing/state.md under
- * "Landing copy" — change it there first, not here.
- *
- * Every number in the stat strip is computed. Typed literals rot the moment the
- * course repo gains a page, and a landing page that lies about its own size is
- * worse than one that shows no numbers at all.
+ * Hero section with value proposition, CTA buttons, and key stats.
+ * Numbers are computed dynamically from course content.
  */
 export function Hero() {
   const stats = [
@@ -21,7 +16,7 @@ export function Hero() {
   ] as const;
 
   return (
-    <div className="max-w-3xl">
+    <div className="max-w-4xl">
       <style>{`
         @keyframes fadeInUp {
           from {
@@ -99,33 +94,30 @@ export function Hero() {
         }
       `}</style>
 
-      <p className="hero-label mono text-xs uppercase tracking-[0.2em] text-muted">
-        Graph Engineering
-      </p>
-      <h1 className="hero-heading mono mt-4 text-3xl leading-tight text-ink sm:text-5xl">
-        Build memory that more than one agent can trust.
-      </h1>
-      <p className="hero-description mt-6 text-base leading-relaxed text-graphite sm:text-lg">
-        A file holds up fine while one loop owns it start to finish. Bring in a
-        second worker and you can no longer say who wrote a line, when it landed,
-        or whether anybody checked it. Graph Engineering swaps that file for two
-        graphs — one recording what was attempted, one holding what turned out to
-        be true — so work that runs in parallel stays auditable afterwards.
+      <p className="hero-label mono text-sm uppercase tracking-widest text-accent font-semibold">
+        Graph Engineering Course
       </p>
 
-      <div className="hero-buttons mt-8 flex flex-wrap gap-3">
-        <PillButton href="/docs/00-start-here/">Start here</PillButton>
+      <h1 className="hero-heading mono mt-6 text-4xl sm:text-5xl leading-tight font-bold text-ink">
+        Build memory that more than one agent can trust.
+      </h1>
+
+      <p className="hero-description mt-6 text-lg leading-relaxed text-graphite max-w-2xl">
+        A file holds up fine while one loop owns it start to finish. Bring in a second worker and you can no longer say who wrote a line. Graph Engineering swaps that file for two graphs — one recording what was attempted, one holding what turned out to be true.
+      </p>
+
+      <div className="hero-buttons mt-8 flex flex-wrap gap-4">
+        <PillButton href="/docs/00-start-here/">Start the course</PillButton>
         <PillButton href="/tracks/" variant="outline">
-          Pick a track
+          Browse tracks
         </PillButton>
       </div>
 
-      {/* A plain list, not a <dl>: the visible label already names the number, so a
-          sr-only <dt> would only make a screen reader say "PAGES, 86 PAGES". */}
-      <ul className="hero-stats mono mt-10 flex flex-wrap gap-x-6 gap-y-2 border-t border-rule pt-5 text-xs tracking-wider text-muted">
+      <ul className="hero-stats mono mt-12 flex flex-wrap gap-8 border-t border-rule pt-8 text-sm tracking-wider">
         {stats.map(([n, label]) => (
           <li key={label} className="stat-item">
-            <span className="text-accent font-semibold">{n}</span> {label}
+            <div className="text-2xl font-bold text-primary">{n}</div>
+            <div className="text-xs uppercase tracking-widest text-muted mt-1">{label}</div>
           </li>
         ))}
       </ul>
