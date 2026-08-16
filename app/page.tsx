@@ -1,13 +1,15 @@
 import { Section } from "@/components/ui/Section";
 import { Hero } from "@/components/landing/Hero";
+import { LiveTerminal } from "@/components/landing/LiveTerminal";
 import { Curriculum } from "@/components/landing/Curriculum";
 import { PatternGrid } from "@/components/landing/PatternGrid";
 import { GetStarted } from "@/components/landing/GetStarted";
+import { MaintainersSection } from "@/components/landing/MaintainersSection";
 import { Footer } from "@/components/landing/Footer";
 
 /**
  * Landing page for graph-lab. Clean, focused layout with essential sections:
- * Hero, Curriculum, Patterns, Getting Started, and Footer.
+ * Hero, Live Terminal, Curriculum, Patterns, Getting Started, Maintainers, and Footer.
  */
 
 export default function LandingPage() {
@@ -15,6 +17,12 @@ export default function LandingPage() {
     <>
       <Section>
         <Hero />
+      </Section>
+
+      <Section className="border-t border-rule">
+        <div className="w-full max-w-3xl">
+          <LiveTerminal />
+        </div>
       </Section>
 
       <Section className="border-t border-rule">
@@ -27,6 +35,10 @@ export default function LandingPage() {
 
       <Section className="border-t border-rule">
         <GetStarted />
+      </Section>
+
+      <Section className="border-t border-rule">
+        <MaintainersSection />
       </Section>
 
       <Footer />
