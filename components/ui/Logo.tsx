@@ -10,46 +10,42 @@ export function Logo() {
     >
       <defs>
         <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" style={{ stopColor: '#38BDF8', stopOpacity: 1 }} />
-          <stop offset="50%" style={{ stopColor: '#818CF8', stopOpacity: 1 }} />
-          <stop offset="100%" style={{ stopColor: '#C084FC', stopOpacity: 1 }} />
+          <stop offset="0%" style={{ stopColor: '#6366F1', stopOpacity: 1 }} />
+          <stop offset="100%" style={{ stopColor: '#4F46E5', stopOpacity: 1 }} />
         </linearGradient>
         <linearGradient id="nodeGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" style={{ stopColor: '#60A5FA', stopOpacity: 1 }} />
+          <stop offset="0%" style={{ stopColor: '#3B82F6', stopOpacity: 1 }} />
           <stop offset="100%" style={{ stopColor: '#2563EB', stopOpacity: 1 }} />
         </linearGradient>
-        <linearGradient id="accentGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-          <stop offset="0%" style={{ stopColor: '#F59E0B', stopOpacity: 1 }} />
-          <stop offset="100%" style={{ stopColor: '#F97316', stopOpacity: 1 }} />
-        </linearGradient>
+        <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+          <feGaussianBlur stdDeviation="3" result="coloredBlur" />
+          <feMerge>
+            <feMergeNode in="coloredBlur" />
+            <feMergeNode in="SourceGraphic" />
+          </feMerge>
+        </filter>
       </defs>
 
-      {/* Outer decorative circle */}
-      <circle cx="24" cy="24" r="22" stroke="url(#logoGradient)" strokeWidth="0.5" opacity="0.3" />
+      {/* Outer circle - representing completeness and connection */}
+      <circle cx="24" cy="24" r="21" stroke="url(#logoGradient)" strokeWidth="1.5" opacity="0.8" />
 
-      {/* Graph nodes - representing interconnected systems */}
-      <circle cx="24" cy="24" r="5" fill="url(#nodeGradient)" filter="drop-shadow(0 0 8px rgba(96, 165, 250, 0.4))" />
+      {/* Central node - representing the core system */}
+      <circle cx="24" cy="24" r="4.5" fill="url(#nodeGradient)" filter="url(#glow)" opacity="0.9" />
 
-      {/* Surrounding nodes representing distributed systems */}
-      <circle cx="12" cy="12" r="3" fill="url(#accentGradient)" filter="drop-shadow(0 0 6px rgba(245, 158, 11, 0.3))" />
-      <circle cx="36" cy="12" r="3" fill="url(#accentGradient)" filter="drop-shadow(0 0 6px rgba(245, 158, 11, 0.3))" />
-      <circle cx="12" cy="36" r="3" fill="url(#accentGradient)" filter="drop-shadow(0 0 6px rgba(245, 158, 11, 0.3))" />
-      <circle cx="36" cy="36" r="3" fill="url(#accentGradient)" filter="drop-shadow(0 0 6px rgba(245, 158, 11, 0.3))" />
+      {/* Surrounding nodes - representing distributed systems */}
+      <circle cx="24" cy="9" r="2.5" fill="#1E40AF" opacity="0.7" />
+      <circle cx="9" cy="24" r="2.5" fill="#1E40AF" opacity="0.7" />
+      <circle cx="39" cy="24" r="2.5" fill="#1E40AF" opacity="0.7" />
+      <circle cx="24" cy="39" r="2.5" fill="#1E40AF" opacity="0.7" />
 
-      {/* Connecting edges - representing data flow and connections */}
-      <line x1="24" y1="24" x2="12" y2="12" stroke="url(#logoGradient)" strokeWidth="1.5" strokeLinecap="round" opacity="0.7" />
-      <line x1="24" y1="24" x2="36" y2="12" stroke="url(#logoGradient)" strokeWidth="1.5" strokeLinecap="round" opacity="0.7" />
-      <line x1="24" y1="24" x2="12" y2="36" stroke="url(#logoGradient)" strokeWidth="1.5" strokeLinecap="round" opacity="0.7" />
-      <line x1="24" y1="24" x2="36" y2="36" stroke="url(#logoGradient)" strokeWidth="1.5" strokeLinecap="round" opacity="0.7" />
+      {/* Connecting edges - clean lines showing relationships */}
+      <line x1="24" y1="24" x2="24" y2="9" stroke="url(#logoGradient)" strokeWidth="1" opacity="0.6" />
+      <line x1="24" y1="24" x2="9" y2="24" stroke="url(#logoGradient)" strokeWidth="1" opacity="0.6" />
+      <line x1="24" y1="24" x2="39" y2="24" stroke="url(#logoGradient)" strokeWidth="1" opacity="0.6" />
+      <line x1="24" y1="24" x2="24" y2="39" stroke="url(#logoGradient)" strokeWidth="1" opacity="0.6" />
 
-      {/* Connecting outer nodes to show network */}
-      <line x1="12" y1="12" x2="12" y2="36" stroke="url(#accentGradient)" strokeWidth="1" opacity="0.5" />
-      <line x1="36" y1="12" x2="36" y2="36" stroke="url(#accentGradient)" strokeWidth="1" opacity="0.5" />
-      <line x1="12" y1="12" x2="36" y2="12" stroke="url(#accentGradient)" strokeWidth="1" opacity="0.5" />
-      <line x1="12" y1="36" x2="36" y2="36" stroke="url(#accentGradient)" strokeWidth="1" opacity="0.5" />
-
-      {/* Decorative ring for elegance */}
-      <circle cx="24" cy="24" r="21" stroke="url(#logoGradient)" strokeWidth="0.5" strokeDasharray="3 3" opacity="0.2" />
+      {/* Inner decorative ring */}
+      <circle cx="24" cy="24" r="14" stroke="url(#logoGradient)" strokeWidth="0.5" strokeDasharray="2 3" opacity="0.4" />
     </svg>
   );
 }

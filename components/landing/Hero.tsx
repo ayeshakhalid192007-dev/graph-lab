@@ -11,8 +11,8 @@ export function Hero() {
     <div className="max-w-4xl">
       <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-accent-primary/10 border border-accent-primary/20 mb-8">
         <span className="relative flex h-3 w-3">
-          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent-primary opacity-75"></span>
-          <span className="relative inline-flex rounded-full h-3 w-3 bg-accent-primary"></span>
+          <span className="absolute inline-flex h-full w-full rounded-full bg-accent-primary opacity-75 animate-ping" />
+          <span className="relative inline-flex rounded-full h-3 w-3 bg-accent-primary" />
         </span>
         <span className="mono text-xs font-semibold text-accent-primary uppercase tracking-wider">
           Graph Engineering
@@ -20,18 +20,18 @@ export function Hero() {
       </div>
 
       <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold text-ink tracking-tight leading-tight mb-6">
-        Build systems that <br className="hidden sm:block" />
-        <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent-primary via-accent-secondary to-accent-vibrant">
+        Build resilient systems that <br className="hidden sm:block" />
+        <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent-primary to-accent-secondary">
           scale across agents
         </span>
       </h1>
 
       <p className="text-lg sm:text-xl text-graphite leading-relaxed max-w-2xl mb-10">
-        A new paradigm for distributed systems. Graph Engineering swaps fragile files for resilient graphs — where attempts and truths live side by side, ready for multiple workers to navigate.
+        A modern approach to distributed systems. Graph Engineering replaces fragile files with resilient graphs — where attempts and truths coexist, enabling multiple workers to navigate complex data relationships with confidence.
       </p>
 
       <div className="flex flex-wrap gap-4 mb-16">
-        <PillButton href="/docs/00-start-here/" className="px-8 py-4 text-base shadow-lg shadow-accent-primary/20">
+        <PillButton href="/docs/00-start-here/" className="px-8 py-4 text-base shadow-lg shadow-accent-primary/15">
           Start Learning
         </PillButton>
         <PillButton href="/tracks/" variant="outline" className="px-8 py-4 text-base">
@@ -50,11 +50,11 @@ export function Hero() {
         </div>
         <div>
           <div className="text-3xl sm:text-4xl font-bold text-ink mb-1">{starterCount}+</div>
-          <div className="text-sm sm:text-base text-muted font-medium uppercase tracking-wider">Kits</div>
+          <div className="text-sm sm:text-base text-muted font-medium uppercase tracking-wider">Starter Kits</div>
         </div>
         <div>
           <div className="text-3xl sm:text-4xl font-bold text-ink mb-1">17</div>
-          <div className="text-sm sm:text-base text-muted font-medium uppercase tracking-wider">Steps</div>
+          <div className="text-sm sm:text-base text-muted font-medium uppercase tracking-wider">Learning Steps</div>
         </div>
       </div>
     </div>

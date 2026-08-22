@@ -3,40 +3,40 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 :root {
-  /* Bright Premium Theme — Fresh, vibrant, modern palette */
-  /* Bright base colors with good contrast */
-  --paper: #F8FAFC;
+  /* Professional Soft Theme — Warm, approachable, trustworthy palette */
+  /* Soft neutral base with professional accent colors */
+  --paper: #F9FAFB;
   --surface: #FFFFFF;
-  --surface-soft: #F1F5F9;
-  --ink: #0F172A;
-  --graphite: #334155;
-  --muted: #64748B;
-  --rule: #E2E8F0;
-  --accent-primary: #3B82F6;
-  --accent-secondary: #10B981;
-  --accent-tertiary: #F59E0B;
-  --accent-vibrant: #8B5CF6;
+  --surface-soft: #F3F4F6;
+  --ink: #111827;
+  --graphite: #4B5563;
+  --muted: #6B7280;
+  --rule: #E5E7EB;
+  --accent-primary: #6366F1;
+  --accent-secondary: #0EA5E9;
+  --accent-tertiary: #8B5CF6;
+  --accent-vibrant: #EC4899;
   --grid-dot: #E0E7FF;
-  --card-border: rgba(15, 23, 42, 0.08);
-  --card-hover: rgba(59, 130, 246, 0.1);
+  --card-border: rgba(17, 24, 39, 0.06);
+  --card-hover: rgba(99, 102, 241, 0.08);
 }
 
 .dark {
-  /* Bright Dark Theme — Deep but vibrant colors */
+  /* Professional Dark Theme — Refined, elegant, modern */
   --paper: #0B1120;
-  --surface: #131B2B;
-  --surface-soft: #1A2335;
-  --ink: #E2E8F0;
-  --graphite: #94A3B8;
-  --muted: #64748B;
-  --rule: #1E293B;
-  --accent-primary: #60A5FA;
-  --accent-secondary: #34D399;
-  --accent-tertiary: #FBBF24;
-  --accent-vibrant: #C084FC;
+  --surface: #111827;
+  --surface-soft: #1F2937;
+  --ink: #F9FAFB;
+  --graphite: #9CA3AF;
+  --muted: #6B7280;
+  --rule: #374151;
+  --accent-primary: #818CF8;
+  --accent-secondary: #38BDF8;
+  --accent-tertiary: #C084FC;
+  --accent-vibrant: #F472B6;
   --grid-dot: #1E293B;
   --card-border: rgba(255, 255, 255, 0.08);
-  --card-hover: rgba(96, 165, 250, 0.15);
+  --card-hover: rgba(129, 140, 248, 0.12);
 }
 
 @theme inline {
