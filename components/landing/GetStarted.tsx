@@ -2,6 +2,7 @@ import Link from "next/link";
 import { CopyButton } from "@/components/ui/CopyButton";
 
 const CLONE = "npx @graph-engineering-kits/graph-kit document-to-facts";
+const INSTALL = "npm install @graph-engineering/core";
 
 /**
  * Minimal getting started guide
@@ -64,9 +65,32 @@ export function GetStarted() {
             Step 3
           </span>
           <h3 className="text-xl font-bold text-ink mb-2 group-hover:text-accent-vibrant transition-colors">
+            Install the core package
+          </h3>
+          <p className="text-graphite mb-3">
+            Get the foundation package that powers all Graph Engineering projects.
+          </p>
+          <div className="bg-surface-soft border border-rule rounded-lg p-4 hover:border-accent-primary transition-colors group relative overflow-hidden">
+            <div className="absolute top-0 left-0 w-1 h-full bg-gradient-to-b from-accent-primary to-accent-vibrant opacity-0 group-hover:opacity-100 transition-opacity" />
+            <div className="flex items-center justify-between gap-3 relative z-10">
+              <code className="mono text-sm text-ink flex-1 break-all font-mono">
+                <span className="text-muted">$</span> {INSTALL}
+              </code>
+              <CopyButton text={INSTALL} />
+            </div>
+          </div>
+        </div>
+
+        {/* Step 4 */}
+        <div className="group relative pl-8 border-l-2 border-rule hover:border-accent-primary transition-colors">
+          <div className="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-surface border-2 border-accent-vibrant group-hover:scale-125 transition-transform" />
+          <span className="mono text-[10px] uppercase tracking-widest text-accent-vibrant font-semibold mb-2 block">
+            Step 4
+          </span>
+          <h3 className="text-xl font-bold text-ink mb-2 group-hover:text-accent-vibrant transition-colors">
             Clone a starter kit
           </h3>
-          <p className="text-graphite mb-4">
+          <p className="text-graphite mb-3">
             One command, no API keys, no build. Run this in your terminal:
           </p>
           <div className="bg-surface-soft border border-rule rounded-lg p-4 hover:border-accent-primary transition-colors group relative overflow-hidden">

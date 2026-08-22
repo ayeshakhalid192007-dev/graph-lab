@@ -30,7 +30,7 @@ export function CopyButton({ text }: { text: string }) {
       type="button"
       onClick={copy}
       aria-label={copied ? "Code copied to clipboard" : "Copy code"}
-      className="mono text-[11px] uppercase tracking-wider text-muted hover:text-accent"
+      className="mono text-[11px] uppercase tracking-wider text-graphite hover:text-accent-primary border border-rule px-2 py-1 rounded hover:border-accent-primary hover:bg-surface-soft transition-all"
     >
       {copied ? "Copied" : "Copy"}
     </button>

@@ -20,19 +20,19 @@ export function ThemeToggle() {
     <button
       type="button"
       onClick={() => setTheme(resolvedTheme === "dark" ? "light" : "dark")}
-      className="mono border border-rule px-3 py-1.5 text-xs font-medium text-graphite hover:text-ink hover:border-accent transition-colors"
+      className="mono flex items-center gap-2 border border-rule px-3 py-1.5 rounded-md text-xs font-medium text-graphite hover:text-ink hover:border-accent-primary hover:bg-surface-soft transition-all"
       title={`Switch to ${resolvedTheme === "dark" ? "light" : "dark"} mode`}
     >
       {resolvedTheme === "dark" ? (
-        <span className="flex items-center gap-1.5">
+        <>
           <span className="w-2 h-2 rounded-full bg-yellow-400" />
-          LIGHT
-        </span>
+          <span>LIGHT</span>
+        </>
       ) : (
-        <span className="flex items-center gap-1.5">
+        <>
           <span className="w-2 h-2 rounded-full bg-slate-600" />
-          DARK
-        </span>
+          <span>DARK</span>
+        </>
       )}
     </button>
   );
