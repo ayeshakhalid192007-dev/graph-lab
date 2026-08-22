@@ -22,6 +22,7 @@ export function ThemeToggle() {
       onClick={() => setTheme(resolvedTheme === "dark" ? "light" : "dark")}
       className="mono flex items-center gap-2 border border-rule px-3 py-1.5 rounded-md text-xs font-medium text-graphite hover:text-ink hover:border-accent-primary hover:bg-surface-soft transition-all"
       title={`Switch to ${resolvedTheme === "dark" ? "light" : "dark"} mode`}
+      suppressHydrationWarning
     >
       {resolvedTheme === "dark" ? (
         <>
