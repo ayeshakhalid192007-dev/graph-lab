@@ -3,73 +3,76 @@ import { CopyButton } from "@/components/ui/CopyButton";
 
 const CLONE = "npx @graph-engineering-kits/graph-kit document-to-facts";
 
-/** Getting started guide with interactive steps and command examples */
+/**
+ * Minimal getting started guide
+ */
 export function GetStarted() {
   return (
-    <div className="max-w-4xl">
-      <div className="mb-12">
-        <h2 className="mono text-3xl font-semibold text-ink">Three steps in</h2>
-        <p className="mt-2 text-graphite">Start learning graph engineering in minutes</p>
+    <div className="max-w-2xl mx-auto">
+      <div className="flex items-center gap-3 mb-8">
+        <div className="h-1 w-12 bg-gradient-to-r from-accent-primary to-accent-secondary rounded-full" />
+        <h2 className="text-xl font-bold text-ink">Get Started</h2>
       </div>
 
-      <ol className="space-y-6">
-        <li className="border-l-2 border-accent pl-6 py-4 hover:border-primary transition-colors duration-200">
-          <div className="flex items-baseline gap-4 mb-2">
-            <span className="mono text-xs tracking-widest font-semibold text-accent bg-accent/10 px-2 py-1 rounded">
-              STEP 01
-            </span>
-            <h3 className="mono text-lg font-semibold text-ink">
-              Read Start here
-            </h3>
-          </div>
-          <p className="text-sm text-graphite leading-relaxed">
+      <div className="space-y-8">
+        {/* Step 1 */}
+        <div className="group relative pl-8 border-l-2 border-rule hover:border-accent-primary transition-colors">
+          <div className="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-surface border-2 border-accent-primary group-hover:scale-125 transition-transform" />
+          <span className="mono text-[10px] uppercase tracking-widest text-accent-primary font-semibold mb-2 block">
+            Step 1
+          </span>
+          <h3 className="text-xl font-bold text-ink mb-2 group-hover:text-accent-primary transition-colors">
+            Read Start here
+          </h3>
+          <p className="text-graphite mb-3">
             Two or three questions about what you have already built, and it points
             you at the page to open first.
           </p>
           <Link
             href="/docs/00-start-here/"
-            className="inline-block mt-3 mono text-xs font-semibold text-accent hover:text-primary transition-colors duration-200"
+            className="inline-flex items-center gap-1 text-sm font-semibold text-accent-primary hover:gap-2 transition-all"
           >
-            Open Start here →
+            Open Start here <span>→</span>
           </Link>
-        </li>
+        </div>
 
-        <li className="border-l-2 border-accent pl-6 py-4 hover:border-primary transition-colors duration-200">
-          <div className="flex items-baseline gap-4 mb-2">
-            <span className="mono text-xs tracking-widest font-semibold text-accent bg-accent/10 px-2 py-1 rounded">
-              STEP 02
-            </span>
-            <h3 className="mono text-lg font-semibold text-ink">
-              Pick a track
-            </h3>
-          </div>
-          <p className="text-sm text-graphite leading-relaxed">
+        {/* Step 2 */}
+        <div className="group relative pl-8 border-l-2 border-rule hover:border-accent-primary transition-colors">
+          <div className="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-surface border-2 border-accent-secondary group-hover:scale-125 transition-transform" />
+          <span className="mono text-[10px] uppercase tracking-widest text-accent-secondary font-semibold mb-2 block">
+            Step 2
+          </span>
+          <h3 className="text-xl font-bold text-ink mb-2 group-hover:text-accent-secondary transition-colors">
+            Pick a track
+          </h3>
+          <p className="text-graphite mb-3">
             G1 through G4, beginner to expert. Each finishes where the next one
             assumes you are.
           </p>
           <Link
             href="/tracks/"
-            className="inline-block mt-3 mono text-xs font-semibold text-accent hover:text-primary transition-colors duration-200"
+            className="inline-flex items-center gap-1 text-sm font-semibold text-accent-secondary hover:gap-2 transition-all"
           >
-            Browse tracks →
+            Browse tracks <span>→</span>
           </Link>
-        </li>
+        </div>
 
-        <li className="border-l-2 border-accent pl-6 py-4 hover:border-primary transition-colors duration-200">
-          <div className="flex items-baseline gap-4 mb-2">
-            <span className="mono text-xs tracking-widest font-semibold text-accent bg-accent/10 px-2 py-1 rounded">
-              STEP 03
-            </span>
-            <h3 className="mono text-lg font-semibold text-ink">
-              Clone a starter kit
-            </h3>
-          </div>
-          <p className="text-sm text-graphite leading-relaxed mb-4">
-            One command, no API keys, no build.
+        {/* Step 3 */}
+        <div className="group relative pl-8 border-l-2 border-rule hover:border-accent-primary transition-colors">
+          <div className="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-surface border-2 border-accent-vibrant group-hover:scale-125 transition-transform" />
+          <span className="mono text-[10px] uppercase tracking-widest text-accent-vibrant font-semibold mb-2 block">
+            Step 3
+          </span>
+          <h3 className="text-xl font-bold text-ink mb-2 group-hover:text-accent-vibrant transition-colors">
+            Clone a starter kit
+          </h3>
+          <p className="text-graphite mb-4">
+            One command, no API keys, no build. Run this in your terminal:
           </p>
-          <div className="bg-surface border border-rule rounded-lg p-4 hover:border-accent transition-colors duration-200 group">
-            <div className="flex items-center justify-between gap-3">
-              <code className="mono text-xs text-graphite flex-1 break-all">
+          <div className="bg-surface-soft border border-rule rounded-lg p-4 hover:border-accent-primary transition-colors group relative overflow-hidden">
+            <div className="absolute top-0 left-0 w-1 h-full bg-gradient-to-b from-accent-primary to-accent-vibrant opacity-0 group-hover:opacity-100 transition-opacity" />
+            <div className="flex items-center justify-between gap-3 relative z-10">
+              <code className="mono text-sm text-ink flex-1 break-all font-mono">
                 <span className="text-muted">$</span> {CLONE}
               </code>
               <CopyButton text={CLONE} />
@@ -77,12 +80,12 @@ export function GetStarted() {
           </div>
           <Link
             href="/patterns/"
-            className="inline-block mt-3 mono text-xs font-semibold text-accent hover:text-primary transition-colors duration-200"
+            className="inline-flex items-center gap-1 text-sm font-semibold text-accent-vibrant hover:gap-2 transition-all"
           >
-            View all starter kits →
+            View all starter kits <span>→</span>
           </Link>
-        </li>
-      </ol>
+        </div>
+      </div>
     </div>
   );
 }

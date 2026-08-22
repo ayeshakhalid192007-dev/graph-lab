@@ -1,34 +1,55 @@
 export function Logo() {
   return (
     <svg
-      width="24"
-      height="24"
-      viewBox="0 0 32 32"
+      width="32"
+      height="32"
+      viewBox="0 0 48 48"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      aria-label="Graph Lab"
+      aria-label="Graph Engineering"
     >
       <defs>
-        <linearGradient id="logoGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" style={{ stopColor: '#4169E1', stopOpacity: 1 }} />
-          <stop offset="100%" style={{ stopColor: '#3654C5', stopOpacity: 1 }} />
+        <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" style={{ stopColor: '#38BDF8', stopOpacity: 1 }} />
+          <stop offset="50%" style={{ stopColor: '#818CF8', stopOpacity: 1 }} />
+          <stop offset="100%" style={{ stopColor: '#C084FC', stopOpacity: 1 }} />
+        </linearGradient>
+        <linearGradient id="nodeGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" style={{ stopColor: '#60A5FA', stopOpacity: 1 }} />
+          <stop offset="100%" style={{ stopColor: '#2563EB', stopOpacity: 1 }} />
+        </linearGradient>
+        <linearGradient id="accentGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" style={{ stopColor: '#F59E0B', stopOpacity: 1 }} />
+          <stop offset="100%" style={{ stopColor: '#F97316', stopOpacity: 1 }} />
         </linearGradient>
       </defs>
 
-      {/* Central node */}
-      <circle cx="16" cy="16" r="4" fill="url(#logoGrad)" />
+      {/* Outer decorative circle */}
+      <circle cx="24" cy="24" r="22" stroke="url(#logoGradient)" strokeWidth="0.5" opacity="0.3" />
 
-      {/* Four surrounding nodes */}
-      <circle cx="8" cy="8" r="2.5" fill="#4169E1" opacity="0.8" />
-      <circle cx="24" cy="8" r="2.5" fill="#D4AF37" opacity="0.7" />
-      <circle cx="8" cy="24" r="2.5" fill="#D4AF37" opacity="0.7" />
-      <circle cx="24" cy="24" r="2.5" fill="#4169E1" opacity="0.8" />
+      {/* Graph nodes - representing interconnected systems */}
+      <circle cx="24" cy="24" r="5" fill="url(#nodeGradient)" filter="drop-shadow(0 0 8px rgba(96, 165, 250, 0.4))" />
 
-      {/* Connecting edges */}
-      <line x1="16" y1="16" x2="8" y2="8" stroke="#4169E1" strokeWidth="1" opacity="0.6" />
-      <line x1="16" y1="16" x2="24" y2="8" stroke="#D4AF37" strokeWidth="1" opacity="0.6" />
-      <line x1="16" y1="16" x2="8" y2="24" stroke="#D4AF37" strokeWidth="1" opacity="0.6" />
-      <line x1="16" y1="16" x2="24" y2="24" stroke="#4169E1" strokeWidth="1" opacity="0.6" />
+      {/* Surrounding nodes representing distributed systems */}
+      <circle cx="12" cy="12" r="3" fill="url(#accentGradient)" filter="drop-shadow(0 0 6px rgba(245, 158, 11, 0.3))" />
+      <circle cx="36" cy="12" r="3" fill="url(#accentGradient)" filter="drop-shadow(0 0 6px rgba(245, 158, 11, 0.3))" />
+      <circle cx="12" cy="36" r="3" fill="url(#accentGradient)" filter="drop-shadow(0 0 6px rgba(245, 158, 11, 0.3))" />
+      <circle cx="36" cy="36" r="3" fill="url(#accentGradient)" filter="drop-shadow(0 0 6px rgba(245, 158, 11, 0.3))" />
+
+      {/* Connecting edges - representing data flow and connections */}
+      <line x1="24" y1="24" x2="12" y2="12" stroke="url(#logoGradient)" strokeWidth="1.5" strokeLinecap="round" opacity="0.7" />
+      <line x1="24" y1="24" x2="36" y2="12" stroke="url(#logoGradient)" strokeWidth="1.5" strokeLinecap="round" opacity="0.7" />
+      <line x1="24" y1="24" x2="12" y2="36" stroke="url(#logoGradient)" strokeWidth="1.5" strokeLinecap="round" opacity="0.7" />
+      <line x1="24" y1="24" x2="36" y2="36" stroke="url(#logoGradient)" strokeWidth="1.5" strokeLinecap="round" opacity="0.7" />
+
+      {/* Connecting outer nodes to show network */}
+      <line x1="12" y1="12" x2="12" y2="36" stroke="url(#accentGradient)" strokeWidth="1" opacity="0.5" />
+      <line x1="36" y1="12" x2="36" y2="36" stroke="url(#accentGradient)" strokeWidth="1" opacity="0.5" />
+      <line x1="12" y1="12" x2="36" y2="12" stroke="url(#accentGradient)" strokeWidth="1" opacity="0.5" />
+      <line x1="12" y1="36" x2="36" y2="36" stroke="url(#accentGradient)" strokeWidth="1" opacity="0.5" />
+
+      {/* Decorative ring for elegance */}
+      <circle cx="24" cy="24" r="21" stroke="url(#logoGradient)" strokeWidth="0.5" strokeDasharray="3 3" opacity="0.2" />
     </svg>
   );
 }

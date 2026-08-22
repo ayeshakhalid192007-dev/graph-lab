@@ -20,14 +20,20 @@ export function ThemeToggle() {
     <button
       type="button"
       onClick={() => setTheme(resolvedTheme === "dark" ? "light" : "dark")}
-      className="mono border border-rule px-2 py-1 text-xs text-graphite hover:text-ink"
+      className="mono border border-rule px-3 py-1.5 text-xs font-medium text-graphite hover:text-ink hover:border-accent transition-colors"
+      title={`Switch to ${resolvedTheme === "dark" ? "light" : "dark"} mode`}
     >
-      <span className="dark:hidden">
-        DARK<span className="sr-only"> — switch to dark theme</span>
-      </span>
-      <span className="hidden dark:inline">
-        LIGHT<span className="sr-only"> — switch to light theme</span>
-      </span>
+      {resolvedTheme === "dark" ? (
+        <span className="flex items-center gap-1.5">
+          <span className="w-2 h-2 rounded-full bg-yellow-400" />
+          LIGHT
+        </span>
+      ) : (
+        <span className="flex items-center gap-1.5">
+          <span className="w-2 h-2 rounded-full bg-slate-600" />
+          DARK
+        </span>
+      )}
     </button>
   );
 }

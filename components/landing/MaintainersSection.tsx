@@ -18,7 +18,7 @@ export function MaintainersSection() {
     <Section id="maintainers">
       <div className="mb-12">
         <p className="mono text-xs uppercase tracking-widest text-accent font-semibold">
-          Who's behind this
+          Who&apos;s behind this
         </p>
         <h2 className="mt-4 text-3xl font-bold text-ink tracking-tight">
           Meet the maintainers

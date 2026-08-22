@@ -46,39 +46,39 @@ function LineRow({
   const writing = line.kind === "file" && active && !done;
 
   let glyph: React.ReactNode = " ";
-  let glyphClass = "text-muted";
+  let glyphClass = "text-ink"; // Fixed: changed from muted to ink
   if (line.kind === "cmd") {
     glyph = "$";
-    glyphClass = "text-muted";
+    glyphClass = "text-accent-primary";
   } else if (line.kind === "dir") {
     glyph = "▸";
-    glyphClass = "text-accent";
+    glyphClass = "text-accent-primary font-bold";
   } else if (line.kind === "file") {
     glyph = writing ? spin : "✓";
-    glyphClass = writing ? "text-accent" : "text-ink";
+    glyphClass = writing ? "text-accent-secondary" : "text-ink font-semibold";
   } else if (line.kind === "info") {
     glyph = active && !done ? spin : "›";
-    glyphClass = "text-muted";
+    glyphClass = "text-accent-tertiary";
   } else if (line.kind === "head") {
     glyph = "◇";
-    glyphClass = "text-accent";
+    glyphClass = "text-accent-vibrant font-bold";
   } else if (line.kind === "beat") {
     glyph = "●";
-    glyphClass = "text-accent";
+    glyphClass = "text-accent-secondary font-bold";
   }
 
   const textClass =
     line.kind === "cmd"
-      ? "text-ink"
+      ? "text-ink font-bold"
       : line.kind === "head"
-        ? "text-accent"
+        ? "text-accent-tertiary font-bold"
         : line.kind === "beat"
-          ? "text-ink"
+          ? "text-accent-vibrant italic font-medium"
           : writing
-            ? "text-muted"
+            ? "text-accent-secondary"
             : line.kind === "dir"
-              ? "text-ink"
-              : "text-muted";
+              ? "text-accent-primary font-bold"
+              : "text-ink"; // Fixed: changed from graphite to ink for better visibility
 
   return (
     <div className="term-line flex items-baseline gap-2.5 leading-relaxed">
@@ -87,7 +87,7 @@ function LineRow({
       </span>
       <span className="min-w-0">
         <span className={textClass}>{line.text}</span>
-        {line.note && <span className="text-muted/60"> — {line.note}</span>}
+        {line.note && <span className="text-ink/70"> — {line.note}</span>}
         {line.kind === "cmd" && active && !done && (
           <span className="animate-pulse" aria-hidden="true">▌</span>
         )}
@@ -167,38 +167,42 @@ export function LiveTerminal() {
     <figure
       ref={root}
       aria-label="A terminal running graph-engineering build: it initializes the dual-agent memory system, creating the attempt graph, truth graph, and reconciliation layers."
-      className="not-prose overflow-hidden rounded-xl border border-rule bg-surface/40 shadow-sm"
+      className="not-prose overflow-hidden rounded-2xl border border-accent-primary/20 bg-surface/90 shadow-xl shadow-accent-primary/10 backdrop-blur-sm"
     >
-      <div className="flex items-center gap-2 border-b border-rule px-4 py-2.5">
-        <span className="flex gap-1.5" aria-hidden="true">
-          <span className="h-2.5 w-2.5 rounded-full bg-rule" />
-          <span className="h-2.5 w-2.5 rounded-full bg-rule" />
-          <span className="h-2.5 w-2.5 rounded-full bg-rule" />
+      <div className="flex items-center gap-2 border-b border-accent-primary/10 px-5 py-4 bg-gradient-to-r from-accent-primary/5 to-surface">
+        <span className="flex gap-2" aria-hidden="true">
+          <span className="h-2.5 w-2.5 rounded-full bg-red-400 shadow-sm shadow-red-400/50" />
+          <span className="h-2.5 w-2.5 rounded-full bg-yellow-400 shadow-sm shadow-yellow-400/50" />
+          <span className="h-2.5 w-2.5 rounded-full bg-green-400 shadow-sm shadow-green-400/50" />
         </span>
-        <span className="ml-2 font-mono text-[11px] uppercase tracking-widest text-muted">
-          graph-lab — build
+        <span className="ml-2 font-mono text-xs uppercase tracking-widest text-accent-primary font-semibold">
+          graph-lab build
         </span>
       </div>
 
-      <div className="px-4 py-4 text-left font-mono text-[13px] sm:text-sm">
+      <div className="px-5 py-5 text-left font-mono text-sm sm:text-base">
         {SCRIPT.slice(0, Math.max(shown, 0)).map((line, i) => (
           <LineRow key={i} line={line} active={i === newest} done={done} spin={spin} />
         ))}
         {done && (
-          <div className="mt-1 flex items-baseline gap-2.5">
-            <span aria-hidden="true" className="w-3 shrink-0 text-center text-muted">
+          <div className="mt-2 flex items-baseline gap-2.5">
+            <span aria-hidden="true" className="w-3 shrink-0 text-center text-accent-primary">
               $
             </span>
-            <span aria-hidden="true" className="text-muted">▌</span>
+            <span aria-hidden="true" className="text-accent-primary">▌</span>
           </div>
         )}
       </div>
 
-      <div className="flex items-center gap-2 border-t border-rule px-4 py-2 font-mono text-[11px] text-muted">
-        <span aria-hidden="true" className={done ? "text-ink" : "text-accent"}>
-          {done ? "✓" : running ? spin : "›"}
+      <div className="flex items-center gap-3 border-t border-accent-primary/10 px-5 py-3.5 font-mono text-xs bg-gradient-to-r from-surface to-accent-secondary/5">
+        <span aria-hidden="true" className={`flex items-center justify-center w-5 h-5 rounded-full ${
+          done
+            ? "bg-green-400 text-white"
+            : "bg-accent-primary text-white animate-pulse"
+        }`}>
+          {done ? "✓" : spin}
         </span>
-        <span className="min-w-0 truncate">{status}</span>
+        <span className="min-w-0 truncate font-semibold text-ink">{status}</span>
       </div>
     </figure>
   );
