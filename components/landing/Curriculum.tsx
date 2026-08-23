@@ -15,7 +15,7 @@ export function Curriculum() {
     title: part.title.replace(/^Part \d+ · /, ""),
     content: (
       <div className="space-y-4">
-        <p className="text-graphite text-sm">{part.description || `${part.steps.length} steps to master this part`}</p>
+        <p className="text-graphite text-sm">{part.steps.length} steps to master this part</p>
         <ul className="space-y-2">
           {part.steps.map((step) => (
             <li key={step.route}>
