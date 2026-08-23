@@ -22,9 +22,9 @@ export function Button({
     "inline-flex items-center justify-center font-mono text-sm font-semibold transition-all duration-200 rounded-lg";
 
   const variantStyles = {
-    primary: "bg-accent-primary text-paper hover:bg-accent-secondary",
-    secondary: "bg-surface border border-card-border text-ink hover:border-accent-primary",
-    outline: "border border-accent-primary text-accent-primary hover:bg-accent-primary/10",
+    primary: "bg-accent-primary text-paper hover:bg-accent-secondary hover:text-paper",
+    secondary: "bg-surface border border-card-border text-ink hover:border-accent-primary hover:bg-surface-soft",
+    outline: "border border-accent-primary text-accent-primary hover:bg-accent-primary hover:text-paper",
   };
 
   const styles = `${baseStyles} ${variantStyles[variant]} ${className}`;

@@ -142,20 +142,20 @@ export function Footer() {
               <div className="flex items-start gap-3">
                 <div className="w-10 h-10 rounded-lg bg-accent-success/10 flex items-center justify-center flex-shrink-0">
                   <svg viewBox="0 0 24 24" width="20" height="20" fill="var(--accent-success)">
-                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" />
+                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z" />
                   </svg>
                 </div>
                 <div>
-                  <h3 className="font-mono font-semibold text-ink text-sm">Graph Engineering</h3>
-                  <p className="text-xs text-graphite">Course by Dav Glass</p>
+                  <h3 className="font-mono font-semibold text-ink text-sm">Saram Ali</h3>
+                  <p className="text-xs text-graphite">Graph Engineering Co-Author</p>
                   <div className="flex items-center gap-2 mt-2">
                     <a
-                      href="https://github.com/dglsparsons/graph-engineering-course"
+                      href="https://github.com/saramali"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="text-xs text-accent-success hover:text-accent-primary transition-colors inline-flex items-center gap-1"
                     >
-                      Course repo
+                      GitHub
                       <svg viewBox="0 0 24 24" width="10" height="10" fill="currentColor">
                         <path d="M18.25 12a.75.75 0 0 0-.75-.75H8.31l-4.47 4.47a.75.75 0 1 0 1.06 1.06l3.72-3.72H17.5a.75.75 0 0 0 0-1.5Z" />
                         <path d="M15.5 4.25a.75.75 0 0 0-1.5 0v2.5h-11a2 2 0 0 0-2 2v11a2 2 0 0 0 2 2h11a2 2 0 0 0 2-2v-11h1.75a.75.75 0 0 0 0-1.5h-1.75v-2.5Z" />

@@ -60,11 +60,12 @@ export default function LandingPage() {
       <Section className="border-t border-rule-strong py-16 sm:py-20">
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-12">
+            <Eyebrow className="mb-4">Getting Started</Eyebrow>
             <h2 className="text-2xl sm:text-3xl font-bold text-ink mb-4">
               Ready to build?
             </h2>
             <p className="text-graphite max-w-2xl mx-auto">
-              Start learning graph engineering in minutes with no setup required.
+              Start building resilient multi-agent systems with Graph Engineering in minutes. No setup required — just install the core package and explore starter kits designed for real-world scenarios.
             </p>
           </div>
           <LiveTerminal />
@@ -74,6 +75,13 @@ export default function LandingPage() {
       {/* Curriculum / Roadmap */}
       <Section className="border-t border-rule-strong py-16 sm:py-20">
         <div className="max-w-4xl mx-auto">
+          <div className="mb-12">
+            <Eyebrow className="mb-4 inline-block">Learning Path</Eyebrow>
+            <h2 className="text-3xl font-bold text-ink mb-2">Seventeen steps, seven parts</h2>
+            <p className="text-graphite max-w-2xl">
+              Master Graph Engineering through a carefully structured curriculum. Steps 1–13 build the foundation with queryable fact graphs and worker coordination. Steps 14–17 explore advanced patterns for scaling and optimization across distributed systems.
+            </p>
+          </div>
           <Curriculum />
         </div>
       </Section>
@@ -81,6 +89,13 @@ export default function LandingPage() {
       {/* Pattern Grid - reduced prominence */}
       <Section className="border-t border-rule-strong py-12 sm:py-16">
         <div className="max-w-4xl mx-auto">
+          <div className="mb-12">
+            <Eyebrow className="mb-4 inline-block">Patterns & Solutions</Eyebrow>
+            <h2 className="text-3xl font-bold text-ink mb-2">Core Patterns</h2>
+            <p className="text-graphite max-w-2xl">
+              Twenty-three battle-tested patterns covering extraction, resolution, provenance, governance, and storage. Each pattern addresses specific challenges in building reliable graph systems that scale across multiple agents.
+            </p>
+          </div>
           <PatternGrid />
         </div>
       </Section>
@@ -88,6 +103,13 @@ export default function LandingPage() {
       {/* Get Started */}
       <Section className="border-t border-rule-strong py-16 sm:py-20">
         <div className="max-w-2xl mx-auto">
+          <div className="mb-12">
+            <Eyebrow className="mb-4 inline-block">Quick Start</Eyebrow>
+            <h2 className="text-3xl font-bold text-ink mb-2">Get Started</h2>
+            <p className="text-graphite max-w-2xl">
+              Follow four simple steps to begin your Graph Engineering journey. From initial setup to running your first starter kit, you'll have a working example in minutes.
+            </p>
+          </div>
           <GetStarted />
         </div>
       </Section>
