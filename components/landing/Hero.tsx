@@ -21,13 +21,13 @@ export function Hero() {
 
       <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold text-ink tracking-tight leading-tight mb-6">
         Build resilient systems that <br className="hidden sm:block" />
-        <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent-primary to-accent-secondary font-bold">
+        <span className="font-bold text-accent-primary">
           scale across agents
         </span>
       </h1>
 
       <p className="text-lg sm:text-xl text-graphite leading-relaxed max-w-2xl mb-10">
-        A modern approach to distributed systems engineering. Graph Engineering replaces fragile file-based architectures with resilient graph structures—where attempts and truths coexist, enabling multiple workers to navigate complex data relationships with confidence and consistency.
+        Graph Engineering transforms how distributed systems handle complexity. Instead of fragile file-based states, it uses resilient graph structures where multiple workers can coordinate safely. Every attempt is recorded, every truth is verified, and your system stays reliable at any scale—from single-agent tools to multi-agent coordination at enterprise level.
       </p>
 
       <div className="flex flex-wrap gap-4 mb-16">
