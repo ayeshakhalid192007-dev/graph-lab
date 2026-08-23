@@ -1,7 +1,6 @@
 'use client';
 
 import { useState } from 'react';
-import { CopyButton } from './CopyButton';
 
 export interface TerminalCommand {
   command: string;

@@ -17,12 +17,12 @@ export function TwoGraphsDiagram() {
 
         {/* Work History Graph - Left Side */}
         <g transform="translate(0, 75)">
-          {/* Nodes - with clean styling - solid white background */}
+          {/* Nodes - with clean styling */}
           <circle cx="150" cy="70" r="28" fill="var(--surface)" stroke="var(--accent-primary)" strokeWidth="1.5" />
           <circle cx="150" cy="180" r="28" fill="var(--surface)" stroke="var(--accent-primary)" strokeWidth="1.5" />
           <circle cx="150" cy="290" r="28" fill="var(--surface)" stroke="var(--accent-primary)" strokeWidth="1.5" />
 
-          {/* Node Labels - use theme-aware colors */}
+          {/* Node Labels */}
           <text x="150" y="70" textAnchor="middle" dy="0.35em" fill="var(--ink)" style={{ fontFamily: 'var(--font-mono)', fontSize: '12px', fontWeight: '600' }}>
             attempt 1
           </text>
@@ -33,7 +33,7 @@ export function TwoGraphsDiagram() {
             attempt 3
           </text>
 
-          {/* Edges - cleaner, thinner */}
+          {/* Edges */}
           <line x1="150" y1="98" x2="150" y2="152" stroke="var(--accent-primary)" strokeWidth="1.5" strokeLinecap="round" opacity="0.8" />
           <line x1="150" y1="208" x2="150" y2="262" stroke="var(--accent-primary)" strokeWidth="1.5" strokeLinecap="round" opacity="0.8" />
         </g>
@@ -46,11 +46,11 @@ export function TwoGraphsDiagram() {
         {/* Fact Graph - Right Side */}
         <g transform="translate(400, 75)">
           {/* Nodes - with clean styling */}
-          <circle cx="150" cy="70" r="28" fill="var(--surface)" stroke="var(--accent-secondary)" strokeWidth="1.5" />
-          <circle cx="250" cy="180" r="28" fill="var(--surface)" stroke="var(--accent-secondary)" strokeWidth="1.5" />
-          <circle cx="50" cy="180" r="28" fill="var(--surface)" stroke="var(--accent-secondary)" strokeWidth="1.5" />
+          <circle cx="150" cy="70" r="28" fill="var(--surface)" stroke="var(--accent-success)" strokeWidth="1.5" />
+          <circle cx="250" cy="180" r="28" fill="var(--surface)" stroke="var(--accent-success)" strokeWidth="1.5" />
+          <circle cx="50" cy="180" r="28" fill="var(--surface)" stroke="var(--accent-success)" strokeWidth="1.5" />
 
-          {/* Node Labels - use theme-aware colors */}
+          {/* Node Labels */}
           <text x="150" y="70" textAnchor="middle" dy="0.35em" fill="var(--ink)" style={{ fontFamily: 'var(--font-mono)', fontSize: '12px', fontWeight: '600' }}>
             Service
           </text>
@@ -61,13 +61,13 @@ export function TwoGraphsDiagram() {
             Receipt
           </text>
 
-          {/* Edges - cleaner, thinner */}
-          <line x1="178" y1="92" x2="222" y2="158" stroke="var(--accent-secondary)" strokeWidth="1.5" strokeLinecap="round" opacity="0.8" />
-          <line x1="122" y1="92" x2="78" y2="158" stroke="var(--accent-secondary)" strokeWidth="1.5" strokeLinecap="round" opacity="0.8" />
-          <line x1="150" y1="98" x2="150" y2="152" stroke="var(--accent-secondary)" strokeWidth="1.5" strokeLinecap="round" opacity="0.8" />
+          {/* Edges */}
+          <line x1="178" y1="92" x2="222" y2="158" stroke="var(--accent-success)" strokeWidth="1.5" strokeLinecap="round" opacity="0.8" />
+          <line x1="122" y1="92" x2="78" y2="158" stroke="var(--accent-success)" strokeWidth="1.5" strokeLinecap="round" opacity="0.8" />
+          <line x1="150" y1="98" x2="150" y2="152" stroke="var(--accent-success)" strokeWidth="1.5" strokeLinecap="round" opacity="0.8" />
         </g>
 
-        {/* Separator line between graphs - thinner, more subtle */}
+        {/* Separator line between graphs */}
         <line x1="380" y1="75" x2="380" y2="325" stroke="var(--rule)" strokeWidth="1" opacity="0.5" />
 
         {/* Explanatory Labels - positioned below each graph */}
@@ -78,7 +78,7 @@ export function TwoGraphsDiagram() {
           </text>
         </g>
         <g transform="translate(400, 325)">
-          <rect x="0" y="0" width="200" height="35" rx="17.5" fill="var(--surface)" stroke="var(--accent-secondary)" strokeWidth="1" />
+          <rect x="0" y="0" width="200" height="35" rx="17.5" fill="var(--surface)" stroke="var(--accent-success)" strokeWidth="1" />
           <text x="100" y="20" textAnchor="middle" dy="0.35em" fill="var(--ink)" style={{ fontFamily: 'var(--font-mono)', fontSize: '10px' }}>
             What turned out to be true
           </text>

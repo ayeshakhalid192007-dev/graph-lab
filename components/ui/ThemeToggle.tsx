@@ -1,23 +1,19 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useTheme } from "next-themes";
 
-/**
- * Theme switch.
- *
- * Uses a mounted state to avoid hydration mismatch: the button shows a neutral
- * placeholder on the server and only renders the actual theme indicator after
- * the component mounts on the client.
- */
 export function ThemeToggle() {
   const { resolvedTheme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
+  const ref = useRef(false);
 
   useEffect(() => {
-    setMounted(true);
+    if (!ref.current) {
+      ref.current = true;
+      setMounted(true);
+    }
   }, []);
 
-  // Show placeholder during SSR/until mount to avoid hydration mismatch
   if (!mounted) {
     return (
       <button

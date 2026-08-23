@@ -14,14 +14,19 @@ const DESCRIPTION =
  * metadataBase already carries the basePath, so the image is given as a bare
  * "/og-image.png" and Next resolves it against that origin. Passing it through
  * withBasePath() here would double the prefix to /graph-lab/graph-lab/og-image.png.
+ *
+ * For favicons, use absolute URLs since Next doesn't apply assetPrefix to metadata paths.
  */
+const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
+const faviconUrl = `${SITE_URL}${basePath}/favicon.svg?v=2`;
+
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: { default: "graph-lab", template: "%s — graph-lab" },
   description: DESCRIPTION,
   icons: {
-    icon: "/favicon.svg?v=2",
-    apple: "/favicon.svg?v=2",
+    icon: faviconUrl,
+    apple: faviconUrl,
   },
   openGraph: {
     type: "website",

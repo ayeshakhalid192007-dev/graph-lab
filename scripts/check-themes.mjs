@@ -1,5 +1,6 @@
 // Check both-themes pass: page rendering, mermaid diagrams, and Shiki
 import { execSync } from "child_process";
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { readFileSync, writeFileSync } from "fs";
 import { join, dirname } from "path";
 import { fileURLToPath } from "url";
@@ -9,6 +10,7 @@ const __dirname = dirname(__filename);
 const rootDir = join(__dirname, "..");
 
 // Pages to test
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const pages = [
   "/",
   "/docs/02-foundations/glossary/",
@@ -28,6 +30,7 @@ async function runTests() {
 
   // Start dev server
   console.log("Starting dev server...");
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const server = execSync("npm run dev", {
     cwd: rootDir,
     encoding: "utf-8",
