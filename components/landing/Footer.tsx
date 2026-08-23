@@ -39,7 +39,7 @@ export function Footer() {
     {
       heading: "Build",
       links: [
-        { label: "Roadmap", href: "/roadmap/", internal: true },
+        { label: "Roadmap", href: "/tracks/", internal: true },
         { label: "Projects", href: "/projects/", internal: true },
         { label: "Resources", href: "/resources/", internal: true },
       ],

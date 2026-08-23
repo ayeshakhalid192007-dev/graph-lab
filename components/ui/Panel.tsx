@@ -7,7 +7,7 @@
 export function Panel({ className = "", children }:
   { className?: string; children: React.ReactNode }) {
   return (
-    <div className={`tick relative bg-surface-soft p-6 border border-card-border shadow-sm hover:shadow-md transition-all duration-300 hover:border-accent ${className}`}>
+    <div className={`premium-panel ${className}`}>
       {children}
     </div>
   );
