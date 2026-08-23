@@ -48,6 +48,7 @@
     "unist-util-visit": "^5.0.0"
   },
   "devDependencies": {
+    "@playwright/mcp": "^0.0.79",
     "@playwright/test": "^1.62.1",
     "@tailwindcss/postcss": "^4.0.0",
     "@types/node": "^20.0.0",

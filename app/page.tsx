@@ -1,89 +1,102 @@
 import { Section } from "@/components/ui/Section";
 import { Hero } from "@/components/landing/Hero";
+import { LiveTerminal } from "@/components/landing/LiveTerminal";
 import { Curriculum } from "@/components/landing/Curriculum";
 import { PatternGrid } from "@/components/landing/PatternGrid";
 import { GetStarted } from "@/components/landing/GetStarted";
-import { Maintainers } from "@/components/landing/Maintainers";
 import { Footer } from "@/components/landing/Footer";
-import { TwoGraphsSplit } from "@/components/landing/TwoGraphsSplit";
+import { TwoGraphsDiagram } from "@/components/landing/TwoGraphsDiagram";
 import { LifecycleDiagram } from "@/components/landing/LifecycleDiagram";
-import { SubgraphViewer } from "@/components/landing/SubgraphViewer";
 
 /**
- * A small, legible example rather than a realistic one: eight nodes is enough to
- * show that a slice is smaller than the whole, and few enough to read at a glance.
+ * Landing page for graph-lab.
+ * Clean, minimal layout with professional warm colors.
  */
-const EXAMPLE_GRAPH = {
-  nodes: ["Ticket", "Service", "Owner", "Deploy", "Incident", "Runbook", "Metric", "Receipt"],
-  edges: [
-    ["Ticket", "Service"],
-    ["Service", "Owner"],
-    ["Service", "Deploy"],
-    ["Deploy", "Incident"],
-    ["Incident", "Runbook"],
-    ["Service", "Metric"],
-    ["Deploy", "Receipt"],
-    ["Owner", "Runbook"],
-  ] as [string, string][],
-};
 
 export default function LandingPage() {
   return (
-    <>
-      <Section>
+    <div className="min-h-screen">
+      {/* Hero Section */}
+      <Section className="py-20 sm:py-28">
         <Hero />
       </Section>
 
-      <Section className="border-t border-rule">
-        <h2 className="mono text-2xl text-ink">Two graphs, not one</h2>
-        <p className="mt-3 max-w-2xl text-graphite">
-          They answer different questions and they age differently. One is a log of
-          what was tried; the other is the set of claims that survived checking.
-        </p>
-        <div className="mt-8">
-          <TwoGraphsSplit />
+      {/* Two Graphs Diagram - Core Concept */}
+      <Section className="border-t border-rule py-16 sm:py-20 bg-gradient-to-b from-surface to-surface/50">
+        <div className="max-w-6xl mx-auto px-6">
+          <div className="text-center mb-12">
+            <span className="inline-block px-3 py-1 rounded-full bg-accent-primary/10 text-accent-primary text-xs font-bold uppercase tracking-wider mb-4">
+              Core Concept
+            </span>
+            <h2 className="text-3xl font-bold text-ink mb-4">Work History vs. Facts</h2>
+            <p className="text-graphite max-w-2xl mx-auto">
+              Graph Engineering separates what was attempted from what turned out to be true,
+              creating resilient systems that multiple agents can navigate safely.
+            </p>
+          </div>
+          <div className="bg-surface rounded-2xl border border-rule p-6 shadow-sm">
+            <TwoGraphsDiagram />
+          </div>
         </div>
       </Section>
 
-      <Section className="border-t border-rule">
-        <Curriculum />
-        <div className="mt-12 border-t border-rule pt-8">
-          <p className="mono text-xs uppercase tracking-wider text-muted">
-            What Part 3 covers
-          </p>
-          <div className="mt-4">
+      {/* Lifecycle Diagram */}
+      <Section className="border-t border-rule py-16 sm:py-20">
+        <div className="max-w-6xl mx-auto px-6">
+          <div className="text-center mb-12">
+            <span className="inline-block px-3 py-1 rounded-full bg-accent-secondary/10 text-accent-secondary text-xs font-bold uppercase tracking-wider mb-4">
+              How It Works
+            </span>
+            <h2 className="text-3xl font-bold text-ink mb-4">The Fact Lifecycle</h2>
+            <p className="text-graphite max-w-2xl mx-auto">
+              Facts move through three stages: extraction, resolution, and provenance.
+              Each stage adds value while preserving the trail of what came before.
+            </p>
+          </div>
+          <div className="bg-surface rounded-2xl border border-rule p-6 shadow-sm">
             <LifecycleDiagram />
           </div>
         </div>
       </Section>
 
-      <Section className="border-t border-rule">
-        <PatternGrid />
-      </Section>
-
-      <Section className="border-t border-rule">
-        <h2 className="mono text-2xl text-ink">Give a worker a slice</h2>
-        <p className="mt-3 max-w-2xl text-graphite">
-          A worker that can see everything will use everything. Bounding the context
-          to the nodes a task actually needs is what keeps its answers checkable.
-        </p>
-        <div className="mt-8">
-          <SubgraphViewer
-            fullGraph={EXAMPLE_GRAPH}
-            subgraphNodeIds={["Ticket", "Service", "Deploy", "Receipt"]}
-          />
+      {/* Live Terminal Preview */}
+      <Section className="border-t border-rule py-16 sm:py-20 bg-surface/50">
+        <div className="max-w-4xl mx-auto">
+          <div className="text-center mb-12">
+            <h2 className="text-2xl sm:text-3xl font-bold text-ink mb-4">
+              Ready to build?
+            </h2>
+            <p className="text-graphite max-w-2xl mx-auto">
+              Start learning graph engineering in minutes with no setup required.
+            </p>
+          </div>
+          <LiveTerminal />
         </div>
       </Section>
 
-      <Section className="border-t border-rule">
-        <GetStarted />
+      {/* Curriculum / Roadmap */}
+      <Section className="border-t border-rule py-16 sm:py-20">
+        <div className="max-w-4xl mx-auto">
+          <Curriculum />
+        </div>
       </Section>
 
-      <Section className="border-t border-rule">
-        <Maintainers />
+      {/* Pattern Grid - reduced prominence */}
+      <Section className="border-t border-rule py-12 sm:py-16 bg-surface/30">
+        <div className="max-w-4xl mx-auto">
+          <PatternGrid />
+        </div>
       </Section>
 
+      {/* Get Started */}
+      <Section className="border-t border-rule py-16 sm:py-20">
+        <div className="max-w-2xl mx-auto">
+          <GetStarted />
+        </div>
+      </Section>
+
+      {/* Footer */}
       <Footer />
-    </>
+    </div>
   );
 }

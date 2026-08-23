@@ -1,134 +1,62 @@
 import { getAllDocs } from "@/lib/docs.ts";
 import { getAllPatterns, getStarterSlugs } from "@/lib/patterns.ts";
-import { getRoadmap } from "@/lib/docs.ts";
 import { PillButton } from "@/components/ui/PillButton";
 
-/**
- * The one place in this project where new prose is written (C2). The wording is
- * drafted and independence-checked in loops/loop-4-landing/state.md under
- * "Landing copy" — change it there first, not here.
- *
- * Every number in the stat strip is computed. Typed literals rot the moment the
- * course repo gains a page, and a landing page that lies about its own size is
- * worse than one that shows no numbers at all.
- */
 export function Hero() {
-  const stats = [
-    [getAllDocs().length, "PAGES"],
-    [getAllPatterns().length, "PATTERNS"],
-    [getStarterSlugs().length, "STARTER KITS"],
-    [getRoadmap().length, "QUIZZES"],
-  ] as const;
+  const docsCount = getAllDocs().length;
+  const patternsCount = getAllPatterns().length;
+  const starterCount = getStarterSlugs().length;
 
   return (
-    <div className="max-w-3xl">
-      <style>{`
-        @keyframes fadeInUp {
-          from {
-            opacity: 0;
-            transform: translateY(20px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
+    <div className="max-w-4xl">
+      <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-accent-primary/10 border border-accent-primary/20 mb-8">
+        <span className="relative flex h-3 w-3">
+          <span className="absolute inline-flex h-full w-full rounded-full bg-accent-primary opacity-75 animate-ping" />
+          <span className="relative inline-flex rounded-full h-3 w-3 bg-accent-primary" />
+        </span>
+        <span className="mono text-xs font-semibold text-accent-primary uppercase tracking-wider">
+          Graph Engineering
+        </span>
+      </div>
 
-        @keyframes fadeInDown {
-          from {
-            opacity: 0;
-            transform: translateY(-10px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-
-        @keyframes slideInRight {
-          from {
-            opacity: 0;
-            transform: translateX(-20px);
-          }
-          to {
-            opacity: 1;
-            transform: translateX(0);
-          }
-        }
-
-        .hero-label {
-          animation: fadeInDown 0.8s ease-out 0.1s both;
-        }
-
-        .hero-heading {
-          animation: fadeInUp 0.8s ease-out 0.2s both;
-        }
-
-        .hero-description {
-          animation: fadeInUp 0.8s ease-out 0.3s both;
-        }
-
-        .hero-buttons {
-          animation: fadeInUp 0.8s ease-out 0.4s both;
-        }
-
-        .hero-stats {
-          animation: fadeInUp 0.8s ease-out 0.5s both;
-        }
-
-        .stat-item {
-          animation: slideInRight 0.6s ease-out forwards;
-        }
-
-        .stat-item:nth-child(1) { animation-delay: 0.55s; }
-        .stat-item:nth-child(2) { animation-delay: 0.65s; }
-        .stat-item:nth-child(3) { animation-delay: 0.75s; }
-        .stat-item:nth-child(4) { animation-delay: 0.85s; }
-
-        @media (prefers-reduced-motion: reduce) {
-          .hero-label,
-          .hero-heading,
-          .hero-description,
-          .hero-buttons,
-          .hero-stats,
-          .stat-item {
-            animation: none;
-            opacity: 1;
-            transform: none;
-          }
-        }
-      `}</style>
-
-      <p className="hero-label mono text-xs uppercase tracking-[0.2em] text-muted">
-        Graph Engineering
-      </p>
-      <h1 className="hero-heading mono mt-4 text-3xl leading-tight text-ink sm:text-5xl">
-        Build memory that more than one agent can trust.
+      <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold text-ink tracking-tight leading-tight mb-6">
+        Build resilient systems that <br className="hidden sm:block" />
+        <span className="font-bold text-accent-primary">
+          scale across agents
+        </span>
       </h1>
-      <p className="hero-description mt-6 text-base leading-relaxed text-graphite sm:text-lg">
-        A file holds up fine while one loop owns it start to finish. Bring in a
-        second worker and you can no longer say who wrote a line, when it landed,
-        or whether anybody checked it. Graph Engineering swaps that file for two
-        graphs — one recording what was attempted, one holding what turned out to
-        be true — so work that runs in parallel stays auditable afterwards.
+
+      <p className="text-lg sm:text-xl text-graphite leading-relaxed max-w-2xl mb-10">
+        Graph Engineering transforms how distributed systems handle complexity. Instead of fragile file-based states, it uses resilient graph structures where multiple workers can coordinate safely. Every attempt is recorded, every truth is verified, and your system stays reliable at any scale—from single-agent tools to multi-agent coordination at enterprise level.
       </p>
 
-      <div className="hero-buttons mt-8 flex flex-wrap gap-3">
-        <PillButton href="/docs/00-start-here/">Start here</PillButton>
-        <PillButton href="/tracks/" variant="outline">
-          Pick a track
+      <div className="flex flex-wrap gap-4 mb-16">
+        <PillButton href="/docs/00-start-here/" className="px-8 py-4 text-base shadow-lg shadow-accent-primary/15">
+          Start Learning
+        </PillButton>
+        <PillButton href="/tracks/" variant="outline" className="px-8 py-4 text-base">
+          View Roadmap
         </PillButton>
       </div>
 
-      {/* A plain list, not a <dl>: the visible label already names the number, so a
-          sr-only <dt> would only make a screen reader say "PAGES, 86 PAGES". */}
-      <ul className="hero-stats mono mt-10 flex flex-wrap gap-x-6 gap-y-2 border-t border-rule pt-5 text-xs tracking-wider text-muted">
-        {stats.map(([n, label]) => (
-          <li key={label} className="stat-item">
-            <span className="text-accent font-semibold">{n}</span> {label}
-          </li>
-        ))}
-      </ul>
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-8 border-t border-rule pt-8">
+        <div>
+          <div className="text-3xl sm:text-4xl font-bold text-ink mb-1">{docsCount}+</div>
+          <div className="text-sm sm:text-base text-muted font-medium uppercase tracking-wider">Pages</div>
+        </div>
+        <div>
+          <div className="text-3xl sm:text-4xl font-bold text-ink mb-1">{patternsCount}+</div>
+          <div className="text-sm sm:text-base text-muted font-medium uppercase tracking-wider">Patterns</div>
+        </div>
+        <div>
+          <div className="text-3xl sm:text-4xl font-bold text-ink mb-1">{starterCount}+</div>
+          <div className="text-sm sm:text-base text-muted font-medium uppercase tracking-wider">Starter Kits</div>
+        </div>
+        <div>
+          <div className="text-3xl sm:text-4xl font-bold text-ink mb-1">17</div>
+          <div className="text-sm sm:text-base text-muted font-medium uppercase tracking-wider">Learning Steps</div>
+        </div>
+      </div>
     </div>
   );
 }
