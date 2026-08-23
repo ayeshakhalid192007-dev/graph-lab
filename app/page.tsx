@@ -107,7 +107,7 @@ export default function LandingPage() {
             <Eyebrow className="mb-4 inline-block">Quick Start</Eyebrow>
             <h2 className="text-3xl font-bold text-ink mb-2">Get Started</h2>
             <p className="text-graphite max-w-2xl">
-              Follow four simple steps to begin your Graph Engineering journey. From initial setup to running your first starter kit, you'll have a working example in minutes.
+              Follow four simple steps to begin your Graph Engineering journey. From initial setup to running your first starter kit, you&apos;ll have a working example in minutes.
             </p>
           </div>
           <GetStarted />
