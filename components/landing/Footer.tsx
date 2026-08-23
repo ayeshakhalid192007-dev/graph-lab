@@ -150,7 +150,7 @@ export function Footer() {
                   <p className="text-xs text-graphite">Graph Engineering Co-Author</p>
                   <div className="flex items-center gap-2 mt-2">
                     <a
-                      href="https://github.com/saramali"
+                      href="https://github.com/SARAMALI15792"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="text-xs text-accent-success hover:text-accent-primary transition-colors inline-flex items-center gap-1"
