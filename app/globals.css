@@ -3,40 +3,40 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 :root {
-  /* Professional Soft Theme — Warm, approachable, trustworthy palette */
-  /* Soft neutral base with professional accent colors - warm muted tones */
-  --paper: #FAFAF9;
-  --surface: #FFFFFF;
-  --surface-soft: #F7F6F4;
-  --ink: #1A1A1A;
-  --graphite: #4A4A4A;
-  --muted: #6A6A6A;
-  --rule: #E8E6E3;
-  --accent-primary: #8C7B63;
-  --accent-secondary: #6B8C75;
-  --accent-tertiary: #8C6B72;
-  --accent-vibrant: #756B8C;
-  --grid-dot: #ECE8E3;
-  --card-border: rgba(0, 0, 0, 0.06);
-  --card-hover: rgba(140, 123, 99, 0.08);
+  /* Warm Ivory + Terracotta + Olive — Premium, soft, professional palette */
+  /* Warm background with muted terracotta accent and olive secondary tones */
+  --paper: #F5F1E8;
+  --surface: #EAE4D8;
+  --surface-soft: #EEE8DC;
+  --ink: #292820;
+  --graphite: #706C60;
+  --muted: #706C60;
+  --rule: #D8D0C2;
+  --accent-primary: #B56A4A;
+  --accent-secondary: #687267;
+  --accent-tertiary: #9C563B;
+  --accent-vibrant: #687267;
+  --grid-dot: #E4DED2;
+  --card-border: rgba(0, 0, 0, 0.08);
+  --card-hover: rgba(181, 106, 74, 0.08);
 }
 
 .dark {
-  /* Professional Dark Theme — Refined, elegant, modern */
-  --paper: #141414;
-  --surface: #1F1F1F;
-  --surface-soft: #2A2A2A;
-  --ink: #F0F0F0;
-  --graphite: #B0B0B0;
-  --muted: #707070;
-  --rule: #333333;
-  --accent-primary: #A89882;
-  --accent-secondary: #8AA890;
-  --accent-tertiary: #A88891;
-  --accent-vibrant: #928AA8;
-  --grid-dot: #252525;
-  --card-border: rgba(255, 255, 255, 0.06);
-  --card-hover: rgba(168, 152, 130, 0.1);
+  /* Warm Ivory + Terracotta + Olive Dark Theme — Refined, elegant, modern */
+  --paper: #1A1815;
+  --surface: #2A251F;
+  --surface-soft: #332D26;
+  --ink: #F5F1E8;
+  --graphite: #C9BFB3;
+  --muted: #A8A09A;
+  --rule: #48423A;
+  --accent-primary: #D9916F;
+  --accent-secondary: #9DB39A;
+  --accent-tertiary: #C9795C;
+  --accent-vibrant: #9DB39A;
+  --grid-dot: #332D26;
+  --card-border: rgba(255, 255, 255, 0.08);
+  --card-hover: rgba(217, 145, 111, 0.12);
 }
 
 @theme inline {
@@ -63,7 +63,7 @@ body {
   color: var(--ink);
   background-image:
     radial-gradient(var(--grid-dot) 1px, transparent 1px),
-    linear-gradient(135deg, transparent 0%, rgba(140, 123, 99, 0.02) 50%, transparent 100%);
+    linear-gradient(135deg, transparent 0%, rgba(181, 106, 74, 0.015) 50%, transparent 100%);
   background-size: 24px 24px, 100% 100%;
   position: relative;
   overflow-x: hidden;
@@ -77,9 +77,9 @@ body::before {
   right: 0;
   bottom: 0;
   background:
-    radial-gradient(circle at 10% 20%, rgba(140, 123, 99, 0.08) 0%, transparent 40%),
-    radial-gradient(circle at 90% 10%, rgba(107, 140, 117, 0.06) 0%, transparent 35%),
-    radial-gradient(circle at 50% 80%, rgba(140, 107, 114, 0.05) 0%, transparent 45%);
+    radial-gradient(circle at 10% 20%, rgba(181, 106, 74, 0.06) 0%, transparent 40%),
+    radial-gradient(circle at 90% 10%, rgba(104, 114, 103, 0.04) 0%, transparent 35%),
+    radial-gradient(circle at 50% 80%, rgba(156, 86, 59, 0.04) 0%, transparent 45%);
   pointer-events: none;
   z-index: -1;
 }
@@ -110,7 +110,7 @@ body::after {
 .premium-glow-1 {
   width: 450px;
   height: 450px;
-  background: radial-gradient(circle, rgba(140, 123, 99, 0.35), transparent 70%);
+  background: radial-gradient(circle, rgba(181, 106, 74, 0.3), transparent 70%);
   top: -150px;
   left: -100px;
 }
@@ -118,7 +118,7 @@ body::after {
 .premium-glow-2 {
   width: 550px;
   height: 550px;
-  background: radial-gradient(circle, rgba(107, 140, 117, 0.25), transparent 70%);
+  background: radial-gradient(circle, rgba(104, 114, 103, 0.2), transparent 70%);
   bottom: -200px;
   right: -150px;
   animation-delay: -5s;
@@ -127,7 +127,7 @@ body::after {
 .premium-glow-3 {
   width: 380px;
   height: 380px;
-  background: radial-gradient(circle, rgba(140, 107, 114, 0.2), transparent 70%);
+  background: radial-gradient(circle, rgba(156, 86, 59, 0.18), transparent 70%);
   top: 30%;
   right: 30%;
   animation-delay: -10s;
@@ -170,14 +170,15 @@ body::after {
   border: 1px solid var(--card-border);
   border-radius: 16px;
   padding: 2rem;
-  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06), 0 1px 0 rgba(255, 255, 255, 0.02) inset;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04), 0 1px 0 rgba(255, 255, 255, 0.02) inset;
+  transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .premium-panel:hover {
   transform: translateY(-4px);
-  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.1), 0 4px 0 rgba(255, 255, 255, 0.03) inset;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12), 0 1px 0 rgba(255, 255, 255, 0.03) inset;
   border-color: var(--accent-primary);
+  background: linear-gradient(145deg, var(--surface-soft), var(--surface));
 }
 
 .premium-panel::before {
@@ -188,10 +189,20 @@ body::after {
   background: linear-gradient(90deg, transparent, var(--accent-primary), transparent);
   opacity: 0;
   transition: opacity 0.3s ease;
+  border-radius: 16px 16px 0 0;
 }
 
 .premium-panel:hover::before {
   opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .premium-panel {
+    transition: none;
+  }
+  .premium-panel:hover {
+    transform: none;
+  }
 }
 
 /* Typography */
@@ -274,7 +285,7 @@ body::after {
   font-family: var(--font-mono);
   font-size: 0.9em;
   color: var(--accent-secondary);
-  background: linear-gradient(135deg, rgba(107, 140, 117, 0.1), rgba(107, 140, 117, 0.05));
+  background: linear-gradient(135deg, rgba(104, 114, 103, 0.1), rgba(104, 114, 103, 0.05));
   border: 1px solid var(--card-border);
   padding: 0.15em 0.4em;
   border-radius: 6px;
@@ -282,7 +293,7 @@ body::after {
   transition: all 0.2s ease;
 }
 .prose-blueprint :not(pre) > code:hover {
-  background: linear-gradient(135deg, rgba(107, 140, 117, 0.15), rgba(107, 140, 117, 0.1));
+  background: linear-gradient(135deg, rgba(104, 114, 103, 0.15), rgba(104, 114, 103, 0.1));
   border-color: var(--accent-primary);
   transform: translateY(-1px);
 }
@@ -291,7 +302,7 @@ body::after {
   border-left: 4px solid var(--accent-primary);
   padding-left: 1.25rem;
   color: var(--graphite);
-  background: linear-gradient(90deg, rgba(140, 123, 99, 0.08), transparent);
+  background: linear-gradient(90deg, rgba(181, 106, 74, 0.06), transparent);
   padding: 1.25rem 1.5rem;
   border-radius: 0 12px 12px 0;
   margin-left: 0;
@@ -321,10 +332,10 @@ body::after {
   letter-spacing: 0.08em;
   color: var(--muted);
   font-weight: 600;
-  background: rgba(140, 123, 99, 0.04);
+  background: rgba(181, 106, 74, 0.04);
 }
 .prose-blueprint tbody tr:hover td {
-  background: rgba(140, 123, 99, 0.03);
+  background: rgba(181, 106, 74, 0.03);
 }
 
 .prose-blueprint details {
