@@ -1,25 +1,29 @@
 <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <rect width="48" height="48" fill="#0B1325"/>
-
   <defs>
-    <linearGradient id="faviconGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#4169E1;stop-opacity:1" />
-      <stop offset="100%" style="stop-color:#3654C5;stop-opacity:1" />
+    <linearGradient id="logoGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stopColor:#8C7B63;stop-opacity:1" />
+      <stop offset="100%" style="stopColor:#6B8C75;stop-opacity:1" />
     </linearGradient>
+    <filter id="softShadow" x="-50%" y="-50%" width="200%" height="200%">
+      <feDropShadow dx="0" dy="1" stdDeviation="2" flood-color="#000000" flood-opacity="0.15"/>
+    </filter>
   </defs>
 
-  <!-- Central node -->
-  <circle cx="24" cy="24" r="6" fill="url(#faviconGrad)"/>
+  {/* Outer circle - representing completeness and connection */}
+  <circle cx="24" cy="24" r="20" stroke="url(#logoGrad)" strokeWidth="1.5" opacity="0.8" filter="url(#softShadow)" />
 
-  <!-- Four surrounding nodes -->
-  <circle cx="12" cy="12" r="3.5" fill="#4169E1" opacity="0.9"/>
-  <circle cx="36" cy="12" r="3.5" fill="#D4AF37" opacity="0.8"/>
-  <circle cx="12" cy="36" r="3.5" fill="#D4AF37" opacity="0.8"/>
-  <circle cx="36" cy="36" r="3.5" fill="#4169E1" opacity="0.9"/>
+  {/* Central node - representing the core system */}
+  <circle cx="24" cy="24" r="5" fill="url(#logoGrad)" />
 
-  <!-- Connecting edges -->
-  <line x1="24" y1="24" x2="12" y2="12" stroke="#4169E1" stroke-width="1.5" opacity="0.7"/>
-  <line x1="24" y1="24" x2="36" y2="12" stroke="#D4AF37" stroke-width="1.5" opacity="0.7"/>
-  <line x1="24" y1="24" x2="12" y2="36" stroke="#D4AF37" stroke-width="1.5" opacity="0.7"/>
-  <line x1="24" y1="24" x2="36" y2="36" stroke="#4169E1" stroke-width="1.5" opacity="0.7"/>
+  {/* Surrounding nodes - representing distributed systems */}
+  <circle cx="24" cy="8" r="3" fill="#6B8C75" opacity="0.7" />
+  <circle cx="8" cy="24" r="3" fill="#8C7B63" opacity="0.7" />
+  <circle cx="40" cy="24" r="3" fill="#8C7B63" opacity="0.7" />
+  <circle cx="24" cy="40" r="3" fill="#6B8C75" opacity="0.7" />
+
+  {/* Connecting edges - clean lines showing relationships */}
+  <line x1="24" y1="24" x2="24" y2="8" stroke="url(#logoGrad)" strokeWidth="1.5" opacity="0.6" />
+  <line x1="24" y1="24" x2="8" y2="24" stroke="url(#logoGrad)" strokeWidth="1.5" opacity="0.6" />
+  <line x1="24" y1="24" x2="40" y2="24" stroke="url(#logoGrad)" strokeWidth="1.5" opacity="0.6" />
+  <line x1="24" y1="24" x2="24" y2="40" stroke="url(#logoGrad)" strokeWidth="1.5" opacity="0.6" />
 </svg>

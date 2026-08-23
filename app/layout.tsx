@@ -20,8 +20,8 @@ export const metadata: Metadata = {
   title: { default: "graph-lab", template: "%s — graph-lab" },
   description: DESCRIPTION,
   icons: {
-    icon: "/favicon.svg",
-    apple: "/favicon.svg",
+    icon: "/favicon.svg?v=2",
+    apple: "/favicon.svg?v=2",
   },
   openGraph: {
     type: "website",

@@ -26,7 +26,7 @@ const styles = `
 .premium-glow-1 {
   width: 450px;
   height: 450px;
-  background: radial-gradient(circle, rgba(59, 130, 246, 0.35), transparent 70%);
+  background: radial-gradient(circle, rgba(140, 123, 99, 0.35), transparent 70%);
   top: -150px;
   left: -100px;
 }
@@ -34,7 +34,7 @@ const styles = `
 .premium-glow-2 {
   width: 550px;
   height: 550px;
-  background: radial-gradient(circle, rgba(16, 185, 129, 0.25), transparent 70%);
+  background: radial-gradient(circle, rgba(107, 140, 117, 0.25), transparent 70%);
   bottom: -200px;
   right: -150px;
   animation-delay: -5s;
@@ -43,7 +43,7 @@ const styles = `
 .premium-glow-3 {
   width: 380px;
   height: 380px;
-  background: radial-gradient(circle, rgba(139, 92, 246, 0.2), transparent 70%);
+  background: radial-gradient(circle, rgba(140, 107, 114, 0.2), transparent 70%);
   top: 30%;
   right: 30%;
   animation-delay: -10s;

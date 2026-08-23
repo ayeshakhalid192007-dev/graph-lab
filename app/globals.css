@@ -4,39 +4,39 @@
 
 :root {
   /* Professional Soft Theme — Warm, approachable, trustworthy palette */
-  /* Soft neutral base with professional accent colors */
-  --paper: #F9FAFB;
+  /* Soft neutral base with professional accent colors - warm muted tones */
+  --paper: #FAFAF9;
   --surface: #FFFFFF;
-  --surface-soft: #F3F4F6;
-  --ink: #111827;
-  --graphite: #4B5563;
-  --muted: #6B7280;
-  --rule: #E5E7EB;
-  --accent-primary: #6366F1;
-  --accent-secondary: #0EA5E9;
-  --accent-tertiary: #8B5CF6;
-  --accent-vibrant: #EC4899;
-  --grid-dot: #E0E7FF;
-  --card-border: rgba(17, 24, 39, 0.06);
-  --card-hover: rgba(99, 102, 241, 0.08);
+  --surface-soft: #F7F6F4;
+  --ink: #1A1A1A;
+  --graphite: #4A4A4A;
+  --muted: #6A6A6A;
+  --rule: #E8E6E3;
+  --accent-primary: #8C7B63;
+  --accent-secondary: #6B8C75;
+  --accent-tertiary: #8C6B72;
+  --accent-vibrant: #756B8C;
+  --grid-dot: #ECE8E3;
+  --card-border: rgba(0, 0, 0, 0.06);
+  --card-hover: rgba(140, 123, 99, 0.08);
 }
 
 .dark {
   /* Professional Dark Theme — Refined, elegant, modern */
-  --paper: #0B1120;
-  --surface: #111827;
-  --surface-soft: #1F2937;
-  --ink: #F9FAFB;
-  --graphite: #9CA3AF;
-  --muted: #6B7280;
-  --rule: #374151;
-  --accent-primary: #818CF8;
-  --accent-secondary: #38BDF8;
-  --accent-tertiary: #C084FC;
-  --accent-vibrant: #F472B6;
-  --grid-dot: #1E293B;
-  --card-border: rgba(255, 255, 255, 0.08);
-  --card-hover: rgba(129, 140, 248, 0.12);
+  --paper: #141414;
+  --surface: #1F1F1F;
+  --surface-soft: #2A2A2A;
+  --ink: #F0F0F0;
+  --graphite: #B0B0B0;
+  --muted: #707070;
+  --rule: #333333;
+  --accent-primary: #A89882;
+  --accent-secondary: #8AA890;
+  --accent-tertiary: #A88891;
+  --accent-vibrant: #928AA8;
+  --grid-dot: #252525;
+  --card-border: rgba(255, 255, 255, 0.06);
+  --card-hover: rgba(168, 152, 130, 0.1);
 }
 
 @theme inline {
@@ -63,7 +63,7 @@ body {
   color: var(--ink);
   background-image:
     radial-gradient(var(--grid-dot) 1px, transparent 1px),
-    linear-gradient(135deg, transparent 0%, rgba(59, 130, 246, 0.02) 50%, transparent 100%);
+    linear-gradient(135deg, transparent 0%, rgba(140, 123, 99, 0.02) 50%, transparent 100%);
   background-size: 24px 24px, 100% 100%;
   position: relative;
   overflow-x: hidden;
@@ -77,9 +77,9 @@ body::before {
   right: 0;
   bottom: 0;
   background:
-    radial-gradient(circle at 10% 20%, rgba(59, 130, 246, 0.08) 0%, transparent 40%),
-    radial-gradient(circle at 90% 10%, rgba(52, 211, 153, 0.06) 0%, transparent 35%),
-    radial-gradient(circle at 50% 80%, rgba(139, 92, 246, 0.05) 0%, transparent 45%);
+    radial-gradient(circle at 10% 20%, rgba(140, 123, 99, 0.08) 0%, transparent 40%),
+    radial-gradient(circle at 90% 10%, rgba(107, 140, 117, 0.06) 0%, transparent 35%),
+    radial-gradient(circle at 50% 80%, rgba(140, 107, 114, 0.05) 0%, transparent 45%);
   pointer-events: none;
   z-index: -1;
 }
@@ -110,7 +110,7 @@ body::after {
 .premium-glow-1 {
   width: 450px;
   height: 450px;
-  background: radial-gradient(circle, rgba(59, 130, 246, 0.35), transparent 70%);
+  background: radial-gradient(circle, rgba(140, 123, 99, 0.35), transparent 70%);
   top: -150px;
   left: -100px;
 }
@@ -118,7 +118,7 @@ body::after {
 .premium-glow-2 {
   width: 550px;
   height: 550px;
-  background: radial-gradient(circle, rgba(16, 185, 129, 0.25), transparent 70%);
+  background: radial-gradient(circle, rgba(107, 140, 117, 0.25), transparent 70%);
   bottom: -200px;
   right: -150px;
   animation-delay: -5s;
@@ -127,7 +127,7 @@ body::after {
 .premium-glow-3 {
   width: 380px;
   height: 380px;
-  background: radial-gradient(circle, rgba(139, 92, 246, 0.2), transparent 70%);
+  background: radial-gradient(circle, rgba(140, 107, 114, 0.2), transparent 70%);
   top: 30%;
   right: 30%;
   animation-delay: -10s;
@@ -274,7 +274,7 @@ body::after {
   font-family: var(--font-mono);
   font-size: 0.9em;
   color: var(--accent-secondary);
-  background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(16, 185, 129, 0.05));
+  background: linear-gradient(135deg, rgba(107, 140, 117, 0.1), rgba(107, 140, 117, 0.05));
   border: 1px solid var(--card-border);
   padding: 0.15em 0.4em;
   border-radius: 6px;
@@ -282,7 +282,7 @@ body::after {
   transition: all 0.2s ease;
 }
 .prose-blueprint :not(pre) > code:hover {
-  background: linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(16, 185, 129, 0.1));
+  background: linear-gradient(135deg, rgba(107, 140, 117, 0.15), rgba(107, 140, 117, 0.1));
   border-color: var(--accent-primary);
   transform: translateY(-1px);
 }
@@ -291,7 +291,7 @@ body::after {
   border-left: 4px solid var(--accent-primary);
   padding-left: 1.25rem;
   color: var(--graphite);
-  background: linear-gradient(90deg, rgba(59, 130, 246, 0.08), transparent);
+  background: linear-gradient(90deg, rgba(140, 123, 99, 0.08), transparent);
   padding: 1.25rem 1.5rem;
   border-radius: 0 12px 12px 0;
   margin-left: 0;
@@ -321,10 +321,10 @@ body::after {
   letter-spacing: 0.08em;
   color: var(--muted);
   font-weight: 600;
-  background: rgba(59, 130, 246, 0.04);
+  background: rgba(140, 123, 99, 0.04);
 }
 .prose-blueprint tbody tr:hover td {
-  background: rgba(59, 130, 246, 0.03);
+  background: rgba(140, 123, 99, 0.03);
 }
 
 .prose-blueprint details {

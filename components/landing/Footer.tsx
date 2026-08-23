@@ -55,12 +55,12 @@ export function Footer() {
           <div className="max-w-sm">
             <div className="flex items-center gap-3 mb-4">
               <svg width="28" height="28" viewBox="0 0 48 48" fill="none">
-                <circle cx="24" cy="24" r="22" stroke="#3B82F6" strokeWidth="0.5" opacity="0.2" />
-                <circle cx="24" cy="24" r="5" fill="#3B82F6" />
-                <circle cx="12" cy="12" r="3" fill="#F59E0B" />
-                <circle cx="36" cy="12" r="3" fill="#F59E0B" />
-                <circle cx="12" cy="36" r="3" fill="#F59E0B" />
-                <circle cx="36" cy="36" r="3" fill="#F59E0B" />
+                <circle cx="24" cy="24" r="22" stroke="#8C7B63" strokeWidth="0.5" opacity="0.2" />
+                <circle cx="24" cy="24" r="5" fill="#6B8C75" />
+                <circle cx="12" cy="12" r="3" fill="#8C6B72" />
+                <circle cx="36" cy="12" r="3" fill="#8C6B72" />
+                <circle cx="12" cy="36" r="3" fill="#8C6B72" />
+                <circle cx="36" cy="36" r="3" fill="#8C6B72" />
               </svg>
               <span className="font-mono text-xl font-bold text-ink">graph-lab</span>
             </div>

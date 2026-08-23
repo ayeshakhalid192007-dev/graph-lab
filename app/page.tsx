@@ -10,7 +10,7 @@ import { LifecycleDiagram } from "@/components/landing/LifecycleDiagram";
 
 /**
  * Landing page for graph-lab.
- * Clean, minimal layout inspired by loop-lab with bright, vibrant colors.
+ * Clean, minimal layout with professional warm colors.
  */
 
 export default function LandingPage() {
@@ -81,8 +81,8 @@ export default function LandingPage() {
         </div>
       </Section>
 
-      {/* Pattern Grid */}
-      <Section className="border-t border-rule py-16 sm:py-20 bg-surface/50">
+      {/* Pattern Grid - reduced prominence */}
+      <Section className="border-t border-rule py-12 sm:py-16 bg-surface/30">
         <div className="max-w-4xl mx-auto">
           <PatternGrid />
         </div>

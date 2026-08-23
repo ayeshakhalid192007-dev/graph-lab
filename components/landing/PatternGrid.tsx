@@ -3,7 +3,8 @@ import { getAllPatterns } from "@/lib/patterns.ts";
 import { PillButton } from "@/components/ui/PillButton";
 
 /**
- * Premium pattern showcase - elegant grid with meaningful descriptions
+ * Pattern showcase - concise grid with meaningful descriptions
+ * Less prominent on landing page, more exploratory
  */
 export function PatternGrid() {
   const patterns = getAllPatterns();
@@ -59,46 +60,46 @@ export function PatternGrid() {
     return labels[category] || category;
   };
 
+  // Show only a curated selection of core patterns on the landing page
+  const corePatterns = patterns.filter((p) => p.core).slice(0, 6);
+
   return (
     <div>
-      <div className="text-center max-w-3xl mx-auto mb-16">
-        <h2 className="text-4xl font-bold text-ink mb-4 tracking-tight">Twenty-Three Patterns</h2>
-        <p className="text-graphite text-lg">
-          Solutions that emerge once your graph handles real traffic.
-          Each comes with a runnable starter kit.
+      <div className="text-center max-w-2xl mx-auto mb-12">
+        <h2 className="text-2xl font-bold text-ink mb-3 tracking-tight">Core Patterns</h2>
+        <p className="text-graphite text-sm">
+          Essential solutions that form the foundation of Graph Engineering.
+          <br className="hidden sm:block" />
+          Explore all 23 patterns on the patterns page.
         </p>
       </div>
 
-      <div className="max-w-5xl mx-auto">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {patterns.map((p) => (
+      <div className="max-w-3xl mx-auto">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          {corePatterns.map((p) => (
             <Link
               key={p.slug}
               href={`/patterns/${p.slug}/`}
-              className="group relative flex flex-col p-5 rounded-xl border border-rule bg-surface hover:border-accent-primary/50 hover:shadow-lg hover:shadow-accent-primary/5 transition-all duration-300"
+              className="group relative flex flex-col p-4 rounded-lg border border-rule bg-surface hover:border-accent-primary/30 transition-all duration-300"
             >
-              <div className="flex items-start justify-between mb-3">
-                <span className="font-mono text-lg font-bold text-ink group-hover:text-accent-primary transition-colors">
+              <div className="flex items-start justify-between mb-2">
+                <span className="font-mono text-sm font-semibold text-ink group-hover:text-accent-primary transition-colors">
                   {p.slug}
                 </span>
-                <span className={`text-[10px] px-2 py-1 rounded-full font-semibold ${
-                  p.core
-                    ? "bg-accent-primary/10 text-accent-primary border border-accent-primary/20"
-                    : "bg-accent-secondary/10 text-accent-secondary border border-accent-secondary/20"
-                }`}>
+                <span className="text-[9px] px-1.5 py-0.5 rounded-full bg-surface-soft text-muted border border-rule">
                   {p.core ? "Core" : "Extended"}
                 </span>
               </div>
 
-              <p className="text-sm text-graphite mb-4 flex-1 leading-relaxed">
+              <p className="text-xs text-graphite mb-3 leading-relaxed flex-1">
                 {getPatternDescription(p.slug, p.category, p.core)}
               </p>
 
-              <div className="flex items-center justify-between pt-4 border-t border-rule/50 group-hover:border-accent-primary/20 transition-colors">
-                <span className="text-xs font-semibold text-muted uppercase tracking-wider">
+              <div className="flex items-center justify-between pt-3 border-t border-rule/30">
+                <span className="text-[10px] text-muted uppercase tracking-wider">
                   {getCategoryLabel(p.category)}
                 </span>
-                <span className="text-accent-primary opacity-0 group-hover:opacity-100 transition-all transform translate-x-[-4px] group-hover:translate-x-0">
+                <span className="text-xs opacity-0 group-hover:opacity-100 transition-all transform translate-x-[-2px] group-hover:translate-x-0">
                   →
                 </span>
               </div>
@@ -107,9 +108,9 @@ export function PatternGrid() {
         </div>
       </div>
 
-      <div className="text-center mt-16">
-        <PillButton href="/patterns/" variant="outline" className="px-8 py-3 text-base">
-          Browse all patterns
+      <div className="text-center mt-10">
+        <PillButton href="/patterns/" variant="outline" className="px-6 py-2 text-sm">
+          View all 23 patterns
         </PillButton>
       </div>
     </div>
