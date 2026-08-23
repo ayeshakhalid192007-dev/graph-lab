@@ -1,12 +1,37 @@
 import Link from "next/link";
 import { getRoadmap } from "@/lib/docs.ts";
-import { PillButton } from "@/components/ui/PillButton";
+import { Button } from "@/components/ui/Button";
+import { Accordion } from "@/components/ui/Accordion";
 
 /**
- * Clean list layout showing the learning path
+ * Curriculum as numbered accordion showing learning path
  */
 export function Curriculum() {
   const roadmap = getRoadmap();
+
+  const accordionItems = roadmap.map((part) => ({
+    id: part.dir,
+    number: part.part,
+    title: part.title.replace(/^Part \d+ · /, ""),
+    content: (
+      <div className="space-y-4">
+        <p className="text-graphite text-sm">{part.description || `${part.steps.length} steps to master this part`}</p>
+        <ul className="space-y-2">
+          {part.steps.map((step) => (
+            <li key={step.route}>
+              <Link
+                href={step.route}
+                className="flex items-center gap-3 text-sm text-accent-primary hover:text-accent-secondary transition-colors group"
+              >
+                <span className="opacity-0 group-hover:opacity-100 transition-opacity">→</span>
+                <span className="flex-1">{step.title.replace(/^Step \d+ · /, "")}</span>
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </div>
+    ),
+  }));
 
   return (
     <div>
@@ -20,48 +45,14 @@ export function Curriculum() {
         </p>
       </div>
 
-      <div className="max-w-4xl mx-auto space-y-3">
-        {roadmap.map((part) => (
-          <div
-            key={part.dir}
-            className="group relative pl-8 border-l-2 border-rule hover:border-accent-primary transition-colors"
-          >
-            <div className="absolute -left-[9px] top-1/2 -translate-y-1/2 w-4 h-4 rounded-full bg-surface border-2 border-accent-primary group-hover:scale-125 transition-transform" />
-            <div className="flex items-center justify-between pb-4 hover:bg-surface/30 -ml-8 pl-8 pr-4 py-2 rounded-r-lg transition-colors">
-              <div>
-                <div className="flex items-center gap-3 mb-1">
-                  <span className="mono text-[10px] uppercase tracking-widest text-accent-primary font-bold">
-                    Part {part.part}
-                  </span>
-                  <span className="h-px w-8 bg-accent-primary/30" />
-                  <h3 className="text-lg font-bold text-ink group-hover:text-accent-primary transition-colors">
-                    {part.title.replace(/^Part \d+ · /, "")}
-                  </h3>
-                </div>
-                <ul className="space-y-1">
-                  {part.steps.map((step) => (
-                    <li key={step.route}>
-                      <Link
-                        href={step.route}
-                        className="flex items-center gap-2 text-sm text-graphite hover:text-accent-primary transition-colors group/link"
-                      >
-                        <span className="opacity-0 group-hover/link:opacity-100 transition-opacity">→</span>
-                        <span className="flex-1">{step.title.replace(/^Step \d+ · /, "")}</span>
-                        <span className="mono text-xs text-muted opacity-60">{part.steps.length} steps</span>
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </div>
-          </div>
-        ))}
+      <div className="max-w-4xl mx-auto">
+        <Accordion items={accordionItems} />
       </div>
 
       <div className="text-center mt-12">
-        <PillButton href="/tracks/" variant="outline">
+        <Button href="/tracks/" variant="outline">
           View full roadmap
-        </PillButton>
+        </Button>
       </div>
     </div>
   );
