@@ -14,8 +14,8 @@ export function Card({
   return (
     <div
       className={`
-        bg-surface border border-card-border rounded-lg p-6
-        transition-all duration-200
+        bg-surface border border-card-border rounded-md p-5
+        transition-all duration-150
         ${hover ? "hover:border-accent-primary hover:bg-surface-soft" : ""}
         ${className}
       `}
