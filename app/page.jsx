@@ -12,6 +12,32 @@ import { SectionHeading } from "@/components/ui/SectionHeading";
 import { getAllDocs } from "@/lib/docs.js";
 import { getAllPatterns, getStarterSlugs } from "@/lib/patterns.js";
 
+const NAV_SECTIONS = [
+  {
+    heading: "Course",
+    links: [
+      { label: "Start here", href: "/docs/00-start-here/" },
+      { label: "Tracks", href: "/tracks/" },
+      { label: "Patterns", href: "/patterns/" },
+    ],
+  },
+  {
+    heading: "Build",
+    links: [
+      { label: "Roadmap", href: "/tracks/" },
+      { label: "Projects", href: "/projects/" },
+      { label: "Resources", href: "/resources/" },
+    ],
+  },
+  {
+    heading: "Reference",
+    links: [
+      { label: "GitHub", href: "https://github.com/ayeshakhalid192007-dev/graph-lab" },
+      { label: "License", href: "https://github.com/ayeshakhalid192007-dev/graph-lab/blob/main/LICENSE" },
+    ],
+  },
+];
+
 export default function LandingPage() {
   const docsCount = getAllDocs().length;
   const patternsCount = getAllPatterns().length;
@@ -25,6 +51,20 @@ export default function LandingPage() {
         patternsCount={patternsCount}
         starterCount={starterCount}
       />
+
+      {/* ── Live Terminal Preview ── */}
+      <AnimatedSection className="py-16 sm:py-24">
+        <div className="max-w-4xl mx-auto px-6">
+          <SectionHeading
+            eyebrow="Live Preview"
+            title="See it in action"
+            description="Watch Graph Engineering initialize a dual-agent memory system in real time — from project scaffolding to a fully built graph structure."
+          />
+          <FadeIn delay={0.2}>
+            <LiveTerminal />
+          </FadeIn>
+        </div>
+      </AnimatedSection>
 
       {/* ── Diagram 1: Combined Graph — Core Concept ── */}
       <AnimatedSection className="py-16 sm:py-24">
@@ -107,20 +147,6 @@ export default function LandingPage() {
         </div>
       </AnimatedSection>
 
-      {/* ── Live Terminal Preview ── */}
-      <AnimatedSection className="py-16 sm:py-24">
-        <div className="max-w-4xl mx-auto px-6">
-          <SectionHeading
-            eyebrow="Getting Started"
-            title="Ready to build?"
-            description="Start building resilient multi-agent systems with Graph Engineering in minutes. No setup required — just install the core package and explore starter kits designed for real-world scenarios."
-          />
-          <FadeIn delay={0.2}>
-            <LiveTerminal />
-          </FadeIn>
-        </div>
-      </AnimatedSection>
-
       {/* ── Curriculum / Roadmap ── */}
       <AnimatedSection className="py-16 sm:py-24">
         <div className="max-w-4xl mx-auto px-6">
@@ -159,6 +185,42 @@ export default function LandingPage() {
           />
           <FadeIn delay={0.2}>
             <GetStarted />
+          </FadeIn>
+        </div>
+      </AnimatedSection>
+
+      {/* ── Navigation / Maintainers ── */}
+      <AnimatedSection className="py-16 sm:py-24">
+        <div className="max-w-4xl mx-auto px-6">
+          <SectionHeading
+            eyebrow="Navigation"
+            title="Explore Graph Engineering"
+            description="Everything you need to learn, build, and ship with Graph Engineering — organized by workflow."
+          />
+          <FadeIn delay={0.15}>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mt-2">
+              {NAV_SECTIONS.map((section) => (
+                <div key={section.heading} className="glass-card p-6 text-center">
+                  <h3 className="font-mono text-sm font-bold uppercase tracking-wider text-accent-primary mb-4">
+                    {section.heading}
+                  </h3>
+                  <ul className="space-y-2.5">
+                    {section.links.map((link) => (
+                      <li key={link.label}>
+                        <a
+                          href={link.href}
+                          target={link.href.startsWith("http") ? "_blank" : undefined}
+                          rel={link.href.startsWith("http") ? "noopener noreferrer" : undefined}
+                          className="text-sm text-graphite hover:text-accent-primary transition-colors"
+                        >
+                          {link.label}
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+            </div>
           </FadeIn>
         </div>
       </AnimatedSection>
