@@ -1,122 +1,775 @@
-# CLAUDE.md — `graph-lab`
+# Graph Lab — Refactoring & Redesign Rules
 
-**Read this file at the start of every session, before any other action.** Everything below is binding.
+## 1. Objective
 
----
+Refactor the existing Graph Lab application into a clean, maintainable Next.js application using:
 
-## 1. What this repo is
+- Next.js
+- React
+- JavaScript / JSX
+- CSS
+- Motion / Framer Motion for UI animation where useful
 
-`graph-lab` is a fully static Next.js site that renders the Graph Engineering course — 86 doc pages, a 17-step roadmap, four skill tracks, 23 patterns with 24 starter kits, 7 quizzes, 6 flashcard sets, 8 projects, 10 attributed sources, site search, and the Graph Ready certification flow.
+The visual direction should be premium, modern, polished, and consistent with the product's identity. The exact color palette and theme must be selected by the project owner during implementation.
 
-The full goal statement lives in `loops/shared/goal.md`. **Read it before starting work.** It is the single definition of what "done" means; no loop invents its own.
-
-| Document | Role |
-| --- | --- |
-| `plan/2026-08-06-course-website-design.md` | **The spec. Authoritative.** Where the plan and the spec disagree, the spec wins and the plan is wrong. |
-| `plan/2026-08-07-graph-lab-implementation-plan.md` | The task-by-task implementation plan (Tasks 1–22). |
-| `loops/shared/goal.md` | The one goal every loop reads. |
-| `loops/shared/constraints.md` | Global constraints that apply to every task. |
-| `loops/shared/loop.md` | The protocol every loop obeys. |
-| `loops/shared/verification.md` | Gate commands and the verification discipline. |
-| `loops/shared/handoff.md` | The loop-to-loop handoff contract. |
-| `loops/shared/state.md` | Cross-loop state: gate ledger, cross-loop repairs, decisions. |
-| `loops/loop-N-*/` | One folder per loop: `loop.md`, `tasks.md`, `gate.md`, `state.md`. |
-
----
-
-## 2. Session start checklist
-
-Do these four things before touching any file:
-
-1. Read this file.
-2. Read `loops/shared/goal.md` and `loops/shared/constraints.md`.
-3. Read `loops/shared/state.md` to learn which gates have cleared.
-4. Read the `loop.md`, `tasks.md`, and `state.md` of the loop you were asked to run. **If no loop was named, ask which loop — do not guess.**
+- dark premium interface
+- glassmorphism
+- subtle gradients and glow
+- animated graph/network visuals
+- smooth entrance and scroll animations
+- polished hover interactions
+- strong typography
+- generous spacing
+- responsive layouts
 
 ---
 
-## 3. Non-negotiable rules
+## 2. Core Rules
 
-These are the Global Constraints from the spec and plan. Every task inherits them.
-
-### Content
-
-- **`content/` is generated, never hand-edited.** `scripts/sync-docs.mjs` is its only writer. A task needing different content changes the course repo and re-syncs.
-- **No course content is authored here.** The single exception is the landing page's own hero and section copy, which is site chrome — and it must be worded independently of both `graph-engineering-course/README.md` and `docs/README.md`. A third fresh phrasing, not a paraphrase of either.
-- **MDX is not used.** Course markdown stays plain and GitHub-readable. All component substitution is pattern-matching on ordinary markdown inside `lib/markdown.ts`.
-
-### Scope
-
-- **`CodeTabs`, `Callout`, and `CheckYourself` are deliberately NOT built.** Zero content exercises them. Their degraded fallbacks are correct output, not bugs.
-- **`TwoGraphsSplit`, `LifecycleDiagram`, `SubgraphViewer` are landing-page components only.** Embedding them in doc pages would need a marker convention inside `docs/`, which is a course-content change and out of scope.
-
-### Platform
-
-- **Node >= 24.** `scripts/check-content-shape.mjs` imports `lib/parse-content.ts` directly so the quiz and flashcard parsers have exactly one definition; only Node >= 23.6 strips types from an imported `.ts` without a flag. Keep `.nvmrc`, `package.json` `engines`, and `.github/workflows/deploy.yml` in step — **never lower one in isolation.**
-- **`basePath` comes from `PAGES_BASE_PATH`** — unset locally so the dev server serves from root, `/graph-lab` in CI.
-
-### Design
-
-- **Blueprint palette only.** Warm paper white / ink blue / graphite in light; deep slate / cyan in dark. No shadows, no gradients, no glow. Hairline rules instead of card borders. Nothing is copied from `loop-lab`'s palette or type scale — structure is borrowed, visuals are not.
-- **All motion is suppressed under `prefers-reduced-motion: reduce`.**
-- **Every interactive element gets a visible focus state and an accessible name.**
-
-### Process
-
-- **Verification before checkbox.** A checkbox is ticked only after its command was run and its output read. A red command means the task is not done.
-- **Commit after every task.** Conventional-commit style.
-- **Creating the remote repo, pushing site code, and enabling Pages require explicit user confirmation** at Loop 5 Task 22.
+1. Preserve existing Graph Lab functionality.
+2. Do not rebuild the project from scratch.
+3. Do not delete working features for visual reasons.
+4. Do not invent content, statistics, testimonials, projects, or claims.
+5. Keep routes working unless a route change is explicitly required.
+6. Prefer incremental refactoring over large rewrites.
+7. Keep components reusable and focused.
+8. Prioritize correctness and usability over decoration.
+9. Every major visual change must be responsive.
+10. Every animation must have a reduced-motion strategy.
 
 ---
 
-## 4. The loop system
+## 3. JavaScript-Only Migration
 
-Five separate, independent `/loop` instances — **one per loop, not one loop reused across loops and not one combined loop spanning the whole build.**
+If the final requirement is strictly JavaScript:
 
-| Loop | Scope | Tasks | Gate |
-| --- | --- | --- | --- |
-| 1 — Foundation & pipeline | Repo scaffold, sync pipeline, CI checks, Blueprint tokens, app shell | 1–4 | `npm run verify:1` |
-| 2 — Render layer & 86 doc pages | content libs, link rewriting, markdown pipeline, doc route, link check | 5–9 | `npm run verify:2` |
-| 3 — Interactive surfaces | tracks, patterns, starters, quizzes, flashcards, projects, resources, certification | 10–14 | `npm run verify:3` |
-| 4 — Landing, identity, search | search index + dialog, landing page, animated diagrams, sitemap/llms.txt/404/OG | 15–18 | `npm run verify:4` |
-| 5 — Polish, verify, deploy | responsive, a11y, dual-theme, full DoD, deploy | 19–22 | `npm run verify:all` |
+- `.tsx` → `.jsx`
+- `.ts` → `.js`
+- remove TypeScript-only types/interfaces
+- preserve runtime behavior
+- do not change business logic unnecessarily
+- do not add new TypeScript
 
-Rules that apply to every loop — the long form is in `loops/shared/loop.md`:
+The final application should use Next.js + React + JavaScript/JSX + CSS.
 
-1. **A loop only ever touches its own tasks.** A defect found in an earlier loop's output is fixed and recorded under "Cross-loop repairs" in `loops/shared/state.md` — it does not license starting a later loop's work.
-2. **A loop stops permanently at its gate.** No loop hands off automatically. The user reviews, then starts the next loop by hand.
-3. **State files are the handoff.** Every task appends one entry to its own `loops/loop-N-*/state.md`; every gate appends one entry to `loops/shared/state.md`.
-4. **Verification before checkbox.**
-5. **A blocked loop stops and reports** rather than inventing an answer. Blocked ≠ done.
+Do not remove HTML semantics from the rendered application. React/Next.js still renders HTML in the browser. The goal is to remove standalone HTML page templates, not HTML as a web standard.
 
 ---
 
-## 5. Where things get written
+## 5. Animation Rules
 
-| You did this | Write it here |
-| --- | --- |
-| Finished a task | Tick its boxes in `loops/loop-N-*/tasks.md`; append an entry to `loops/loop-N-*/state.md` |
-| Passed a gate | Append to `loops/shared/state.md` → Gate ledger |
-| Fixed an earlier loop's defect | `loops/shared/state.md` → Cross-loop repairs |
-| Made a decision that binds later loops | `loops/shared/state.md` → Decisions |
-| Got blocked | `loops/loop-N-*/state.md` → Blockers, then stop and report |
+Use Motion/Framer Motion for:
 
-The plan's own checkboxes in `plan/2026-08-07-graph-lab-implementation-plan.md` are also ticked as steps complete. `tasks.md` per loop mirrors them at task granularity.
+- page/section entrance
+- scroll reveal
+- staggered cards
+- hover interactions
+- navbar transitions
+- layout transitions
+
+Use CSS for simple decorative animations.
+
+Only add GSAP, Three.js, Lenis, particle libraries, etc. when the requirement genuinely needs them.
+
+Do not add dependencies merely to reproduce a visual effect that CSS or Motion can handle.
+
+Preferred reveal:
+
+```text
+opacity: 0 → 1
+translateY: 24px → 0
+```
+
+Preferred card hover:
+
+```text
+scale: 1 → 1.02
+translateY: 0 → -4px
+```
+
+Avoid excessive bouncing, spinning, flashing, or constant large-scale movement.
+
+All non-essential animation must respect:
+
+```css
+@media (prefers-reduced-motion: reduce) {
+  /* reduce or disable non-essential motion */
+}
+```
 
 ---
 
-## 6. Conventions
+## 6. Preserve Existing Functionality
 
-- **Package manager:** npm. Not pnpm, not yarn, not bun.
-- **Commits:** conventional-commit style — `feat:`, `fix:`, `chore:`, `docs:`. Each task's final step names its message.
-- **Branch:** `main`.
-- **Tech stack, pinned:** Next.js 16.2.11 (App Router, `output: "export"`), React 19.2.4, TypeScript 5, Tailwind CSS v4 (CSS-configured, no `tailwind.config.ts`), unified/remark/rehype, Shiki, mermaid 11, next-themes.
-- **Never** add a dependency not listed in the plan's `package.json` without recording the reason in `loops/shared/state.md` → Decisions.
+Before changing any feature:
+
+1. Understand what it currently does.
+2. Identify its route and dependencies.
+3. Preserve its behavior.
+4. Change presentation separately.
+5. Verify it after the change.
+
+Important areas to preserve include:
+
+- documentation
+- patterns
+- starter/project content
+- quizzes
+- flashcards
+- practice projects
+- search
+- certification
+- interactive learning features
+
+If existing logic works, refactor its UI instead of replacing the logic.
 
 ---
 
-## 7. When in doubt
+## 7. Repository Audit
 
-- The spec beats the plan. The plan beats your judgment. Your judgment beats silence — if all three are unclear, **stop and ask.**
-- Do not mark work complete without running the verification and reading its output.
-- Do not create remote repositories, push, or enable Pages without explicit confirmation for that specific action.
+Before a major refactor inspect:
+
+- `package.json`
+- `app/`
+- `components/`
+- `content/`
+- `lib/`
+- `public/`
+- `scripts/`
+- tests
+- configuration files
+
+Identify:
+
+- routes
+- layouts
+- page components
+- reusable components
+- content/data sources
+- CSS
+- dependencies
+- interactive components
+- duplicated UI
+- unused code
+- current validation/build commands
+
+Do not assume code is unused. Search its references before deleting it.
+
+---
+
+# 9. Required Work Phases
+
+## Phase 0 — Baseline
+
+Before editing:
+
+- run the project locally
+- verify the homepage
+- verify important routes
+- verify search
+- verify interactive features
+- verify quizzes
+- verify flashcards
+- verify projects
+- verify certification
+- run available lint/build/test checks
+
+Record failures before the redesign so new failures can be distinguished from existing ones.
+
+## Phase 1 — Architecture Audit
+
+Map the current application and dependencies.
+
+Do not delete code during this phase unless it is proven dead.
+
+## Phase 2 — JavaScript Migration
+
+Convert TypeScript/TSX to JS/JSX if strict JS-only is required.
+
+After each group of migrations:
+
+- run the app
+- check imports
+- check routes
+- run build/lint checks
+
+Do not combine migration with unrelated behavioral rewrites.
+
+## Phase 3 — Visual Design
+
+Create one consistent visual system before redesigning individual sections.
+
+## Phase 4 — Homepage Redesign
+
+Recommended order:
+
+1. Navbar
+2. Hero
+3. Animated graph
+4. Learning overview
+5. Learning path
+6. Interactive section
+7. Features
+8. Projects
+9. Certification CTA
+10. Footer
+
+## Phase 5 — Internal Pages
+
+Apply the same design language to documentation, patterns, projects, quizzes, flashcards, and interactive pages without sacrificing readability.
+
+## Phase 6 — Responsive + Accessibility + Performance
+
+Test all major surfaces on mobile, tablet, laptop, and desktop.
+
+---
+
+# 9. Design System
+
+```css
+:root {
+
+}
+```
+
+Tune these values against the actual Graph Lab content.
+
+---
+
+# 10. Glassmorphism Rules
+
+Glassmorphism should be intentional, not applied everywhere.
+
+Use a combination of:
+
+- translucent background
+- backdrop blur
+- subtle border
+- soft shadow
+- rounded corners
+
+Example:
+
+```css
+.glass {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
+}
+```
+
+Good candidates:
+
+- navbar
+- feature cards
+- code panels
+- interactive panels
+- project cards
+- important CTA surfaces
+
+Do not put long-form text inside unnecessarily blurred surfaces.
+
+---
+
+# 11. Graph Lab Identity
+
+Do not turn Graph Lab into a generic SaaS template.
+
+The visual identity should come from graph engineering:
+
+- nodes
+- edges
+- graph paths
+- connected points
+- network structures
+- graph diagrams
+- code/algorithm motifs
+- learning progression
+
+The hero should preferably use an animated graph/network instead of generic floating blobs.
+
+Decorative animation should reinforce the product.
+
+---
+
+# 12. Homepage Structure
+
+Recommended structure:
+
+```text
+Floating glass navbar
+Hero
+Learning overview
+Learning path
+Interactive graph section
+Features / capabilities
+Practice projects
+Certification CTA
+Footer
+```
+
+Do not add:
+
+- fake testimonials
+- fake statistics
+- fake customer logos
+- invented claims
+
+---
+
+# 13. Navbar
+
+Create a floating glass navbar with:
+
+- logo/brand
+- existing navigation
+- active route state
+- responsive mobile navigation
+- keyboard accessibility
+- visible focus states
+
+Animation:
+
+- subtle entrance
+- optional compact state on scroll
+- smooth transitions
+
+Do not make navigation harder to use for visual effects.
+
+---
+
+# 14. Hero
+
+The hero must immediately explain Graph Lab.
+
+Include:
+
+- strong headline
+- short supporting text
+- primary CTA
+- secondary CTA when useful
+- animated graph/network visual
+- subtle ambient glow
+
+Keep the hero readable and spacious.
+
+Do not let animation compete with the main message.
+
+---
+
+# 15. Animated Graph
+
+Create a reusable graph visual component.
+
+Possible behavior:
+
+- nodes gently pulse
+- edges subtly animate
+- selected nodes glow
+- graph slowly drifts
+- pointer interaction creates subtle movement
+
+Requirements:
+
+- lightweight
+- optimized
+- isolated from business logic
+- reduced-motion support
+- no animation required for comprehension
+
+If canvas is required, isolate it in its own component and avoid unnecessary React re-renders.
+
+---
+
+# 16. Cards
+
+Cards should use a consistent glass style.
+
+Possible hover:
+
+- slight upward movement
+- slight scale
+- brighter border
+- subtle glow
+- small icon movement
+
+Avoid exaggerated effects.
+
+---
+
+# 17. Learning Path
+
+Create a visual progression such as:
+
+```text
+01 Fundamentals
+      ↓
+02 Graph Modeling
+      ↓
+03 Graph Patterns
+      ↓
+04 Practice
+      ↓
+05 Projects
+```
+
+Graph-like connections can illuminate on scroll.
+
+The learning path must remain understandable with animations disabled.
+
+---
+
+# 18. Interactive Learning
+
+Keep existing interactive functionality.
+
+Present it inside polished panels where appropriate.
+
+Improve:
+
+- hierarchy
+- spacing
+- controls
+- labels
+- loading states
+- empty states
+- error states
+- responsiveness
+
+Do not sacrifice usability for appearance.
+
+---
+
+# 19. Documentation
+
+Documentation must prioritize:
+
+1. readability
+2. navigation
+3. search
+4. code clarity
+5. content hierarchy
+6. visual polish
+
+Use glass effects mainly for:
+
+- side navigation
+- controls
+- code blocks
+- callouts
+- interactive examples
+
+Avoid excessive blur behind large amounts of text.
+
+---
+
+# 20. Projects and Certification
+
+Project cards should only show metadata already available in the application.
+
+Use:
+
+- project name
+- existing difficulty
+- existing description
+- existing tags
+- action
+
+Certification should be a visually strong CTA while preserving the existing certification flow.
+
+Do not invent certification claims.
+
+---
+
+# 21. Component Architecture
+
+Prefer focused components:
+
+```text
+components/
+  landing/
+    Navbar.jsx
+    Hero.jsx
+    HeroGraph.jsx
+    LearningOverview.jsx
+    LearningPath.jsx
+    InteractiveLearning.jsx
+    Projects.jsx
+    CertificationCTA.jsx
+    Footer.jsx
+
+  ui/
+    GlassCard.jsx
+    GlassButton.jsx
+    SectionHeading.jsx
+    AnimatedSection.jsx
+
+  animations/
+    FadeIn.jsx
+    Stagger.jsx
+```
+
+Do not create tiny components without a real reuse or responsibility benefit.
+
+Do not create one giant page component containing all homepage logic.
+
+---
+
+# 22. Routing
+
+Preserve existing routes.
+
+If a route changes:
+
+1. find all references
+2. update navigation
+3. update internal links
+4. add redirect behavior if appropriate
+5. verify the old route
+
+Never break deep links accidentally.
+
+---
+
+# 23. Client Components
+
+Do not add `"use client"` everywhere.
+
+Use client components only where browser interactivity is required, such as:
+
+- interactive graph controls
+- animation state that requires client execution
+- menus
+- quizzes
+- interactive learning tools
+
+Keep static content server-rendered where possible.
+
+---
+
+# 24. Accessibility
+
+Every redesigned surface must support:
+
+- semantic HTML
+- keyboard navigation
+- visible focus states
+- accessible labels
+- sufficient contrast
+- reduced motion
+- responsive text
+- non-hover alternatives
+
+No important action may depend only on hover.
+
+---
+
+# 25. Responsive Design
+
+Explicitly test:
+
+- navbar
+- hero
+- graph animation
+- cards
+- learning path
+- interactive tools
+- documentation
+- project cards
+- footer
+
+on:
+
+- mobile
+- tablet
+- laptop
+- large desktop
+
+Do not simply shrink the desktop design.
+
+---
+
+# 26. Performance
+
+Prefer:
+
+- transforms
+- opacity
+- CSS animations
+- Motion transforms
+- optimized assets
+
+Avoid continuously animating expensive layout properties.
+
+Do not create unnecessary client-side rendering.
+
+Do not add heavy libraries for simple effects.
+
+---
+
+# 27. Content Rules
+
+Never modify educational content just for styling.
+
+Never invent:
+
+- lessons
+- statistics
+- testimonials
+- project results
+- user counts
+- certifications
+- companies
+- reviews
+
+Separate content from presentation when practical.
+
+---
+
+# 28. Git Rules
+
+Use small meaningful commits.
+
+Suggested progression:
+
+```text
+refactor: audit existing application
+refactor: migrate components to javascript
+refactor: migrate routes to javascript
+style: introduce graph lab design system
+style: redesign navigation
+style: redesign hero
+feat: add animated graph visual
+style: redesign learning sections
+style: redesign interactive sections
+style: redesign project cards
+style: redesign certification CTA
+feat: add responsive behavior
+perf: optimize animations
+fix: resolve accessibility and responsive issues
+```
+
+Do not create one giant commit containing the entire refactor.
+
+---
+
+# 29. Task Execution Protocol
+
+For every task follow:
+
+### Step 1 — Inspect
+
+Read the relevant existing files before editing.
+
+### Step 2 — Plan
+
+Identify:
+
+- what changes
+- what remains unchanged
+- affected files
+- dependencies
+- verification method
+
+### Step 3 — Implement
+
+Make the smallest clean set of changes required.
+
+### Step 4 — Verify
+
+Run relevant checks and inspect affected pages.
+
+### Step 5 — Fix
+
+Resolve errors before continuing.
+
+### Step 6 — Report
+
+Report:
+
+- files changed
+- functionality changed
+- visual changes
+- animation changes
+- verification performed
+- remaining issues
+
+---
+
+# 30. Verification
+
+After each meaningful phase:
+
+1. start the development server
+2. inspect affected pages
+3. inspect browser console
+4. check imports
+5. check navigation
+6. check responsive behavior
+7. run available lint/build/test commands
+
+At minimum verify:
+
+- homepage
+- documentation
+- patterns
+- projects
+- quizzes
+- flashcards
+- search
+- certification
+- interactive features
+
+---
+
+# 31. Definition of Done
+
+The refactor is complete when:
+
+- [ ] Next.js + React + JavaScript + CSS stack is used
+- [ ] TypeScript is removed if strict JS-only migration is required
+- [ ] existing functionality still works
+- [ ] existing routes still work
+- [ ] search still works
+- [ ] interactive features still work
+- [ ] quizzes work
+- [ ] flashcards work
+- [ ] projects work
+- [ ] certification works
+- [ ] homepage uses the new visual system
+- [ ] glassmorphism is consistent
+- [ ] animated graph visual exists
+- [ ] scroll/entrance animations exist
+- [ ] hover interactions exist
+- [ ] mobile layout works
+- [ ] reduced-motion behavior works
+- [ ] keyboard navigation works
+- [ ] no unnecessary dependencies were added
+- [ ] no fake content was introduced
+- [ ] build/lint/test checks pass where available
+- [ ] no avoidable browser-console errors remain
+
+---
+
+# 32. Final Design Principle
+
+The final Graph Lab should feel like:
+
+> A premium interactive learning platform built around graph engineering.
+
+It should NOT feel like:
+
+> A generic glassmorphism template with Graph Lab text inserted into it.
+
+Every major visual effect should support Graph Lab:
+
+- graph nodes
+- graph connections
+- learning progression
+- interactive exploration
+- code
+- patterns
+- projects
+- certification
