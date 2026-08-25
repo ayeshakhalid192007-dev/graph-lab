@@ -16,7 +16,7 @@
 
 <div align="center">
 
-# Graph Lab
+# Graph Engineering — Landing Site
 
 *Learn graph engineering — from data structures to real-world systems.*
 
