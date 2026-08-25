@@ -1,29 +1,20 @@
 <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
   <defs>
-    <linearGradient id="logoGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stopColor:#8C7B63;stop-opacity:1" />
-      <stop offset="100%" style="stopColor:#6B8C75;stop-opacity:1" />
+    <linearGradient id="fg" x1="0" y1="0" x2="48" y2="48" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#F5C518" />
+      <stop offset="100%" stop-color="#FFE08A" />
     </linearGradient>
-    <filter id="softShadow" x="-50%" y="-50%" width="200%" height="200%">
-      <feDropShadow dx="0" dy="1" stdDeviation="2" flood-color="#000000" flood-opacity="0.15"/>
-    </filter>
   </defs>
 
-  {/* Outer circle - representing completeness and connection */}
-  <circle cx="24" cy="24" r="20" stroke="url(#logoGrad)" strokeWidth="1.5" opacity="0.8" filter="url(#softShadow)" />
+  <circle cx="24" cy="24" r="22" stroke="url(#fg)" strokeWidth="1" opacity="0.2" />
 
-  {/* Central node - representing the core system */}
-  <circle cx="24" cy="24" r="5" fill="url(#logoGrad)" />
+  <line x1="24" y1="24" x2="24" y2="10" stroke="url(#fg)" strokeWidth="1.4" opacity="0.5" />
+  <line x1="24" y1="24" x2="36.5" y2="31" stroke="url(#fg)" strokeWidth="1.4" opacity="0.5" />
+  <line x1="24" y1="24" x2="11.5" y2="31" stroke="url(#fg)" strokeWidth="1.4" opacity="0.5" />
 
-  {/* Surrounding nodes - representing distributed systems */}
-  <circle cx="24" cy="8" r="3" fill="#6B8C75" opacity="0.7" />
-  <circle cx="8" cy="24" r="3" fill="#8C7B63" opacity="0.7" />
-  <circle cx="40" cy="24" r="3" fill="#8C7B63" opacity="0.7" />
-  <circle cx="24" cy="40" r="3" fill="#6B8C75" opacity="0.7" />
+  <circle cx="24" cy="10" r="3.5" fill="url(#fg)" opacity="0.65" />
+  <circle cx="36.5" cy="31" r="3.5" fill="url(#fg)" opacity="0.65" />
+  <circle cx="11.5" cy="31" r="3.5" fill="url(#fg)" opacity="0.65" />
 
-  {/* Connecting edges - clean lines showing relationships */}
-  <line x1="24" y1="24" x2="24" y2="8" stroke="url(#logoGrad)" strokeWidth="1.5" opacity="0.6" />
-  <line x1="24" y1="24" x2="8" y2="24" stroke="url(#logoGrad)" strokeWidth="1.5" opacity="0.6" />
-  <line x1="24" y1="24" x2="40" y2="24" stroke="url(#logoGrad)" strokeWidth="1.5" opacity="0.6" />
-  <line x1="24" y1="24" x2="24" y2="40" stroke="url(#logoGrad)" strokeWidth="1.5" opacity="0.6" />
+  <circle cx="24" cy="24" r="5.5" fill="url(#fg)" />
 </svg>

@@ -96,53 +96,12 @@ export default function LandingPage() {
           <SectionHeading
             eyebrow="How It Works"
             title="The lifecycle of a fact"
-            description="Facts are not created all at once. They pass through three stages — each adding confidence, context, and a verifiable trail."
+            description="A fact is not created all at once. It passes through three stages — each one adding confidence, context, and a verifiable trail. This is how raw input becomes structured, trustworthy knowledge."
           />
 
           <FadeIn delay={0.15}>
-            <div className="mt-10 glass-card p-6 sm:p-10">
+            <div className="mt-10 glass-card p-6 sm:p-10 overflow-hidden">
               <LifecycleDiagram />
-            </div>
-          </FadeIn>
-
-          <FadeIn delay={0.3}>
-            <div className="mt-8 grid gap-6 sm:grid-cols-3">
-              <div className="glass-card p-6">
-                <div className="flex items-center gap-2 mb-3">
-                  <span className="inline-flex items-center justify-center w-6 h-6 rounded-md bg-accent-primary/10 border border-accent-primary/20 font-mono text-[10px] font-bold text-accent-primary">
-                    1
-                  </span>
-                  <h3 className="font-mono text-sm font-semibold text-ink">Extract</h3>
-                </div>
-                <p className="text-sm text-graphite leading-relaxed">
-                  Raw input is parsed into structured facts. Unstructured prose becomes
-                  typed, queryable triples that downstream systems can reason about.
-                </p>
-              </div>
-              <div className="glass-card p-6">
-                <div className="flex items-center gap-2 mb-3">
-                  <span className="inline-flex items-center justify-center w-6 h-6 rounded-md bg-accent-secondary/10 border border-accent-secondary/20 font-mono text-[10px] font-bold text-accent-secondary">
-                    2
-                  </span>
-                  <h3 className="font-mono text-sm font-semibold text-ink">Resolve</h3>
-                </div>
-                <p className="text-sm text-graphite leading-relaxed">
-                  New facts merge with existing ones. Contradictions are flagged rather than
-                  silently overwritten, preserving the full decision trail.
-                </p>
-              </div>
-              <div className="glass-card p-6">
-                <div className="flex items-center gap-2 mb-3">
-                  <span className="inline-flex items-center justify-center w-6 h-6 rounded-md bg-accent-success/10 border border-accent-success/20 font-mono text-[10px] font-bold text-accent-success">
-                    3
-                  </span>
-                  <h3 className="font-mono text-sm font-semibold text-ink">Provenance</h3>
-                </div>
-                <p className="text-sm text-graphite leading-relaxed">
-                  Every fact carries a receipt — who created it, when, and under what context.
-                  Auditors and agents can trace any claim back to its source.
-                </p>
-              </div>
             </div>
           </FadeIn>
         </div>

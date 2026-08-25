@@ -1,229 +1,185 @@
-/**
- * Professional Lifecycle Diagram
- * Shows how facts move through extraction, resolution, and provenance
- */
+"use client";
+import { motion } from "framer-motion";
+
+const STAGES = [
+  {
+    step: 1,
+    title: "Extraction",
+    accent: "var(--accent-primary)",
+    accentBg: "var(--accent-primary)",
+    desc: "Raw input is parsed into structured facts. Unstructured prose becomes typed, queryable triples that downstream systems can reason about.",
+  },
+  {
+    step: 2,
+    title: "Resolution",
+    accent: "var(--accent-secondary)",
+    accentBg: "var(--accent-secondary)",
+    desc: "New facts merge with existing ones. Contradictions are flagged rather than silently overwritten, preserving the full decision trail.",
+  },
+  {
+    step: 3,
+    title: "Provenance",
+    accent: "var(--accent-success)",
+    accentBg: "var(--accent-success)",
+    desc: "Every fact carries a receipt — who created it, when, and under what context. Auditors and agents can trace any claim back to its source.",
+  },
+];
+
+function StageNode({ stage, index }) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 16 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-60px" }}
+      transition={{ duration: 0.5, delay: index * 0.15, ease: [0.25, 0.46, 0.45, 0.94] }}
+      className="flex flex-col items-center text-center flex-1 min-w-0"
+    >
+      <div
+        className="relative flex items-center justify-center w-14 h-14 rounded-full mb-4"
+        style={{
+          background: `color-mix(in srgb, ${stage.accentBg} 10%, transparent)`,
+          border: `1.5px solid color-mix(in srgb, ${stage.accent} 25%, transparent)`,
+          boxShadow: `0 0 24px color-mix(in srgb, ${stage.accent} 12%, transparent)`,
+        }}
+      >
+        <span className="font-mono text-base font-bold" style={{ color: stage.accent }}>
+          {stage.step}
+        </span>
+        <div
+          className="absolute inset-0 rounded-full lifecycle-pulse"
+          style={{
+            border: `1px solid color-mix(in srgb, ${stage.accent} 20%, transparent)`,
+            animationDelay: `${index * 0.8}s`,
+          }}
+        />
+      </div>
+      <h3 className="font-mono text-sm font-bold text-ink mb-1.5 tracking-tight">
+        {stage.title}
+      </h3>
+      <p className="text-xs text-graphite leading-relaxed max-w-[200px]">
+        {stage.desc}
+      </p>
+    </motion.div>
+  );
+}
+
+function HorizontalConnector({ index }) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, scaleX: 0 }}
+      whileInView={{ opacity: 1, scaleX: 1 }}
+      viewport={{ once: true, margin: "-60px" }}
+      transition={{ duration: 0.5, delay: index * 0.15 + 0.25, ease: [0.25, 0.46, 0.45, 0.94] }}
+      className="hidden sm:flex items-center justify-center flex-shrink-0 w-16 md:w-20 lg:w-24 relative self-start mt-7"
+    >
+      <div className="absolute w-full h-px bg-card-border" />
+      <div
+        className="absolute h-px lifecycle-flow-line"
+        style={{
+          background: `linear-gradient(90deg, var(--accent-primary), var(--accent-success))`,
+          animationDelay: `${index * 1.2}s`,
+        }}
+      />
+      <div className="lifecycle-traveler-container">
+        <div
+          className="lifecycle-traveler"
+          style={{
+            background: `var(--accent-primary)`,
+            boxShadow: `0 0 8px var(--accent-primary), 0 0 16px color-mix(in srgb, var(--accent-primary) 40%, transparent)`,
+            animationDelay: `${index * 1.2}s`,
+          }}
+        />
+      </div>
+      <svg viewBox="0 0 12 12" className="absolute right-0 w-3 h-3 text-graphite/40" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M2 6 L9 6 M6 3 L9 6 L6 9" />
+      </svg>
+    </motion.div>
+  );
+}
+
+function VerticalConnector({ index }) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, scaleY: 0 }}
+      whileInView={{ opacity: 1, scaleY: 1 }}
+      viewport={{ once: true, margin: "-40px" }}
+      transition={{ duration: 0.4, delay: index * 0.15 + 0.2, ease: [0.25, 0.46, 0.45, 0.94] }}
+      className="sm:hidden flex justify-center py-3 relative"
+      style={{ height: "40px" }}
+    >
+      <div className="absolute top-0 bottom-0 w-px bg-card-border" />
+      <div
+        className="absolute top-0 bottom-0 w-px lifecycle-flow-line-v"
+        style={{
+          background: `linear-gradient(180deg, var(--accent-primary), var(--accent-success))`,
+          animationDelay: `${index * 1.2}s`,
+        }}
+      />
+      <svg viewBox="0 0 12 12" className="absolute bottom-0 w-3 h-3 text-graphite/40" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M6 2 L6 9 M3 6 L6 9 L9 6" />
+      </svg>
+    </motion.div>
+  );
+}
+
 export function LifecycleDiagram() {
   return (
-    <div className="w-full overflow-x-auto">
-      <svg
-        viewBox="0 0 840 340"
-        className="w-full max-w-5xl mx-auto"
-        aria-label="Three-stage lifecycle: extraction, resolution, and provenance"
+    <div className="w-full" role="img" aria-label="Fact lifecycle: Extraction, Resolution, and Provenance — three connected stages showing how facts flow through the system">
+      {/* Desktop / tablet: horizontal layout */}
+      <div className="hidden sm:flex items-start justify-center gap-0 px-4 py-8 lg:py-10">
+        {STAGES.map((stage, i) => (
+          <div key={stage.step} className="flex items-start gap-0">
+            <StageNode stage={stage} index={i} />
+            {i < STAGES.length - 1 && <HorizontalConnector index={i} />}
+          </div>
+        ))}
+      </div>
+
+      {/* Mobile: vertical layout */}
+      <div className="sm:hidden flex flex-col items-center px-2 py-6">
+        {STAGES.map((stage, i) => (
+          <div key={stage.step} className="flex flex-col items-center w-full">
+            <StageNode stage={stage} index={i} />
+            {i < STAGES.length - 1 && <VerticalConnector index={i} />}
+          </div>
+        ))}
+      </div>
+
+      {/* Bottom flow bar */}
+      <motion.div
+        initial={{ opacity: 0, y: 12 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-40px" }}
+        transition={{ duration: 0.5, delay: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
+        className="mt-6 sm:mt-8 flex items-center justify-center px-2"
       >
-        <defs>
-          <linearGradient id="extractGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor="var(--accent-primary)" stopOpacity="0.12" />
-            <stop offset="100%" stopColor="var(--accent-primary)" stopOpacity="0.03" />
-          </linearGradient>
-          <linearGradient id="resolveGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor="var(--accent-secondary)" stopOpacity="0.12" />
-            <stop offset="100%" stopColor="var(--accent-secondary)" stopOpacity="0.03" />
-          </linearGradient>
-          <linearGradient id="provGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor="var(--accent-success)" stopOpacity="0.12" />
-            <stop offset="100%" stopColor="var(--accent-success)" stopOpacity="0.03" />
-          </linearGradient>
-          <filter id="cardShadow">
-            <feDropShadow dx="0" dy="4" stdDeviation="8" floodOpacity="0.08" />
-          </filter>
-          <marker id="arrowA" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
-            <path d="M0,0 L10,4 L0,8" fill="none" stroke="var(--accent-primary)" strokeWidth="1.5" strokeLinejoin="round" />
-          </marker>
-          <marker id="arrowB" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
-            <path d="M0,0 L10,4 L0,8" fill="none" stroke="var(--accent-secondary)" strokeWidth="1.5" strokeLinejoin="round" />
-          </marker>
-          <marker id="arrowC" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
-            <path d="M0,0 L10,4 L0,8" fill="none" stroke="var(--accent-success)" strokeWidth="1.5" strokeLinejoin="round" />
-          </marker>
-        </defs>
+        <div className="relative flex items-center justify-center gap-3 sm:gap-0 glass rounded-full px-4 sm:px-6 py-2.5 border border-card-border max-w-full flex-wrap sm:flex-nowrap">
+          <div className="hidden sm:block absolute left-[15%] right-[15%] h-px border-t border-dashed border-graphite/20" />
+          <div className="hidden sm:block absolute left-[15%] right-[15%] h-px lifecycle-progress-bar">
+            <div
+              className="h-full lifecycle-progress-fill"
+              style={{
+                background: "linear-gradient(90deg, var(--accent-primary), var(--accent-secondary), var(--accent-success))",
+              }}
+            />
+          </div>
 
-        {/* ── Stage 1: Extraction ── */}
-        <g transform="translate(20, 40)">
-          {/* Card */}
-          <rect x="0" y="0" width="230" height="200" rx="16" fill="var(--surface)" stroke="var(--card-border)" strokeWidth="1" filter="url(#cardShadow)" />
+          <span className="relative z-10 flex items-center gap-1.5 flex-shrink-0">
+            <span className="w-2 h-2 rounded-full bg-accent-primary lifecycle-dot-pulse" style={{ animationDelay: "0s" }} />
+            <span className="font-mono text-[10px] sm:text-xs text-graphite font-medium">extract</span>
+          </span>
 
-          {/* Top accent */}
-          <line x1="24" y1="0" x2="100" y2="0" stroke="var(--accent-primary)" strokeWidth="2.5" strokeLinecap="round" />
+          <span className="relative z-10 sm:px-5 font-mono text-[10px] sm:text-xs text-ink font-semibold text-center leading-tight">
+            <span className="hidden sm:inline">facts flow through all three stages</span>
+            <span className="sm:hidden">3 stages</span>
+          </span>
 
-          {/* Step number */}
-          <g transform="translate(24, 24)">
-            <circle cx="16" cy="16" r="16" fill="var(--accent-primary)" fillOpacity="0.12" stroke="var(--accent-primary)" strokeWidth="1" />
-            <text x="16" y="20" textAnchor="middle" fill="var(--accent-primary)" style={{ fontFamily: 'var(--font-mono)', fontSize: '12px', fontWeight: '700' }}>
-              1
-            </text>
-          </g>
-
-          {/* Title */}
-          <text x="52" y="36" fill="var(--ink)" style={{ fontFamily: 'var(--font-mono)', fontSize: '14px', fontWeight: '700' }}>
-            Extraction
-          </text>
-
-          {/* Description */}
-          <text x="24" y="64" fill="var(--graphite)" style={{ fontFamily: 'var(--font-sans)', fontSize: '12px' }}>
-            Parse raw input and pull out
-          </text>
-          <text x="24" y="80" fill="var(--graphite)" style={{ fontFamily: 'var(--font-sans)', fontSize: '12px' }}>
-            structured facts from prose.
-          </text>
-
-          {/* Icon area */}
-          <g transform="translate(24, 100)">
-            <rect x="0" y="0" width="182" height="80" rx="8" fill="var(--surface-soft)" stroke="var(--rule)" strokeWidth="0.5" />
-            {/* Document icon */}
-            <rect x="30" y="16" width="32" height="44" rx="4" fill="none" stroke="var(--accent-primary)" strokeWidth="1.5" />
-            <line x1="36" y1="28" x2="56" y2="28" stroke="var(--accent-primary)" strokeWidth="1" opacity="0.5" />
-            <line x1="36" y1="36" x2="56" y2="36" stroke="var(--accent-primary)" strokeWidth="1" opacity="0.5" />
-            <line x1="36" y1="44" x2="48" y2="44" stroke="var(--accent-primary)" strokeWidth="1" opacity="0.5" />
-            {/* Arrow */}
-            <line x1="72" y1="38" x2="100" y2="38" stroke="var(--accent-primary)" strokeWidth="1.5" opacity="0.4" />
-            {/* Schema icon */}
-            <rect x="108" y="16" width="44" height="44" rx="4" fill="none" stroke="var(--accent-primary)" strokeWidth="1.5" />
-            <circle cx="120" cy="30" r="4" fill="var(--accent-primary)" fillOpacity="0.3" />
-            <circle cx="140" cy="30" r="4" fill="var(--accent-primary)" fillOpacity="0.3" />
-            <circle cx="130" cy="46" r="4" fill="var(--accent-primary)" fillOpacity="0.3" />
-            <line x1="120" y1="34" x2="130" y2="42" stroke="var(--accent-primary)" strokeWidth="1" opacity="0.5" />
-            <line x1="140" y1="34" x2="130" y2="42" stroke="var(--accent-primary)" strokeWidth="1" opacity="0.5" />
-            <text x="91" y="72" textAnchor="middle" fill="var(--muted)" style={{ fontFamily: 'var(--font-mono)', fontSize: '8px' }}>
-              prose → schema
-            </text>
-          </g>
-        </g>
-
-        {/* ── Arrow 1→2 ── */}
-        <g transform="translate(250, 130)">
-          <line x1="0" y1="0" x2="60" y2="0" stroke="var(--accent-primary)" strokeWidth="1.5" opacity="0.4" markerEnd="url(#arrowA)" />
-          <text x="30" y="-8" textAnchor="middle" fill="var(--muted)" style={{ fontFamily: 'var(--font-mono)', fontSize: '8px' }}>
-            emits
-          </text>
-        </g>
-
-        {/* ── Stage 2: Resolution ── */}
-        <g transform="translate(310, 40)">
-          {/* Card */}
-          <rect x="0" y="0" width="230" height="200" rx="16" fill="var(--surface)" stroke="var(--card-border)" strokeWidth="1" filter="url(#cardShadow)" />
-
-          {/* Top accent */}
-          <line x1="24" y1="0" x2="100" y2="0" stroke="var(--accent-secondary)" strokeWidth="2.5" strokeLinecap="round" />
-
-          {/* Step number */}
-          <g transform="translate(24, 24)">
-            <circle cx="16" cy="16" r="16" fill="var(--accent-secondary)" fillOpacity="0.12" stroke="var(--accent-secondary)" strokeWidth="1" />
-            <text x="16" y="20" textAnchor="middle" fill="var(--accent-secondary)" style={{ fontFamily: 'var(--font-mono)', fontSize: '12px', fontWeight: '700' }}>
-              2
-            </text>
-          </g>
-
-          {/* Title */}
-          <text x="52" y="36" fill="var(--ink)" style={{ fontFamily: 'var(--font-mono)', fontSize: '14px', fontWeight: '700' }}>
-            Resolution
-          </text>
-
-          {/* Description */}
-          <text x="24" y="64" fill="var(--graphite)" style={{ fontFamily: 'var(--font-sans)', fontSize: '12px' }}>
-            Merge new facts with existing ones.
-          </text>
-          <text x="24" y="80" fill="var(--graphite)" style={{ fontFamily: 'var(--font-sans)', fontSize: '12px' }}>
-            Conflicts are flagged, not silently dropped.
-          </text>
-
-          {/* Icon area */}
-          <g transform="translate(24, 100)">
-            <rect x="0" y="0" width="182" height="80" rx="8" fill="var(--surface-soft)" stroke="var(--rule)" strokeWidth="0.5" />
-            {/* Merge symbol */}
-            <circle cx="60" cy="25" r="12" fill="none" stroke="var(--accent-secondary)" strokeWidth="1.5" />
-            <circle cx="120" cy="25" r="12" fill="none" stroke="var(--accent-secondary)" strokeWidth="1.5" />
-            <path d="M60 25 L90 45 L120 25" fill="none" stroke="var(--accent-secondary)" strokeWidth="1.5" opacity="0.5" />
-            {/* Checkmark */}
-            <circle cx="90" cy="55" r="10" fill="var(--accent-secondary)" fillOpacity="0.15" stroke="var(--accent-secondary)" strokeWidth="1" />
-            <path d="M84 55 L88 59 L96 51" fill="none" stroke="var(--accent-secondary)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-            <text x="91" y="72" textAnchor="middle" fill="var(--muted)" style={{ fontFamily: 'var(--font-mono)', fontSize: '8px' }}>
-              merge + trail
-            </text>
-          </g>
-        </g>
-
-        {/* ── Arrow 2→3 ── */}
-        <g transform="translate(540, 130)">
-          <line x1="0" y1="0" x2="60" y2="0" stroke="var(--accent-secondary)" strokeWidth="1.5" opacity="0.4" markerEnd="url(#arrowB)" />
-          <text x="30" y="-8" textAnchor="middle" fill="var(--muted)" style={{ fontFamily: 'var(--font-mono)', fontSize: '8px' }}>
-            resolves
-          </text>
-        </g>
-
-        {/* ── Stage 3: Provenance ── */}
-        <g transform="translate(600, 40)">
-          {/* Card */}
-          <rect x="0" y="0" width="230" height="200" rx="16" fill="var(--surface)" stroke="var(--card-border)" strokeWidth="1" filter="url(#cardShadow)" />
-
-          {/* Top accent */}
-          <line x1="24" y1="0" x2="100" y2="0" stroke="var(--accent-success)" strokeWidth="2.5" strokeLinecap="round" />
-
-          {/* Step number */}
-          <g transform="translate(24, 24)">
-            <circle cx="16" cy="16" r="16" fill="var(--accent-success)" fillOpacity="0.12" stroke="var(--accent-success)" strokeWidth="1" />
-            <text x="16" y="20" textAnchor="middle" fill="var(--accent-success)" style={{ fontFamily: 'var(--font-mono)', fontSize: '12px', fontWeight: '700' }}>
-              3
-            </text>
-          </g>
-
-          {/* Title */}
-          <text x="52" y="36" fill="var(--ink)" style={{ fontFamily: 'var(--font-mono)', fontSize: '14px', fontWeight: '700' }}>
-            Provenance
-          </text>
-
-          {/* Description */}
-          <text x="24" y="64" fill="var(--graphite)" style={{ fontFamily: 'var(--font-sans)', fontSize: '12px' }}>
-            Every fact carries a receipt showing
-          </text>
-          <text x="24" y="80" fill="var(--graphite)" style={{ fontFamily: 'var(--font-sans)', fontSize: '12px' }}>
-            where it came from and who verified it.
-          </text>
-
-          {/* Icon area */}
-          <g transform="translate(24, 100)">
-            <rect x="0" y="0" width="182" height="80" rx="8" fill="var(--surface-soft)" stroke="var(--rule)" strokeWidth="0.5" />
-            {/* Receipt icon */}
-            <rect x="55" y="10" width="72" height="56" rx="4" fill="none" stroke="var(--accent-success)" strokeWidth="1.5" />
-            <line x1="65" y1="24" x2="117" y2="24" stroke="var(--accent-success)" strokeWidth="0.8" opacity="0.4" />
-            <line x1="65" y1="34" x2="117" y2="34" stroke="var(--accent-success)" strokeWidth="0.8" opacity="0.4" />
-            <line x1="65" y1="44" x2="100" y2="44" stroke="var(--accent-success)" strokeWidth="0.8" opacity="0.4" />
-            <circle cx="91" cy="24" r="3" fill="var(--accent-success)" fillOpacity="0.3" />
-            <circle cx="91" cy="34" r="3" fill="var(--accent-success)" fillOpacity="0.3" />
-            {/* Seal */}
-            <circle cx="145" cy="50" r="14" fill="var(--accent-success)" fillOpacity="0.12" stroke="var(--accent-success)" strokeWidth="1" />
-            <path d="M139 50 L143 54 L151 46" fill="none" stroke="var(--accent-success)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-            <text x="91" y="72" textAnchor="middle" fill="var(--muted)" style={{ fontFamily: 'var(--font-mono)', fontSize: '8px' }}>
-              receipt per edge
-            </text>
-          </g>
-        </g>
-
-        {/* ── Bottom flow indicator ── */}
-        <g transform="translate(20, 280)">
-          <rect x="0" y="0" width="810" height="40" rx="20" fill="var(--surface-soft)" stroke="var(--rule)" strokeWidth="0.5" />
-
-          {/* Progress dots */}
-          <circle cx="100" cy="20" r="5" fill="var(--accent-primary)" />
-          <line x1="105" y1="20" x2="370" y2="20" stroke="var(--accent-primary)" strokeWidth="1" opacity="0.3" strokeDasharray="4 4" />
-          <circle cx="375" cy="20" r="5" fill="var(--accent-secondary)" />
-          <line x1="380" y1="20" x2="650" y2="20" stroke="var(--accent-secondary)" strokeWidth="1" opacity="0.3" strokeDasharray="4 4" />
-          <circle cx="655" cy="20" r="5" fill="var(--accent-success)" />
-
-          <text x="100" y="34" textAnchor="middle" fill="var(--muted)" style={{ fontFamily: 'var(--font-mono)', fontSize: '8px' }}>
-            extract
-          </text>
-          <text x="375" y="34" textAnchor="middle" fill="var(--muted)" style={{ fontFamily: 'var(--font-mono)', fontSize: '8px' }}>
-            resolve
-          </text>
-          <text x="655" y="34" textAnchor="middle" fill="var(--muted)" style={{ fontFamily: 'var(--font-mono)', fontSize: '8px' }}>
-            provenance
-          </text>
-
-          <text x="405" y="24" textAnchor="middle" fill="var(--ink)" style={{ fontFamily: 'var(--font-mono)', fontSize: '10px', fontWeight: '600' }}>
-            facts flow through all three stages in order
-          </text>
-        </g>
-      </svg>
+          <span className="relative z-10 flex items-center gap-1.5 flex-shrink-0">
+            <span className="font-mono text-[10px] sm:text-xs text-graphite font-medium">provenance</span>
+            <span className="w-2 h-2 rounded-full bg-accent-success lifecycle-dot-pulse" style={{ animationDelay: "1.6s" }} />
+          </span>
+        </div>
+      </motion.div>
     </div>
   );
 }
