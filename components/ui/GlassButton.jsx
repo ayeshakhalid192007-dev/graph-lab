@@ -10,15 +10,15 @@ export function GlassButton({
   onClick,
 }) {
   const baseStyles =
-    "inline-flex items-center justify-center font-mono text-sm font-semibold transition-all duration-200 rounded-xl";
+    "inline-flex items-center justify-center font-mono text-sm font-semibold transition-all duration-300 rounded-xl";
 
   const variantStyles = {
     primary:
-      "bg-accent-primary text-paper hover:bg-accent-secondary shadow-lg shadow-accent-primary/20 hover:shadow-accent-primary/30",
+      "border border-accent-primary/60 text-accent-primary hover:bg-accent-primary hover:text-paper hover:border-accent-primary hover:shadow-lg hover:shadow-accent-primary/20",
     secondary:
       "glass border border-glass-border text-ink hover:border-accent-primary/30 hover:bg-glass-bg-hover",
     outline:
-      "border border-accent-primary/50 text-accent-primary hover:bg-accent-primary/10 hover:border-accent-primary",
+      "border border-accent-primary/60 text-accent-primary hover:bg-accent-primary hover:text-paper hover:border-accent-primary hover:shadow-lg hover:shadow-accent-primary/20",
     ghost:
       "text-graphite hover:text-ink hover:bg-surface-soft",
   };
@@ -28,8 +28,8 @@ export function GlassButton({
   if (href) {
     return (
       <motion.div
-        whileHover={{ scale: 1.02 }}
-        whileTap={{ scale: 0.98 }}
+        whileHover={{ scale: 1.03, y: -2 }}
+        whileTap={{ scale: 0.97 }}
         className="inline-block"
       >
         <Link href={href} className={`px-6 py-3 ${styles}`}>
@@ -41,8 +41,8 @@ export function GlassButton({
 
   return (
     <motion.button
-      whileHover={{ scale: 1.02 }}
-      whileTap={{ scale: 0.98 }}
+      whileHover={{ scale: 1.03, y: -2 }}
+      whileTap={{ scale: 0.97 }}
       onClick={onClick}
       className={`px-6 py-3 ${styles}`}
     >

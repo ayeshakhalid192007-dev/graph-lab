@@ -58,7 +58,7 @@ export function Hero({ docsCount, patternsCount, starterCount }) {
           transition={{ duration: 0.7, delay: 0.3, ease: [0.25, 0.46, 0.45, 0.94] }}
           className="flex flex-wrap gap-4 mb-16"
         >
-          <GlassButton href="/docs/00-start-here/" variant="primary" className="px-8 py-4 text-base">
+          <GlassButton href="/docs/00-start-here/" variant="outline" className="px-8 py-4 text-base">
             Start Learning
           </GlassButton>
           <GlassButton href="/tracks/" variant="outline" className="px-8 py-4 text-base">
