@@ -26,8 +26,8 @@ const OUT = join(root, "public", "search-index.json");
 const LIMIT = 400 * 1024;
 const EXCERPT = 300;
 
-const { getAllDocs, getSidebarTree } = await import(join(root, "lib", "docs.ts"));
-const { toHast } = await import(join(root, "lib", "markdown.ts"));
+const { getAllDocs, getSidebarTree } = await import(join(root, "lib", "docs.js"));
+const { toHast } = await import(join(root, "lib", "markdown.js"));
 
 /** Section label per section key, from the one list lib/docs.ts already keeps. */
 const LABELS = new Map(getSidebarTree().map((g) => [g.section, g.label]));

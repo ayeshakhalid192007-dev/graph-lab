@@ -12,9 +12,9 @@ const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 const OUT = join(root, "public", "llms.txt");
 const ORIGIN = process.env.NEXT_PUBLIC_SITE_URL ?? "https://ayeshakhalid192007-dev.github.io/graph-lab";
 
-const { getAllDocs, getSidebarTree, getRoadmap } = await import(join(root, "lib", "docs.ts"));
-const { getAllPatterns } = await import(join(root, "lib", "patterns.ts"));
-const { getSource } = await import(join(root, "lib", "content.ts"));
+const { getAllDocs, getSidebarTree, getRoadmap } = await import(join(root, "lib", "docs.js"));
+const { getAllPatterns } = await import(join(root, "lib", "patterns.js"));
+const { getSource } = await import(join(root, "lib", "content.js"));
 
 const source = getSource();
 const lines = [

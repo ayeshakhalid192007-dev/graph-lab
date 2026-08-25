@@ -2,6 +2,7 @@
   "name": "graph-lab",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "engines": {
     "//": "Node >=23.6 strips types from an imported .ts. scripts/check-content-shape.mjs imports lib/parse-content.ts so the quiz and flashcard parsers have exactly one definition; on older Node the check dies with ERR_UNKNOWN_FILE_EXTENSION. Keep in step with .nvmrc and .github/workflows/deploy.yml.",
     "node": ">=24"
@@ -29,6 +30,7 @@
   },
   "dependencies": {
     "@shikijs/rehype": "^3.0.0",
+    "framer-motion": "^13.1.1",
     "github-slugger": "^2.0.0",
     "gray-matter": "^4.0.3",
     "hast-util-to-string": "^3.0.0",
