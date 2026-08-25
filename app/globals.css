@@ -511,6 +511,27 @@ body {
 
 .diagram .dimmed { opacity: 0.28; transition: opacity 300ms ease-out; }
 
+/* ─── Combined Graph Diagram ─── */
+.diagram-node {
+  animation: diagramNodePulse 4s ease-in-out infinite;
+}
+.diagram-node.fact {
+  animation: diagramNodePulse 4s ease-in-out infinite;
+  animation-delay: 1s;
+}
+.diagram-node-ring {
+  transition: stroke-width 0.3s ease, filter 0.3s ease;
+}
+.diagram-node-ring:hover {
+  stroke-width: 2.5;
+  filter: brightness(1.2);
+}
+
+@keyframes diagramNodePulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.75; }
+}
+
 /* ─── Reduced Motion ─── */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
@@ -539,6 +560,8 @@ body {
 
   .diagram .edge { stroke-dashoffset: 0; }
   .diagram .node { opacity: 1; transform: none; }
+  .diagram-node { animation: none !important; opacity: 1 !important; }
+  .diagram-node.fact { animation: none !important; opacity: 1 !important; }
 }
 
 /* ─── Mobile Adjustments ─── */

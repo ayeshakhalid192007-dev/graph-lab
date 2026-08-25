@@ -6,7 +6,7 @@ import { Curriculum } from "@/components/landing/Curriculum";
 import { PatternGrid } from "@/components/landing/PatternGrid";
 import { GetStarted } from "@/components/landing/GetStarted";
 import { Footer } from "@/components/landing/Footer";
-import { TwoGraphsDiagram } from "@/components/landing/TwoGraphsDiagram";
+import { CombinedGraphDiagram } from "@/components/landing/CombinedGraphDiagram";
 import { LifecycleDiagram } from "@/components/landing/LifecycleDiagram";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { getAllDocs } from "@/lib/docs.js";
@@ -26,7 +26,7 @@ export default function LandingPage() {
         starterCount={starterCount}
       />
 
-      {/* ── Diagram 1: Two Graphs — Core Concept ── */}
+      {/* ── Diagram 1: Combined Graph — Core Concept ── */}
       <AnimatedSection className="py-16 sm:py-24">
         <div className="max-w-5xl mx-auto px-6">
           <SectionHeading
@@ -37,35 +37,53 @@ export default function LandingPage() {
 
           <FadeIn delay={0.15}>
             <div className="mt-10 glass-card p-6 sm:p-10">
-              <TwoGraphsDiagram />
-            </div>
-          </FadeIn>
+              <div className="flex flex-col lg:flex-row gap-8 lg:gap-10 items-start">
+                {/* Diagram — left */}
+                <div className="flex-[3] w-full min-w-0">
+                  <CombinedGraphDiagram />
+                </div>
 
-          <FadeIn delay={0.3}>
-            <div className="mt-8 grid gap-6 sm:grid-cols-2">
-              <div className="glass-card p-6">
-                <div className="flex items-center gap-3 mb-3">
-                  <span className="inline-flex items-center justify-center w-8 h-8 rounded-lg bg-accent-primary/10 border border-accent-primary/20">
-                    <span className="w-2 h-2 rounded-full bg-accent-primary" />
-                  </span>
-                  <h3 className="font-mono text-sm font-semibold text-ink">Work History</h3>
+                {/* Explanation — right */}
+                <div className="flex-[2] w-full min-w-0 space-y-6 lg:pt-4">
+                  <div>
+                    <div className="flex items-center gap-3 mb-2">
+                      <span className="inline-flex items-center justify-center w-8 h-8 rounded-lg bg-accent-primary/10 border border-accent-primary/20">
+                        <span className="w-2 h-2 rounded-full bg-accent-primary" />
+                      </span>
+                      <h3 className="font-mono text-sm font-semibold text-ink">
+                        Work History
+                      </h3>
+                    </div>
+                    <p className="text-sm text-graphite leading-relaxed pl-11">
+                      Every attempt an agent makes is recorded in the
+                      work-history graph. Previous attempts are marked
+                      superseded — agents never act on stale work.
+                    </p>
+                  </div>
+
+                  <div>
+                    <div className="flex items-center gap-3 mb-2">
+                      <span className="inline-flex items-center justify-center w-8 h-8 rounded-lg bg-accent-success/10 border border-accent-success/20">
+                        <span className="w-2 h-2 rounded-full bg-accent-success" />
+                      </span>
+                      <h3 className="font-mono text-sm font-semibold text-ink">
+                        Verified Facts
+                      </h3>
+                    </div>
+                    <p className="text-sm text-graphite leading-relaxed pl-11">
+                      The fact graph holds only what has been verified true.
+                      Every edge carries a receipt — agents can trust the data
+                      without re-verifying it themselves.
+                    </p>
+                  </div>
+
+                  <div className="pt-2 border-t border-card-border">
+                    <p className="text-xs text-muted font-mono leading-relaxed">
+                      Work history records attempts. Facts record what is true.
+                      Agents read facts; they do not replay history.
+                    </p>
+                  </div>
                 </div>
-                <p className="text-sm text-graphite leading-relaxed">
-                  Every attempt an agent makes is recorded in the work-history graph.
-                  Previous attempts are marked superseded — agents never act on stale work.
-                </p>
-              </div>
-              <div className="glass-card p-6">
-                <div className="flex items-center gap-3 mb-3">
-                  <span className="inline-flex items-center justify-center w-8 h-8 rounded-lg bg-accent-success/10 border border-accent-success/20">
-                    <span className="w-2 h-2 rounded-full bg-accent-success" />
-                  </span>
-                  <h3 className="font-mono text-sm font-semibold text-ink">Verified Facts</h3>
-                </div>
-                <p className="text-sm text-graphite leading-relaxed">
-                  The fact graph holds only what has been verified true. Every edge carries a receipt — agents
-                  can trust the data without re-verifying it themselves.
-                </p>
               </div>
             </div>
           </FadeIn>
