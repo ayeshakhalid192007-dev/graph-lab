@@ -10,7 +10,7 @@ const DESCRIPTION =
   "Work through Graph Engineering in the browser: 86 pages, 23 patterns, 24 starter kits, quizzes, and the Graph Ready certification.";
 
 const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
-const faviconUrl = `${SITE_URL}${basePath}/favicon.svg?v=3`;
+const faviconUrl = `${basePath}/favicon.svg?v=4`;
 
 export const metadata = {
   metadataBase: new URL(SITE_URL),
