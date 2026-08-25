@@ -3,49 +3,80 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 :root {
-  /* Bold Black + Yellow Dark Theme — Modern, high-contrast, technical */
-  --paper: #0A0A0A;
-  --surface: #151515;
-  --surface-soft: #1A1A1A;
-  --ink: #F5F5F5;
-  --graphite: #9A9A9A;
-  --muted: #9A9A9A;
-  --rule: #1F1F1F;
-  --rule-strong: #333333;
-  --accent-primary: #F5C518;
-  --accent-secondary: #FFE08A;
-  --accent-tertiary: #F5C518;
-  --accent-vibrant: #F5C518;
-  --accent-success: #3AD37A;
-  --grid-dot: #1F1F1F;
-  --card-border: rgba(255, 255, 255, 0.1);
-  --card-hover: rgba(245, 197, 24, 0.15);
+  /* Graph Lab Design System — Light theme (default) */
+  --paper: #FAFAF8;
+  --surface: #FFFFFF;
+  --surface-soft: #F5F5F3;
+  --surface-elevated: #EEEEEC;
+  --ink: #111113;
+  --graphite: #4A4A4A;
+  --muted: #8A8A8A;
+  --rule: #E5E5E3;
+  --rule-strong: #D4D4D2;
+  --accent-primary: #D4A017;
+  --accent-secondary: #B8860B;
+  --accent-tertiary: #D4A017;
+  --accent-vibrant: #D4A017;
+  --accent-success: #1A9D5C;
+  --grid-dot: #E8E8E6;
+  --card-border: rgba(0, 0, 0, 0.08);
+  --card-border-hover: rgba(212, 160, 23, 0.4);
+  --card-hover: rgba(212, 160, 23, 0.06);
+  --glass-bg: rgba(255, 255, 255, 0.7);
+  --glass-bg-hover: rgba(255, 255, 255, 0.85);
+  --glass-border: rgba(0, 0, 0, 0.08);
+  --glass-border-hover: rgba(0, 0, 0, 0.15);
+  --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.06);
+  --glass-shadow-lg: 0 20px 60px rgba(0, 0, 0, 0.1);
+  --glass-bg-strong: rgba(255, 255, 255, 0.75);
+  --glass-border-strong: rgba(0, 0, 0, 0.1);
+  --glow-primary: rgba(212, 160, 23, 0.12);
+  --glow-success: rgba(26, 157, 92, 0.12);
+  --node-size: 8px;
+  --edge-color: rgba(212, 160, 23, 0.35);
+  --edge-color-active: rgba(212, 160, 23, 0.7);
 }
 
 .dark {
-  /* Bold Black + Yellow Dark Theme — Already dark, so light and dark are identical */
+  /* Graph Lab Design System — Dark premium interface */
   --paper: #0A0A0A;
-  --surface: #151515;
-  --surface-soft: #1A1A1A;
+  --surface: #111113;
+  --surface-soft: #18181B;
+  --surface-elevated: #1E1E22;
   --ink: #F5F5F5;
   --graphite: #9A9A9A;
-  --muted: #9A9A9A;
+  --muted: #6B7280;
   --rule: #1F1F1F;
-  --rule-strong: #333333;
+  --rule-strong: #2A2A2E;
   --accent-primary: #F5C518;
   --accent-secondary: #FFE08A;
   --accent-tertiary: #F5C518;
   --accent-vibrant: #F5C518;
   --accent-success: #3AD37A;
-  --grid-dot: #1F1F1F;
-  --card-border: rgba(255, 255, 255, 0.1);
-  --card-hover: rgba(245, 197, 24, 0.15);
+  --grid-dot: #1A1A1E;
+  --card-border: rgba(255, 255, 255, 0.08);
+  --card-border-hover: rgba(245, 197, 24, 0.3);
+  --card-hover: rgba(245, 197, 24, 0.08);
+  --glass-bg: rgba(255, 255, 255, 0.03);
+  --glass-bg-hover: rgba(255, 255, 255, 0.06);
+  --glass-border: rgba(255, 255, 255, 0.08);
+  --glass-border-hover: rgba(255, 255, 255, 0.15);
+  --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  --glass-shadow-lg: 0 20px 60px rgba(0, 0, 0, 0.4);
+  --glass-bg-strong: rgba(255, 255, 255, 0.05);
+  --glass-border-strong: rgba(255, 255, 255, 0.12);
+  --glow-primary: rgba(245, 197, 24, 0.15);
+  --glow-success: rgba(58, 211, 122, 0.15);
+  --node-size: 8px;
+  --edge-color: rgba(245, 197, 24, 0.3);
+  --edge-color-active: rgba(245, 197, 24, 0.6);
 }
 
 @theme inline {
   --color-paper: var(--paper);
   --color-surface: var(--surface);
   --color-surface-soft: var(--surface-soft);
+  --color-surface-elevated: var(--surface-elevated);
   --color-ink: var(--ink);
   --color-graphite: var(--graphite);
   --color-muted: var(--muted);
@@ -59,10 +90,13 @@
   --color-primary: var(--accent-primary);
   --color-card-border: var(--card-border);
   --color-card-hover: var(--card-hover);
-  --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
-  --font-mono: ui-monospace, "SF Mono", "Cascadia Code", "JetBrains Mono", monospace;
+  --color-glass-bg: var(--glass-bg);
+  --color-glass-border: var(--glass-border);
+  --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "JetBrains Mono", "SF Mono", "Cascadia Code", ui-monospace, monospace;
 }
 
+/* ─── Base ─── */
 body {
   background-color: var(--paper);
   color: var(--ink);
@@ -70,9 +104,51 @@ body {
   background-size: 32px 32px;
   position: relative;
   overflow-x: hidden;
+  font-family: var(--font-sans);
 }
 
-/* Ambient background — subtle, minimal */
+/* ─── Glassmorphism Utilities ─── */
+.glass {
+  background: var(--glass-bg);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-shadow);
+}
+
+.glass-hover:hover {
+  background: var(--glass-bg-hover);
+  border-color: var(--glass-border-hover);
+  box-shadow: var(--glass-shadow-lg);
+}
+
+.glass-strong {
+  background: var(--glass-bg-strong);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid var(--glass-border-strong);
+  box-shadow: var(--glass-shadow-lg);
+}
+
+/* ─── Graph Node/Edge Visual Language ─── */
+.graph-node {
+  width: var(--node-size);
+  height: var(--node-size);
+  border-radius: 50%;
+  background: var(--accent-primary);
+  box-shadow: 0 0 12px var(--glow-primary);
+}
+
+.graph-edge {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--edge-color), transparent);
+}
+
+.graph-edge-active {
+  background: linear-gradient(90deg, transparent, var(--edge-color-active), transparent);
+}
+
+/* ─── Ambient Background ─── */
 .premium-glow {
   position: fixed;
   pointer-events: none;
@@ -114,40 +190,80 @@ body {
   }
 }
 
-@media (prefers-reduced-motion: reduce) {
-  body::before, body::after, .premium-glow {
-    animation: none;
-    opacity: 0.1;
-  }
+@keyframes pulse-glow {
+  0%, 100% { opacity: 0.4; transform: scale(1); }
+  50% { opacity: 0.7; transform: scale(1.05); }
 }
 
-/* Monospace carries the identity */
+@keyframes node-drift {
+  0%, 100% { transform: translate(0, 0); }
+  25% { transform: translate(2px, -3px); }
+  50% { transform: translate(-1px, 2px); }
+  75% { transform: translate(3px, 1px); }
+}
+
+@keyframes edge-pulse {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 0.6; }
+}
+
+@keyframes fade-in-up {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slide-in-left {
+  from { opacity: 0; transform: translateX(-24px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes slide-in-right {
+  from { opacity: 0; transform: translateX(24px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes scale-in {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+/* ─── Focus States ─── */
+:focus-visible {
+  outline: 2px solid var(--accent-primary);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* ─── Monospace Identity ─── */
 .mono { font-family: var(--font-mono); font-feature-settings: "calt" 0; }
 
-/* Corner ticks for Panel */
+/* ─── Corner Ticks for Panel ─── */
 .tick::before, .tick::after {
   content: ""; position: absolute; width: 10px; height: 10px;
-  border-color: var(--rule); border-style: solid;
+  border-color: var(--rule-strong); border-style: solid;
 }
 .tick::before { top: -1px; left: -1px; border-width: 1px 0 0 1px; }
 .tick::after  { bottom: -1px; right: -1px; border-width: 0 1px 1px 0; }
 
-/* Premium Panel — Match loop-lab's clean card style */
+/* ─── Premium Panel ─── */
 .premium-panel {
   position: relative;
   background: var(--surface);
   border: 1px solid var(--card-border);
-  border-radius: 8px;
+  border-radius: 12px;
   padding: 1.5rem;
-  box-shadow: none;
-  transition: all 0.15s ease;
+  transition: all 0.2s ease;
 }
 
 .premium-panel:hover {
-  transform: none;
-  box-shadow: none;
-  border-color: var(--accent-primary);
+  border-color: var(--card-border-hover);
   background: var(--surface-soft);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
 }
 
 .premium-panel::before {
@@ -155,29 +271,39 @@ body {
   position: absolute;
   top: 0; left: 0; right: 0;
   height: 1px;
-  background: var(--accent-primary);
+  background: linear-gradient(90deg, transparent, var(--accent-primary), transparent);
   opacity: 0;
-  transition: opacity 0.15s ease;
-  border-radius: 8px 8px 0 0;
+  transition: opacity 0.2s ease;
+  border-radius: 12px 12px 0 0;
 }
 
 .premium-panel:hover::before {
-  opacity: 1;
+  opacity: 0.6;
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .premium-panel {
-    transition: none;
-  }
-  .premium-panel:hover {
-    transform: none;
-  }
+/* ─── Glass Card ─── */
+.glass-card {
+  background: var(--glass-bg);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--glass-border);
+  border-radius: 16px;
+  padding: 1.5rem;
+  transition: all 0.25s ease;
+  box-shadow: var(--glass-shadow);
 }
 
-/* Typography - Match loop-lab's font hierarchy */
+.glass-card:hover {
+  background: var(--glass-bg-hover);
+  border-color: var(--glass-border-hover);
+  transform: translateY(-2px);
+  box-shadow: var(--glass-shadow-lg);
+}
+
+/* ─── Typography ─── */
 .prose-blueprint {
   color: var(--graphite);
-  line-height: 1.6;
+  line-height: 1.7;
   font-weight: 400;
   font-size: 1rem;
 }
@@ -254,7 +380,6 @@ body {
 .prose-blueprint li > ul,
 .prose-blueprint li > ol { margin-top: 0.5rem; margin-bottom: 0; }
 
-/* Inline code - Match loop-lab style */
 .prose-blueprint :not(pre) > code {
   font-family: var(--font-mono);
   font-size: 0.9em;
@@ -262,7 +387,7 @@ body {
   background: var(--surface);
   border: 1px solid var(--card-border);
   padding: 0.2em 0.4em;
-  border-radius: 4px;
+  border-radius: 6px;
   transition: all 0.15s ease;
 }
 
@@ -311,7 +436,7 @@ body {
   border: 1px solid var(--card-border);
   background: var(--surface);
   padding: 1rem;
-  border-radius: 8px;
+  border-radius: 12px;
   margin: 1rem 0;
   transition: all 0.15s ease;
 }
@@ -342,11 +467,11 @@ body {
 .prose-blueprint img {
   max-width: 100%;
   height: auto;
-  border-radius: 8px;
+  border-radius: 12px;
   margin: 1.5rem 0;
 }
 
-/* Shiki code highlighting */
+/* ─── Shiki Code Highlighting ─── */
 .dark .shiki,
 .dark .shiki span {
   color: var(--shiki-dark) !important;
@@ -363,22 +488,11 @@ body {
   background: var(--surface) !important;
 }
 
-:focus-visible {
-  outline: 2px solid var(--accent-primary);
-  outline-offset: 2px;
-  border-radius: 4px;
+:root .shiki {
+  background: var(--surface-soft) !important;
 }
 
-@media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
-  }
-}
-
-/* Diagram styles */
+/* ─── Diagram Styles ─── */
 .diagram .edge {
   stroke-dasharray: 1;
   stroke-dashoffset: 1;
@@ -397,7 +511,55 @@ body {
 
 .diagram .dimmed { opacity: 0.28; transition: opacity 300ms ease-out; }
 
+/* ─── Reduced Motion ─── */
 @media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .premium-glow {
+    animation: none !important;
+    opacity: 0.1 !important;
+  }
+
+  .premium-panel {
+    transition: none;
+  }
+
+  .premium-panel:hover {
+    transform: none;
+  }
+
+  .glass-card:hover {
+    transform: none;
+  }
+
   .diagram .edge { stroke-dashoffset: 0; }
   .diagram .node { opacity: 1; transform: none; }
+}
+
+/* ─── Mobile Adjustments ─── */
+@media (max-width: 768px) {
+  .premium-glow {
+    opacity: 0.15 !important;
+  }
+  .premium-glow-1 {
+    width: 250px;
+    height: 250px;
+    top: -50px;
+    left: -50px;
+  }
+  .premium-glow-2 {
+    width: 300px;
+    height: 300px;
+    bottom: -80px;
+    right: -50px;
+  }
+  .premium-glow-3 {
+    width: 200px;
+    height: 200px;
+  }
 }

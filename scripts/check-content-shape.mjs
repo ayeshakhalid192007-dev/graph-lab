@@ -11,7 +11,7 @@
 import { readdir, readFile } from "node:fs/promises";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
-import { parseQuiz, parseFlashcards } from "../lib/parse-content.ts";
+import { parseQuiz, parseFlashcards } from "../lib/parse-content.js";
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 const DOCS = join(root, "content", "docs");
